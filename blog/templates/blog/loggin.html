@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
+    <title>Loggin</title>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid bg-dark" style="height: 100vh">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-3">
+                <!-- main card to show the content -->
+                <div class="card bg-light">
+                    <div class="card-body shadow">
+                        <!-- loggin title -->
+                        <h3>Wilson Blog Loggin</h3>
+                        <!-- loggin form -->
+                        <form action="" class="form" method="POST">
+                        {% csrf_token %}
+                            <!-- name input field with an incon attached -->
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-user"></i></div>
+                                </div>
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername2"
+                                    placeholder="Username" name="username">
+                            </div>
+                            <!-- password input field with an incon attached -->
+                            <div class="input-group mb-2 mr-sm-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-key"></i></div>
+                                </div>
+                                <input type="password" class="form-control" id="username"
+                                    placeholder="Password" name="password">
+                            </div>
+                            <!-- some extra content to make it more visual -->
+                            <p class="text-muted" style="font-size: 0.7em;">
+                                Troubles signing in? resset 
+                                <a href="">username</a> or <a href="">password</a>
+                            </p>
+                            <!-- submit button -->
+                            <button type="submit" class="btn btn-info btn-block">Loggin</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

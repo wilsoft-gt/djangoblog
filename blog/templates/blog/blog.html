@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <title>wilsoft blog</title>
+
+    <style>
+        /* * {
+            border: red 0.2px dotted;
+        } */
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .card-title {
+            font-size: 3em;
+        }
+
+        .card {
+            margin: 1em 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- navigation bar with a search box -->
+    <nav class="navbar navbar-dark bg-dark shadow">
+        <!-- title or brand -->
+        <a class="navbar-brand text-white ">Wilson blog</a>
+        <!-- search form -->
+        <div class="row">
+
+            {% if usernamelog and anonymous %}
+                {% if usernamelog != anonymous %}
+                
+                anonimous
+                {% else %}
+                not anonimous
+                {% endif %}
+            {% endif %}
+            {% comment %} {% if usernamelog == anonymous %}
+                <div class="col text-white">
+                    not logged in
+                </div>
+            {% endif %} {% endcomment %}
+
+
+{% comment %}             {% if usernamelog|stringify != anonymous|stringify %}
+                <!-- creamos un dropdown on las opciones principales -->
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ir a
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/resources">Resources</a>
+                        <a class="dropdown-item" href="/blog">blog</a>
+                    </div>
+                </div>
+                <div class="col text-white">
+                    logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
+                </div>
+            {% endif %} {% endcomment %}
+            
+
+        </div>
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+
+    <!-- main container for all the cards/articles -->
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-9 bg-light shadow">
+                <div class="row justify-content-center">
+
+                    <!-- this div contain all the cards, the 
+                        previous where just to indent the div 
+                        in the middle -->
+                    <div class="col-sm-11">
+                        <!-- ############ -->
+                        <!-- blog entries -->
+                        {% if blogposts %}
+                        {% for posts in blogposts %}
+
+                        <div class="card">
+                            <img src="{{ posts.post_image_header }}" class="card-img-top img-thumbnail" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ posts.post_title }}</h5>
+                                <p class="card-text">{{ posts.post_body|slice:":125"|safe }} ...<a
+                                        href="/blogentry?id={{posts.id}}">continue reading</a></p>
+                                <hr>
+                                by <a href="">wilson romero</a>
+                                on 10/10/2019
+
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+
+                        <!-- end of block entries -->
+                        <!-- #################### -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- footer at the very bottom of the page -->
+    <footer>
+        <!-- div container -->
+        <div class="container-fluid bg-dark shadow">
+            <div class="row p-5">
+
+                <!-- first column on the footer to show some text -->
+                <div class="col-sm-6 text-info">
+                    <h3>Title</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo repellat quia exercitationem
+                        dignissimos a praesentium ipsum facilis fuga impedit, animi distinctio debitis ex. Illo vero
+                        ipsum facere distinctio voluptates magnam.</p>
+                </div>
+
+                <!-- second column on the footer to show some links -->
+                <div class="col-sm-3">
+                    <h5 class="text-info text-info">LINKS</h5>
+                    <ul class="list-unstyled text-secondary pr-5">
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                    </ul>
+                </div>
+
+                <!-- third column on the footer to show some links -->
+                <div class="col-sm-3">
+                    <h5 class="text-secondary text-info">LINKS</h5>
+                    <ul class="list-unstyled text-secondary pr-5">
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                        <li>option 1</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- copyright info of the blog -->
+            <div class="row justify-content-center text-muted">
+                <p>Copyright &copy; Wilson Romero | 2019 </p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
