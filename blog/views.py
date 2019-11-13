@@ -1,4 +1,6 @@
 #importamos las librerias necesarias para nuestro proyecto
+import os
+from django.conf import settings
 from django.shortcuts import render #<- para renderizar un template
 from django.http import HttpResponse, HttpResponseRedirect #<- respuesta del servidor en plain text o redireccionamiento
 from .models import blogposts, images #<- importar base de datos para usarla en las views
@@ -33,11 +35,8 @@ def blogEntry(request):
     #reenvio la information requerida del template para usarlo dentro del blog
     return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog})
 
-
-
 #@login_required creo que no necesita mucha explicaion pero esto hace que sea requerido loguearse antes de poder ver el view
 #para usarlo se necesita en import en la linea NO. 6 de este documento
-@login_required
 def createEntry(request):
     #tomo el username como texto para pasarlo al template como texno no como objeto
     usernamelog = str(request.user)
@@ -63,10 +62,9 @@ def createEntry(request):
         #una vez se guarda muestra una entrada vacia
         return render(request, "blog/createedit.html", {"post": newp})
 
-
 #@login_required creo que no necesita mucha explicaion pero esto hace que sea requerido loguearse antes de poder ver el view
 #para usarlo se necesita en import en la linea NO. 6 de este documento
-@login_required
+
 def resources(request):
     usernamelog = str(request.user)
     #si la pagina solo se solicita se muestra el template y se pasan los datos dentro de mi tabla de imagenes
@@ -82,7 +80,6 @@ def resources(request):
         newImg.save()
         imagenes = images.objects.all()
         return render(request, "blog/resources.html", {"imagenes": imagenes})
-
 
 #este es el sistema de loggin que se hereda de a linea NO. 5 de este documento
 def logginview(request):
@@ -119,3 +116,16 @@ def logoutview(request):
     #como solo se puede loguear un user por sesion entonces solamente se necesita cerrar la sesion y ya
     logout(request)
     return HttpResponseRedirect("blog")
+
+def removeresource(request):
+    imagen = request.GET.get("img")
+    imagen_db = images.objects.get(id=imagen)
+    imagen_path = os.path.join(settings.MEDIA_ROOT, str(imagen_db.imagefile))
+    os.remove(imagen_path)
+    imagen_db.delete()
+    return HttpResponseRedirect("resources")
+
+def administration(request):
+    usernamelog = str(request.user)
+    imagenes = images.objects.all()
+    return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog})

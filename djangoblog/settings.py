@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'b=d6%n&lfuv$3t5e_1y)gyc#f0-9l%#8_-a83+ovxbm#by!)iy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["wilsonblog.herokuapp.com"]
+ALLOWED_HOSTS = ["wilsonblog.herokuapp.com", "127.0.0.1"]
 
 
 # Application definition
@@ -120,7 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'blog/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'blog/')
 #mediafiles
 #esto es necesario para poder mostrar los archivos (imagenes), desde el DB sin tanta cosa, solamente usarse en development
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media')
