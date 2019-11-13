@@ -43,24 +43,18 @@
         <!-- title or brand -->
         <a class="navbar-brand text-white ">Wilson blog</a>
         <!-- search form -->
-        <div class="row">
+        <div class="row justify-content-center align-items-center">
 
-            {% if usernamelog and anonymous %}
-                {% if usernamelog != anonymous %}
-                
-                anonimous
-                {% else %}
-                not anonimous
-                {% endif %}
-            {% endif %}
-            {% comment %} {% if usernamelog == anonymous %}
+            <!-- verifico si el username recibido es diferente de anonimo -->
+            {% if usernamelog == "AnonymousUser" %}
                 <div class="col text-white">
-                    not logged in
+                    <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
+                    Login
                 </div>
-            {% endif %} {% endcomment %}
+            {% endif %}
 
-
-{% comment %}             {% if usernamelog|stringify != anonymous|stringify %}
+            <!-- si estoy logueado me muestra otras opciones -->
+            {% if usernamelog != "AnonymousUser" %}
                 <!-- creamos un dropdown on las opciones principales -->
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -75,14 +69,14 @@
                 <div class="col text-white">
                     logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
                 </div>
-            {% endif %} {% endcomment %}
+            {% endif %}
             
-
-        </div>
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
         </form>
+
+        </div>
     </nav>
 
     <!-- main container for all the cards/articles -->
@@ -108,7 +102,7 @@
                                         href="/blogentry?id={{posts.id}}">continue reading</a></p>
                                 <hr>
                                 by <a href="">wilson romero</a>
-                                on 10/10/2019
+                                on {{ posts.post_date }}
 
                             </div>
                         </div>

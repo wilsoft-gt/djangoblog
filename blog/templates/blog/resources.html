@@ -82,9 +82,28 @@
     <nav class="navbar navbar-dark bg-dark shadow">
         <a class="navbar-brand text-white ">Wilson blog / Resources</a>
         <div class="row justify-content-center align-items-center">
-            <div class="col text-white">
-                logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
-            </div>
+            <!-- verificamos que el usuario este logueado -->
+            {% if usernamelog == "AnonymousUser" %}
+                <div class="col text-white">
+                    Login
+                </div>
+            {% endif %}
+            {% if usernamelog != "AnonymousUser" %}
+                <!-- creamos un dropdown on las opciones principales -->
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ir a
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/resources">Resources</a>
+                        <a class="dropdown-item" href="/blog">blog</a>
+                    </div>
+                </div>
+                <div class="col text-white">
+                    logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
+                </div>
+            {% endif %}
 
             <form class="form-inline">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

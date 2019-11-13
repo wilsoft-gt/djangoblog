@@ -122,7 +122,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #mediafiles
+#esto es necesario para poder mostrar los archivos (imagenes), desde el DB sin tanta cosa, solamente usarse en development
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media')
+#esto es como va a mostrar el navegador la direccion, podria cambiarse a images y el servidor mostraria www.myweb.com/images?nombreendatabase=nombredelaimagen.png
 MEDIA_URL = "/media/"
-LOGIN_URL = 'accounts/login/'
-LOGIN_REDIRECT_URL = '/'
