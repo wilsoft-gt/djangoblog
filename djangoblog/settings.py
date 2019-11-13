@@ -120,7 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'blog/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'blog/static')
 #mediafiles
 #esto es necesario para poder mostrar los archivos (imagenes), desde el DB sin tanta cosa, solamente usarse en development
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media')
