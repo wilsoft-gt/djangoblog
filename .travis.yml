@@ -1,6 +1,5 @@
 language: python
 python:
- Travis CI
   - "3.7"
 
 # command to install dependencies
