@@ -121,6 +121,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'blog/static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'blog/static'),
+)
 #mediafiles
 #esto es necesario para poder mostrar los archivos (imagenes), desde el DB sin tanta cosa, solamente usarse en development
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media')
