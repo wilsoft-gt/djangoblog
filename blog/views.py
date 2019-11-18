@@ -9,15 +9,12 @@ from django.contrib.auth.decorators import login_required #<- redirecciona el te
 
 # Create your views here.
 
-def main(request):
-    return HttpResponse("main screen")
-
 def blog(request):
     #tomo el username como texto para pasarlo al template como texno no como objeto
     usernamelog = str(request.user)
 
     #tomo todos los post y los paso a una lista iterable
-    blogs = blogposts.objects.all()
+    blogs = blogposts.objects.order_by("-post_date")
 
     #renderizo el template con los argumentos o variables que continenen el username y los datos de los blogs
     return render(request, "blog/blog.html", {"blogposts": blogs, "usernamelog":usernamelog})
@@ -35,8 +32,15 @@ def blogEntry(request):
     #reenvio la information requerida del template para usarlo dentro del blog
     return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog})
 
+@login_required
+def postDelete(request):
+    postId = request.GET.get("id")
+    post = blogposts.objects.get(id=postId)
+    post.delete()
+    return HttpResponseRedirect("administracion")
 #@login_required creo que no necesita mucha explicaion pero esto hace que sea requerido loguearse antes de poder ver el view
 #para usarlo se necesita en import en la linea NO. 6 de este documento
+@login_required
 def createEntry(request):
     #tomo el username como texto para pasarlo al template como texno no como objeto
     usernamelog = str(request.user)
@@ -44,7 +48,7 @@ def createEntry(request):
     #si no estoy enviando un formulario va a mostrar el template con el form vacio
     if request.method == "GET":
         #renderiza el template en blanco
-        return render(request, "blog/createedit.html", {"usernamelog":usernamelog})
+        return HttpResponseRedirect("administracion")
     #si se solicita el view como POST (envio de formulario), entonces voy a tomar los datos y guardarlos en la base de datos
     elif request.method == "POST":
         #blogposts es el objeto que es llamado desde mi model (database)
@@ -60,17 +64,17 @@ def createEntry(request):
         #guardo el nuevo post a la base de datos
         newp.save()
         #una vez se guarda muestra una entrada vacia
-        return render(request, "blog/createedit.html", {"post": newp})
+        return HttpResponseRedirect("administracion")
 
 #@login_required creo que no necesita mucha explicaion pero esto hace que sea requerido loguearse antes de poder ver el view
 #para usarlo se necesita en import en la linea NO. 6 de este documento
-
+@login_required
 def resources(request):
     usernamelog = str(request.user)
     #si la pagina solo se solicita se muestra el template y se pasan los datos dentro de mi tabla de imagenes
     if request.method == "GET":
         imagenes = images.objects.all()
-        return render(request, "blog/resources.html", {"imagenes": imagenes, "usernamelog":usernamelog})
+        return HttpResponseRedirect("administracion")
 
     #si se envia datos al template entonces tomo los datos y los guardo en el servidor
     #en este caso necesito usar si o si la linea: enctype="multipart/form-data" en el form porque no estoy usando el modelform de django
@@ -79,7 +83,7 @@ def resources(request):
         newImg.imagefile = request.FILES["newpic"]
         newImg.save()
         imagenes = images.objects.all()
-        return render(request, "blog/resources.html", {"imagenes": imagenes})
+        return HttpResponseRedirect("administracion")
 
 #este es el sistema de loggin que se hereda de a linea NO. 5 de este documento
 def logginview(request):
@@ -103,6 +107,9 @@ def logginview(request):
                 login(request, user)
                 #y renderiza el view desde el que fue llamado el loggin
                 return HttpResponseRedirect(request.GET.get("next"))
+            else:
+                login(request, user)
+                return HttpResponseRedirect("/")
                 
         else:
             #si el loggin es incorrecto entonces tira un error
@@ -114,18 +121,26 @@ def logginview(request):
 #esto es muy muy simple, creo que no se necesita tanta explicacion
 def logoutview(request):
     #como solo se puede loguear un user por sesion entonces solamente se necesita cerrar la sesion y ya
-    logout(request)
-    return HttpResponseRedirect("blog")
+    nextpost = request.GET.get("next")
+    if nextpost:
+        logout(request)
+        return HttpResponseRedirect(nextpost)
+    else:
+        logout(request)
+        return HttpResponseRedirect("/")
 
+@login_required
 def removeresource(request):
     imagen = request.GET.get("img")
     imagen_db = images.objects.get(id=imagen)
     imagen_path = os.path.join(settings.MEDIA_ROOT, str(imagen_db.imagefile))
     os.remove(imagen_path)
     imagen_db.delete()
-    return HttpResponseRedirect("resources")
+    return HttpResponseRedirect("administracion")
 
+@login_required
 def administration(request):
     usernamelog = str(request.user)
     imagenes = images.objects.all()
-    return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog})
+    entries = blogposts.objects.order_by("-post_date")
+    return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries})

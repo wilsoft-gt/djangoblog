@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load staticfiles %}
+{% load staticfiles %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,79 +17,83 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-        
-        <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
-        <script src="{% static 'blog/js/script.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
+    <script src="{% static 'blog/js/script.js' %}"></script>
     <title>Blog admin page</title>
 </head>
 <style>
-/* * {
+    /* * {
     border: red dotted 0.2px
 } */
-body {
-    height: 100vh;
-    width: 100%;
-}
-.card {
-            -webkit-column-break-inside: avoid;
-            /* Chrome, Safari, Opera */
-            page-break-inside: avoid;
-            /* Firefox */
-            break-inside: avoid;
-            /* IE 10+ */
-        }
+    body {
+        height: 100vh;
+        width: 100%;
+    }
+
+    .card {
+        -webkit-column-break-inside: avoid;
+        /* Chrome, Safari, Opera */
+        page-break-inside: avoid;
+        /* Firefox */
+        break-inside: avoid;
+        /* IE 10+ */
+    }
 </style>
 
 <body onload="alertHide()">
     {{ staticfiles }}
-    <nav class="navbar navbar-dark bg-secondary shadow-sm m-0 p-0">
+    <nav class="navbar navbar-dark bg-secondary shadow m-0 p-0">
         <div class="col-2 m-0 p-0 bg-dark">
             <a class="navbar-brand text-white ml-3">Wilson blog / Resources</a>
 
         </div>
-        
+
         <div class="navbar-brand">Bienvenido {{ usernamelog }}</div>
 
-        <a href="/logout" class="btn btn-info text-light navbar-brand m-0">Logout <i class="fas fa-sign-out-alt"></i></a>
+        <a href="/logout" class="btn btn-info text-light navbar-brand m-0">Logout <i
+                class="fas fa-sign-out-alt"></i></a>
 
 
     </nav>
     <div class="container-fluid" style="height: 95%">
         <div class="row h-100">
-            <div class="col-2 bg-light shadow-sm border-right">
+            <div class="col-2 bg-light shadow border-right">
                 <!-- esta lista sirve para mostrar y ocultar los datos del menu administrativo principal -->
                 <div class="list-group" id="list-tab" role="tablist">
                     <div class="dropdown-divider"></div>
                     Tabs
+                    <!-- esto muestra el div con las entradas de los blogs creados -->
+                    <a class="list-group-item list-group-item-action btn-info active" id="list-profile-list" data-toggle="list" href="#postslist" role="tab" aria-controls="postslist"><i class="fas fa-edit"></i> Entries</a>
                     <!-- esto despliega una accion que abre la opcion de agregar un nuevo post -->
-                    <a class="list-group-item list-group-item-action btn-info active" id="list-home-list" data-toggle="list" href="#newpost" role="tab" aria-controls="home"><i class="fas fa-plus-square"></i> New Post</a>
+                    <a class="list-group-item list-group-item-action btn-info" id="list-home-list" data-toggle="list" href="#newpost" role="tab" aria-controls="home"><i class="fas fa-plus-square"></i> New Post</a>
                     <!-- esto muestra las imagenes en la base de datos -->
                     <a class="list-group-item list-group-item-action btn-info" id="list-profile-list" data-toggle="list" href="#resources" role="tab" aria-controls="profile"><i class="fas fa-image"></i> Resources</a>
+                    
                     <!-- solo un hr usando -->
                     <div class="dropdown-divider"></div>
                     Go to
 
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <!-- este boton envia hacia el menu principal -->
-                        <button type="button" class="btn btn-outline-info"><i class="fas fa-home"></i> Blog</a></button>
+                        <a type="button" class="btn btn-outline-info" href="/"><i class="fas fa-home"></i> Blog</a></a>
                         <!-- esto envia al menu root de django -->
-                        <button type="button" class="btn btn-outline-info"><i class="fas fa-user-cog"></i> Root</a></button>
+                        <a type="button" class="btn btn-outline-info" href="/admin"><i class="fas fa-user-cog"></i>
+                            Root</a></a>
                     </div>
                 </div>
             </div>
             <hr />
-            <div class="col mt-3" style="height: 95%" >
+            <div class="col mt-3" style="height: 95%">
                 <div class="col-12 h-100" style="overflow-y: scroll">
                     <div class="tab-content h-100" id="nav-tabContent">
-                        <!-- esto es el primer div a mostrar -->
-                        <div class="tab-pane fade show active" id="newpost" role="tabpanel" aria-labelledby="list-home-list">
-                            <!-- ############################################################## -->
-                            <!-- ############################################################## -->
-                            <!-- ############################################################## -->
-                            <!--               esta seccion es para crear nuevos posts          -->
-                            <!-- ############################################################## -->
-                            <!-- ############################################################## -->
-                            <!-- ############################################################## -->
+
+
+                        <!-- ############################################################## -->
+                        <!--               esta seccion es para crear nuevos posts          -->
+                        <!-- ############################################################## -->
+                        <div class="tab-pane fade show" id="newpost" role="tabpanel"
+                            aria-labelledby="list-home-list">
 
                             <div class="container-fluid row justify-content-center">
                                 <div class="col-lg-9 col-md-11 bg-light shadow">
@@ -101,77 +106,92 @@ body {
                                                     <!-- esta esto es para el titulo -->
                                                     <div class="input-group mb-2">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="fas fa-heading"></i></div>
+                                                            <div class="input-group-text"><i class="fas fa-heading"></i>
+                                                            </div>
                                                         </div>
-                                                        <input type="text" class="form-control" id="entryTitle" name="entryTitle"
-                                                            placeholder="Post title">
+                                                        <input type="text" class="form-control" id="entryTitle"
+                                                            name="entryTitle" placeholder="Post title">
                                                     </div>
-                        
+
                                                     <!-- esto es para la imagen heather -->
                                                     <div class="input-group mb-2">
                                                         <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="fas fa-image"></i></div>
+                                                            <div class="input-group-text"><i class="fas fa-image"></i>
+                                                            </div>
                                                         </div>
-                                                        <input type="text" class="form-control" id="entryImageHeader" name="entryImageHeader"
-                                                            placeholder="Header image">
+                                                        <input type="text" class="form-control" id="entryImageHeader"
+                                                            name="entryImageHeader" placeholder="Header image">
                                                     </div>
-                        
+
                                                     <div class="btn-group btn-group-sm" role="group">
-                                                        <button type="button" title="Header 1 wrapper" class="btn btn-secondary btn-sm" id="h1"
+                                                        <button type="button" title="Header 1 wrapper"
+                                                            class="btn btn-secondary btn-sm" id="h1"
                                                             onclick="addWrapper('h1')">h1</button>
                                                         <button type="button" type="button" title="Header 2 wrapper"
-                                                            class="btn btn-secondary btn-sm" id="h2" onclick="addWrapper('h2')">h2</button>
-                                                        <button type="button" title="Header 3 wrapper" class="btn btn-secondary btn-sm" id="h3"
+                                                            class="btn btn-secondary btn-sm" id="h2"
+                                                            onclick="addWrapper('h2')">h2</button>
+                                                        <button type="button" title="Header 3 wrapper"
+                                                            class="btn btn-secondary btn-sm" id="h3"
                                                             onclick="addWrapper('h3')">h3</button>
-                                                        <button type="button" title="Header 4 wrapper" class="btn btn-secondary btn-sm" id="h4"
+                                                        <button type="button" title="Header 4 wrapper"
+                                                            class="btn btn-secondary btn-sm" id="h4"
                                                             onclick="addWrapper('h4')">h4</button>
-                                                        <button type="button" title="Parragraph wrapper" class="btn btn-secondary btn-sm" id="p"
-                                                            onclick="addWrapper('p')"><i class="fas fa-paragraph"></i></button>
-                                                        <button type="button" title="Bold / strong" class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('strong')"><i class="fas fa-bold"></i></button>
-                                                        <button type="button" title="Italic / emphatized" class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('i')"><i class="fas fa-italic"></i></button>
-                                                        <button type="button" title="Underlined" class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('u')"><i class="fas fa-underline"></i></button>
+                                                        <button type="button" title="Parragraph wrapper"
+                                                            class="btn btn-secondary btn-sm" id="p"
+                                                            onclick="addWrapper('p')"><i
+                                                                class="fas fa-paragraph"></i></button>
+                                                        <button type="button" title="Bold / strong"
+                                                            class="btn btn-secondary btn-sm"
+                                                            onclick="addWrapper('strong')"><i
+                                                                class="fas fa-bold"></i></button>
+                                                        <button type="button" title="Italic / emphatized"
+                                                            class="btn btn-secondary btn-sm"
+                                                            onclick="addWrapper('i')"><i
+                                                                class="fas fa-italic"></i></button>
+                                                        <button type="button" title="Underlined"
+                                                            class="btn btn-secondary btn-sm"
+                                                            onclick="addWrapper('u')"><i
+                                                                class="fas fa-underline"></i></button>
                                                     </div>
-                                                    <textarea class="form-control" id="postBody" name="postBody" cols="30" rows="15"
+                                                    <textarea class="form-control" id="postBody" name="postBody"
+                                                        cols="30" rows="15"
                                                         placeholder="Write your entrie here!"></textarea>
                                                     <button type="button" class="btn btn-secondary btn-sm"
                                                         onclick="addWrapper()">Mostrar</button>
-                                                    <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-                        
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-sm">Guardar</button>
+
                                                 </form>
                                                 <hr>
                                                 Body Preview
                                                 <div class="card">
                                                     <div id="result" class="card-body" style="font-size: 17px">
-                        
+
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                        
+
                                 </div>
-                                
+
                             </div>
                         </div>
-                                    
-                        <!-- ############################################################## -->
-                        <!-- ############################################################## -->
+
+
                         <!-- ############################################################## -->
                         <!--               esta seccion es para los resources               -->
                         <!-- ############################################################## -->
-                        <!-- ############################################################## -->
-                        <!-- ############################################################## -->
                         <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="list-profile-list">
                             <!-- upload button -->
-                            <button type="button" class="btn btn-info ml-4 mr-3" data-toggle="modal" data-target="#subirimagen">
+                            <button type="button" class="btn btn-info ml-4 mr-3" data-toggle="modal"
+                                data-target="#subirimagen">
                                 <i class="fas fa-plus-square"></i>
                             </button>
 
                             <!-- alert to upload an image -->
-                            <div class="modal fade" id="subirimagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal fade" id="subirimagen" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -185,7 +205,8 @@ body {
                                                 {% csrf_token %}
                                                 <input type="file" name="newpic" id="newpic">
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
@@ -196,26 +217,89 @@ body {
                             </div>
 
                             <!-- esto es el div para mostrar las imagenes -->
-                            <div id="imgcontainer" class="container-fluid mt-3" style="-webkit-columns: 3; -moz-columns: 3; columns: 3;">
+                            <div id="imgcontainer" class="container-fluid mt-3"
+                                style="-webkit-columns: 3; -moz-columns: 3; columns: 3;">
                                 {% if imagenes %}
                                 {% for i in imagenes %}
                                 <div class="card border border-info bg-dark text-white shadow-sm m-2">
-                                    <img style="cursor: pointer; display: block" onclick="returnUrl(this)" class="img-fluid" src="{{ i.imagefile.url }}" alt="{{ i.imagefile.name }}">
+                                    <img style="cursor: pointer; display: block" onclick="returnUrl(this)"
+                                        class="img-fluid" src="{{ i.imagefile.url }}" alt="{{ i.imagefile.name }}">
                                     <div class="card-img-overlay img-fluid" style="height: 0px; padding: 0px">
-                                        <a href="/remove?img={{ i.id }}" style="font-size: 1.5em;" class="text-danger mt-3 ml-3"><i class="fas fa-trash"></i></a>
+                                        <a href="/remove?img={{ i.id }}" style="font-size: 1.5em;"
+                                            class="text-danger mt-3 ml-3"><i class="fas fa-trash"></i></a>
                                     </div>
                                 </div>
-                        
+
                                 {% endfor %}
                                 {% endif %}
                             </div>
                             <!-- copied alert -->
                             <div class="row justify-content-center fixed-bottom">
-                                    <div class="alert alert-info fade show alert-dismissible" role="alert">
-                                        Image link <a id="imageLink" href="#" class="alert-link"></a> copied to clipboard.
-                                    </div>
+                                <div class="alert alert-info fade show alert-dismissible" role="alert">
+                                    Image link <a id="imageLink" href="#" class="alert-link"></a> copied to clipboard.
                                 </div>
+                            </div>
                         </div>
+
+
+
+
+
+
+                        <!-- ############################################################## -->
+                        <!--               esta seccion de los posts creados                -->
+                        <!-- ############################################################## -->
+                        <div class="tab-pane fade show active" id="postslist" role="tabpanel"
+                            aria-labelledby="list-home-list">
+
+                            <div class="container-fluid row justify-content-center">
+                                <div class="col-lg-11 col-md-11 bg-light shadow-sm">
+                                    <div class="row justify-content-center">
+                                        <!-- here django will render the content of the post -->
+
+                                        <table class="table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col-2">ID #</th>
+                                                        <th scope="col-6">Titulo</th>
+                                                        <th scope="col-2">Fecha</th>
+                                                        <th scope="col-2">Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                {% if entries %}
+                                                {% for i in entries %}
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">{{i.id}}</th>
+                                                        <td class="">{{ i.post_title}} </td>
+                                                        <td>{{i.post_date}}</td>
+                                                        <td> <a href="blogentry?id={{ i.id }}" ><i class="fas fa-eye"></i></a> | <a title="Edit" href=""><i class="fas fa-edit"></i></a> | <a href="postDelete?id={{ i.id }}" title="Delete"><i style="color:red" class="fa fa-trash"></i></a></td>
+                                                    </tr>
+                                                </tbody>
+                                                
+                                                {% endfor %}
+                                                {% endif %}
+                                            </table>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
             </div>

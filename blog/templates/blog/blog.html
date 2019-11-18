@@ -16,6 +16,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../../static/blog/fontawesome5112/css/all.css">
     <title>wilsoft blog</title>
 
     <style>
@@ -41,7 +42,7 @@
     <!-- navigation bar with a search box -->
     <nav class="navbar navbar-dark bg-dark shadow">
         <!-- title or brand -->
-        <a class="navbar-brand text-white ">Wilson blog</a>
+        <a class="navbar-brand text-white " href="/">Wilson blog</a>
         <!-- search form -->
         <div class="row justify-content-center align-items-center">
 
@@ -49,25 +50,17 @@
             {% if usernamelog == "AnonymousUser" %}
                 <div class="col text-white">
                     <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
-                    Login
+                    <a class="text-info" href="accounts/login/">Login</a>
                 </div>
             {% endif %}
 
             <!-- si estoy logueado me muestra otras opciones -->
             {% if usernamelog != "AnonymousUser" %}
                 <!-- creamos un dropdown on las opciones principales -->
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ir a
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="/resources">Resources</a>
-                        <a class="dropdown-item" href="/blog">blog</a>
-                    </div>
-                </div>
+
                 <div class="col text-white">
-                    logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
+                    logged in as <u>{{usernamelog}}</u> / <a class="text-info" href="/logout">logout</a>
+                    <a class="text-info" href="/administracion"><i class="fas fa-cog"></i></a>
                 </div>
             {% endif %}
             
@@ -98,10 +91,10 @@
                             <img src="{{ posts.post_image_header }}" class="card-img-top img-thumbnail" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">{{ posts.post_title }}</h5>
-                                <p class="card-text">{{ posts.post_body|slice:":125"|safe }} ...<a
+                                <p class="card-text">{{ posts.post_body|slice:":125"|safe }} ...<a class="text-info"
                                         href="/blogentry?id={{posts.id}}">continue reading</a></p>
                                 <hr>
-                                by <a href="">wilson romero</a>
+                                by <a class="text-info" href="">wilson romero</a>
                                 on {{ posts.post_date }}
 
                             </div>

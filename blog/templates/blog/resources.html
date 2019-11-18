@@ -92,26 +92,23 @@
         <a class="navbar-brand text-white ">Wilson blog / Resources</a>
         <div class="row justify-content-center align-items-center">
             <!-- verificamos que el usuario este logueado -->
+
+            <!-- verifico si el username recibido es diferente de anonimo -->
             {% if usernamelog == "AnonymousUser" %}
-            <div class="col text-white">
-                Login
-            </div>
-            {% endif %}
-            {% if usernamelog != "AnonymousUser" %}
-            <!-- creamos un dropdown on las opciones principales -->
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Ir a
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/resources">Resources</a>
-                    <a class="dropdown-item" href="/blog">blog</a>
+                <div class="col text-white">
+                    <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
+                    <a href="accounts/login/">Login</a>
                 </div>
-            </div>
-            <div class="col text-white">
-                logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
-            </div>
+            {% endif %}
+
+            <!-- si estoy logueado me muestra otras opciones -->
+            {% if usernamelog != "AnonymousUser" %}
+                <!-- creamos un dropdown on las opciones principales -->
+
+                <div class="col text-white">
+                    logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
+                    <a href="/administracion"><i class="fas fa-cog"></i></a>
+                </div>
             {% endif %}
 
             <form class="form-inline">
