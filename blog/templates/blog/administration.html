@@ -56,6 +56,7 @@
 
 
     </nav>
+
     <div class="container-fluid" style="height: 95%">
         <div class="row h-100">
             <div class="col-2 bg-light shadow border-right">
@@ -64,12 +65,16 @@
                     <div class="dropdown-divider"></div>
                     Tabs
                     <!-- esto muestra el div con las entradas de los blogs creados -->
-                    <a class="list-group-item list-group-item-action btn-info active" id="list-profile-list" data-toggle="list" href="#postslist" role="tab" aria-controls="postslist"><i class="fas fa-edit"></i> Entries</a>
+                    <a class="list-group-item list-group-item-action btn-info active" id="list-profile-list"
+                        data-toggle="list" href="#postslist" role="tab" aria-controls="postslist"><i
+                            class="fas fa-edit"></i> Entries</a>
                     <!-- esto despliega una accion que abre la opcion de agregar un nuevo post -->
-                    <a class="list-group-item list-group-item-action btn-info" id="list-home-list" data-toggle="list" href="#newpost" role="tab" aria-controls="home"><i class="fas fa-plus-square"></i> New Post</a>
+                    <a class="list-group-item list-group-item-action btn-info" id="list-home-list" data-toggle="list"
+                        href="#newpost" role="tab" aria-controls="home"><i class="fas fa-plus-square"></i> New Post</a>
                     <!-- esto muestra las imagenes en la base de datos -->
-                    <a class="list-group-item list-group-item-action btn-info" id="list-profile-list" data-toggle="list" href="#resources" role="tab" aria-controls="profile"><i class="fas fa-image"></i> Resources</a>
-                    
+                    <a class="list-group-item list-group-item-action btn-info" id="list-profile-list" data-toggle="list"
+                        href="#resources" role="tab" aria-controls="profile"><i class="fas fa-image"></i> Resources</a>
+
                     <!-- solo un hr usando -->
                     <div class="dropdown-divider"></div>
                     Go to
@@ -92,8 +97,7 @@
                         <!-- ############################################################## -->
                         <!--               esta seccion es para crear nuevos posts          -->
                         <!-- ############################################################## -->
-                        <div class="tab-pane fade show" id="newpost" role="tabpanel"
-                            aria-labelledby="list-home-list">
+                        <div class="tab-pane fade show" id="newpost" role="tabpanel" aria-labelledby="list-home-list">
 
                             <div class="container-fluid row justify-content-center">
                                 <div class="col-lg-9 col-md-11 bg-light shadow">
@@ -152,6 +156,9 @@
                                                             class="btn btn-secondary btn-sm"
                                                             onclick="addWrapper('u')"><i
                                                                 class="fas fa-underline"></i></button>
+                                                        <button type="button" title="Add image"
+                                                            class="btn btn-secondary btn-sm"
+                                                            onclick="addWrapper('img')"><i class="fas fa-image"></i></button>
                                                     </div>
                                                     <textarea class="form-control" id="postBody" name="postBody"
                                                         cols="30" rows="15"
@@ -242,10 +249,6 @@
                         </div>
 
 
-
-
-
-
                         <!-- ############################################################## -->
                         <!--               esta seccion de los posts creados                -->
                         <!-- ############################################################## -->
@@ -258,28 +261,32 @@
                                         <!-- here django will render the content of the post -->
 
                                         <table class="table">
-                                                <thead class="thead-dark">
-                                                    <tr>
-                                                        <th scope="col-2">ID #</th>
-                                                        <th scope="col-6">Titulo</th>
-                                                        <th scope="col-2">Fecha</th>
-                                                        <th scope="col-2">Opciones</th>
-                                                    </tr>
-                                                </thead>
-                                                {% if entries %}
-                                                {% for i in entries %}
-                                                <tbody>
-                                                    <tr>
-                                                        <th scope="row">{{i.id}}</th>
-                                                        <td class="">{{ i.post_title}} </td>
-                                                        <td>{{i.post_date}}</td>
-                                                        <td> <a href="blogentry?id={{ i.id }}" ><i class="fas fa-eye"></i></a> | <a title="Edit" href=""><i class="fas fa-edit"></i></a> | <a href="postDelete?id={{ i.id }}" title="Delete"><i style="color:red" class="fa fa-trash"></i></a></td>
-                                                    </tr>
-                                                </tbody>
-                                                
-                                                {% endfor %}
-                                                {% endif %}
-                                            </table>
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col-2">ID #</th>
+                                                    <th scope="col-6">Titulo</th>
+                                                    <th scope="col-2">Fecha</th>
+                                                    <th scope="col-2">Opciones</th>
+                                                </tr>
+                                            </thead>
+                                            {% if entries %}
+                                            {% for i in entries %}
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">{{i.id}}</th>
+                                                    <td class="">{{ i.post_title}} </td>
+                                                    <td>{{i.post_date}}</td>
+                                                    <td> <a href="blogentry?id={{ i.id }}"><i
+                                                                class="fas fa-eye"></i></a> | <a title="Edit" href=""><i
+                                                                class="fas fa-edit"></i></a> | <a
+                                                            href="postDelete?id={{ i.id }}" title="Delete"><i
+                                                                style="color:red" class="fa fa-trash"></i></a></td>
+                                                </tr>
+                                            </tbody>
+
+                                            {% endfor %}
+                                            {% endif %}
+                                        </table>
 
 
 
@@ -290,14 +297,6 @@
 
                             </div>
                         </div>
-
-
-
-
-
-
-
-
 
 
                     </div>

@@ -14,5 +14,5 @@ class blogposts(models.Model):
         return self.post_title
 
 class images(models.Model):
-    imagefile = models.ImageField(upload_to="media/blog/images")
+    imagefile = models.ImageField(upload_to="blog/images")
     

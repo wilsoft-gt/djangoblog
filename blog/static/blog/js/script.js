@@ -5,13 +5,26 @@ function addWrapper(textwrapper) {
     if (textwrapper != undefined) {
         /* verificamos si hay texto seleccionado */
         if (window.getSelection()) {
-            /* aca cambiamos el nuevo texto y lo concatenamos junto con el texto que va a wrappear el texto seleccionado */
-            var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<" + textwrapper + ">" + textareacont.value.substring(textareacont.selectionStart, textareacont.selectionEnd) + "</" + textwrapper + ">" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length);
-            /* regresamos el texto cambiado al textarea original */
-            textareacont.value = newContent;
+            if (textwrapper === "img"){
+                console.log("Agregando image tag")
+                /* aca cambiamos el nuevo texto y lo concatenamos junto con el texto que va a wrappear el texto seleccionado */
+                var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<img class='img-fluid' src='#yourImageLinkHere' alt='#alternateTextHere'>" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length)
+                /* regresamos el texto cambiado al textarea original */
+                textareacont.value = newContent;
+    
+                /* mandamos el texto actualizado al previsualizador */
+                document.getElementById("result").innerHTML = newContent;
 
-            /* mandamos el texto actualizado al previsualizador */
-            document.getElementById("result").innerHTML = newContent;
+            } else {
+                console.log("img tag no reconocido")
+                /* aca cambiamos el nuevo texto y lo concatenamos junto con el texto que va a wrappear el texto seleccionado */
+                var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<" + textwrapper + ">" + textareacont.value.substring(textareacont.selectionStart, textareacont.selectionEnd) + "</" + textwrapper + ">" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length);
+                /* regresamos el texto cambiado al textarea original */
+                textareacont.value = newContent;
+    
+                /* mandamos el texto actualizado al previsualizador */
+                document.getElementById("result").innerHTML = newContent;
+            }
 
         }
     } else {
