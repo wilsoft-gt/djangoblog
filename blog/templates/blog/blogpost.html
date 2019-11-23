@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load staticfiles%}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
     <title>Blog Title</title>
     <style>
@@ -36,35 +38,35 @@
     <nav class="navbar navbar-dark bg-dark shadow">
         <!-- title or brand -->
         <a class="navbar-brand text-white " href="/">Wilson blog / {{ postGet.post_title }}</a>
-        
+
         <!-- search form -->
         <div class="row text-white justify-content-center align-items-center" style="text-align: center;">
             <!-- verificamos que el usuario este logueado -->
-            
+
             <!-- verifico si el username recibido es diferente de anonimo -->
             {% if usernamelog == "AnonymousUser" %}
-                <div class="col text-white">
-                    <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
-                    <a class="text-info" href="accounts/login/">Login</a>
-                </div>
+            <div class="col text-white">
+                <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
+                <a class="text-info" href="accounts/login/">Login</a>
+            </div>
             {% endif %}
 
             <!-- si estoy logueado me muestra otras opciones -->
             {% if usernamelog != "AnonymousUser" %}
-                <!-- creamos un dropdown on las opciones principales -->
+            <!-- creamos un dropdown on las opciones principales -->
 
-                <div class="col text-white">
-                    logged in as <u>{{usernamelog}}</u> / <a class="text-info" href="/logout">logout</a>
-                    <a class="text-info" href="/administracion"><i class="fas fa-cog"></i></a>
-                </div>
+            <div class="col text-white">
+                logged in as <u>{{usernamelog}}</u> / <a class="text-info" href="/logout">logout</a>
+                <a class="text-info" href="/administracion"><i class="fas fa-cog"></i></a>
+            </div>
             {% endif %}
         </div>
     </nav>
 
     <!-- main container for the post content -->
     <div class="container-fluid">
-    {% if postGet %}
-    
+        {% if postGet %}
+
 
         <!-- main div for title, author and date, etc. -->
         <div class="row justify-content-center">
@@ -77,7 +79,7 @@
                         <img class="rounded-circle" src="https://via.placeholder.com/50" alt="">
                     </div>
                     <div class="col">
-                        Wilson Romero <br> {{ postGet.post_date }}
+                        {{postGet.post_author.get_full_name}} <br> {{ postGet.post_date }}
                     </div>
                 </div>
             </div>
@@ -120,22 +122,60 @@
                         </div>
                         <div class="col">
                             Writed by:
-                            <h3>Wilson Omar Rromero</h3>
+                            <h3>{{postGet.post_author.get_full_name}}</h3>
                             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi similique
                                 accusantium voluptas at nihil, ducimus architecto.</p>
                         </div>
                     </div>
                 </div>
                 <hr class="my-4">
+                <!-- comments div -->
+                <div class="col" style="font-size: 30px">
+                    <div class="card">
+                        <div class="card-header">
+                            Coments
+                        </div>
+                        <div class="card-body">
+                            
+                            
+                            {% if comments %}
+                            {% for j in comments %}
+                              
+                            <div class="card shadow-sm mb-2">
+                                <div class="card-body">
+                                    <h6 class="card-title"> <strong>{{ j.comment_name}}</strong> on {{j.comment_date}}</h6>
+                                    <p class="card-text"> {{j.comment_comment}} </p>
+                                </div>
+                            </div>
+                            
+                            {% endfor %}
+                            {% else %}
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <p class="card-text"> Nothing yet </p>
+                                    </div>
+                                </div>
+                            {% endif %}
 
+
+
+                        </div>
+                    </div>
+                    <!-- comment -->
+
+                    <hr class="my-4">
+
+                </div>
                 <!-- comment form -->
                 <div class="col p-4">
-                    <h2>Comments</h2>
-                    <form>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter Name">
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+
+                    <h2>New comment</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" class="form-control" name="comment_name" id="comment_name" placeholder="Enter Name">
+                        <input type="email" class="form-control" name="comment_email" id="comment_email" aria-describedby="emailHelp"
                             placeholder="Enter email">
-                        <textarea class="form-control" rows="5" placeholder="Add your comments here"></textarea>
+                        <textarea class="form-control" name="comment_body" id="comment_body" rows="5" placeholder="Add your comments here"></textarea>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                             else.</small>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -143,7 +183,7 @@
                 </div>
             </div>
         </div>
-    {% endif %}
+        {% endif %}
 
     </div>
 </body>

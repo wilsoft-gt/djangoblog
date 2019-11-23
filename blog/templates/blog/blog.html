@@ -94,7 +94,12 @@
                                 <p class="card-text">{{ posts.post_body|slice:":125"|safe }} ...<a class="text-info"
                                         href="/blogentry?id={{posts.id}}">continue reading</a></p>
                                 <hr>
-                                by <a class="text-info" href="">wilson romero</a>
+                                {% if posts.post_author.get_full_name %}
+                                by <a class="text-info" href="">{{ posts.post_author.get_full_name }}</a>
+                                {% else %}
+                                by <a class="text-info" href="">{{ posts.post_author }}</a>
+                                {% endif %}
+                                
                                 on {{ posts.post_date }}
 
                             </div>

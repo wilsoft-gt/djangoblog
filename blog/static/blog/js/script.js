@@ -6,7 +6,6 @@ function addWrapper(textwrapper) {
         /* verificamos si hay texto seleccionado */
         if (window.getSelection()) {
             if (textwrapper === "img"){
-                console.log("Agregando image tag")
                 /* aca cambiamos el nuevo texto y lo concatenamos junto con el texto que va a wrappear el texto seleccionado */
                 var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<img class='img-fluid' src='#yourImageLinkHere' alt='#alternateTextHere'>" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length)
                 /* regresamos el texto cambiado al textarea original */
@@ -15,8 +14,15 @@ function addWrapper(textwrapper) {
                 /* mandamos el texto actualizado al previsualizador */
                 document.getElementById("result").innerHTML = newContent;
 
+            } else if (textwrapper === "code") {
+                var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<code><pre class='prettyprint'>" + textareacont.value.substring(textareacont.selectionStart, textareacont.selectionEnd) + "</pre></code>" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length);
+                /* regresamos el texto cambiado al textarea original */
+                textareacont.value = newContent;
+    
+                /* mandamos el texto actualizado al previsualizador */
+                document.getElementById("result").innerHTML = newContent;
+
             } else {
-                console.log("img tag no reconocido")
                 /* aca cambiamos el nuevo texto y lo concatenamos junto con el texto que va a wrappear el texto seleccionado */
                 var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<" + textwrapper + ">" + textareacont.value.substring(textareacont.selectionStart, textareacont.selectionEnd) + "</" + textwrapper + ">" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length);
                 /* regresamos el texto cambiado al textarea original */

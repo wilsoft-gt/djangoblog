@@ -3,7 +3,7 @@ import os
 from django.conf import settings
 from django.shortcuts import render #<- para renderizar un template
 from django.http import HttpResponse, HttpResponseRedirect #<- respuesta del servidor en plain text o redireccionamiento
-from .models import blogposts, images #<- importar base de datos para usarla en las views
+from .models import blogposts, images, comment #<- importar base de datos para usarla en las views
 from django.contrib.auth import authenticate, login, logout #<- loguea y desloguea a un usuario, sumamente necesario para loggins
 from django.contrib.auth.decorators import login_required #<- redirecciona el template al loggin info si no hay ningun usuario logueado
 
@@ -22,15 +22,29 @@ def blog(request):
 def blogEntry(request):
     #tomo el username como texto para pasarlo al template como texno no como objeto
     usernamelog = str(request.user)
-
     #tomo el id enviado desde el get request que sera el id del blog que quiero mostrar
     postId = request.GET.get("id")
-
     #tomo unicamente el post que fue requerido desde el template
     postGet = blogposts.objects.get(id=postId)
-    
+
+    comments = comment.objects.all().filter(comment_post=postGet)
+    if request.method == "POST":
+        commentnew = comment()
+        commentnew.comment_name = request.POST['comment_name']
+        commentnew.comment_email = request.POST['comment_email']
+        commentnew.comment_comment = request.POST['comment_body']
+        commentnew.comment_post = postGet
+        commentnew.save()
+        if comments != "":
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments})
+        else:
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog})
     #reenvio la information requerida del template para usarlo dentro del blog
-    return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog})
+    else:
+        if comments != "":
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments})
+        else:
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog})
 
 @login_required
 def postDelete(request):
@@ -61,6 +75,7 @@ def createEntry(request):
         newp.post_title = postTitle
         newp.post_image_header = postHeadImage
         newp.post_body = postBody
+        newp.post_author = request.user
         #guardo el nuevo post a la base de datos
         newp.save()
         #una vez se guarda muestra una entrada vacia
