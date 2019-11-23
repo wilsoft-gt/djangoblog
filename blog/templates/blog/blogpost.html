@@ -17,8 +17,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
+    <script src="{% static 'blog/js/script.js' %}"></script>
     <title>Blog Title</title>
     <style>
         body {
@@ -33,7 +35,7 @@
 </head>
 
 <body>
-
+<input type="hidden" id="postid" name="variable" value="{{ postGet.id }}">
     <!-- navigation bar with a search box -->
     <nav class="navbar navbar-dark bg-dark shadow">
         <!-- title or brand -->
@@ -79,7 +81,12 @@
                         <img class="rounded-circle" src="https://via.placeholder.com/50" alt="">
                     </div>
                     <div class="col">
+                    {% if postGet.post_author.get_full_name %}
                         {{postGet.post_author.get_full_name}} <br> {{ postGet.post_date }}
+                    {% else %}
+                        {{postGet.post_author}} <br> {{ postGet.post_date }}
+                    {% endif %}
+                        
                     </div>
                 </div>
             </div>
@@ -122,7 +129,11 @@
                         </div>
                         <div class="col">
                             Writed by:
-                            <h3>{{postGet.post_author.get_full_name}}</h3>
+                            {% if postGet.post_author.get_full_name %}
+                                {{postGet.post_author.get_full_name}}
+                            {% else %}
+                                {{postGet.post_author}}
+                            {% endif %}
                             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi similique
                                 accusantium voluptas at nihil, ducimus architecto.</p>
                         </div>
@@ -130,7 +141,7 @@
                 </div>
                 <hr class="my-4">
                 <!-- comments div -->
-                <div class="col" style="font-size: 30px">
+                <div class="col" id="commentsDiv" style="font-size: 30px">
                     <div class="card">
                         <div class="card-header">
                             Coments
@@ -170,7 +181,7 @@
                 <div class="col p-4">
 
                     <h2>New comment</h2>
-                    <form method="POST">
+                    <form action="#commentsDiv" method="POST">
                         {% csrf_token %}
                         <input type="text" class="form-control" name="comment_name" id="comment_name" placeholder="Enter Name">
                         <input type="email" class="form-control" name="comment_email" id="comment_email" aria-describedby="emailHelp"
@@ -178,7 +189,7 @@
                         <textarea class="form-control" name="comment_body" id="comment_body" rows="5" placeholder="Add your comments here"></textarea>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                             else.</small>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" onclick="sendComment()" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>

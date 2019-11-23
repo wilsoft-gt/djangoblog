@@ -100,7 +100,7 @@
                                 by <a class="text-info" href="">{{ posts.post_author }}</a>
                                 {% endif %}
                                 
-                                on {{ posts.post_date }}
+                                on {{ posts.post_date }} total views {{posts.post_views}}
 
                             </div>
                         </div>
@@ -134,15 +134,16 @@
 
                 <!-- second column on the footer to show some links -->
                 <div class="col-sm-3">
-                    <h5 class="text-info text-info">LINKS</h5>
+                    <h5 class="text-info text-info">Most views</h5>
                     <ul class="list-unstyled text-secondary pr-5">
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
+                        {% if views %}
+                        {% for i in views %}
+                        <li><a class="text-secondary" href="/blogentry?id={{i.id}}">{{i.post_title}}</a></li>
+                        
+                        {% endfor %}
+                        {% else %}
+                        no data available
+                        {% endif %}
                     </ul>
                 </div>
 
@@ -150,13 +151,14 @@
                 <div class="col-sm-3">
                     <h5 class="text-secondary text-info">LINKS</h5>
                     <ul class="list-unstyled text-secondary pr-5">
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
-                        <li>option 1</li>
+                        {% if mostcommented %}
+                        {% for j in mostcommented %}
+                        <li><a class="text-secondary" href="/blogentry?id={{j.id}}">{{j.id}}</a></li>
+                        
+                        {% endfor %}
+                        {% else %}
+                        no data available
+                        {% endif %}
                     </ul>
                 </div>
             </div>

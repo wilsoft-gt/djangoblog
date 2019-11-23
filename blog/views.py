@@ -15,9 +15,11 @@ def blog(request):
 
     #tomo todos los post y los paso a una lista iterable
     blogs = blogposts.objects.order_by("-post_date")
+    mostviewed = blogposts.objects.order_by("-post_views")[:5]
+    mostcomments = comment.objects.order_by("comment_post")[:5]
 
     #renderizo el template con los argumentos o variables que continenen el username y los datos de los blogs
-    return render(request, "blog/blog.html", {"blogposts": blogs, "usernamelog":usernamelog})
+    return render(request, "blog/blog.html", {"blogposts": blogs, "usernamelog":usernamelog, "views":mostviewed, "mostcommented":mostcomments})
 
 def blogEntry(request):
     #tomo el username como texto para pasarlo al template como texno no como objeto
@@ -28,6 +30,8 @@ def blogEntry(request):
     postGet = blogposts.objects.get(id=postId)
 
     comments = comment.objects.all().filter(comment_post=postGet)
+    postGet.post_views += 1
+    postGet.save()
     if request.method == "POST":
         commentnew = comment()
         commentnew.comment_name = request.POST['comment_name']

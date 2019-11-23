@@ -54,3 +54,4 @@ function returnUrl(elements) {
 function alertHide() {
     $(".alert").hide()
 }
+
