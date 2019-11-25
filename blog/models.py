@@ -10,6 +10,7 @@ class blogposts(models.Model):
     post_views = models.IntegerField(default=0)
     post_author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     post_like = models.IntegerField(default=0)
+    post_count_comments = models.IntegerField(default=0)
     #post_shares = models.IntegerField(default=0)
 
     def __str__(self):

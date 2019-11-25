@@ -149,11 +149,11 @@
 
                 <!-- third column on the footer to show some links -->
                 <div class="col-sm-3">
-                    <h5 class="text-secondary text-info">LINKS</h5>
+                    <h5 class="text-secondary text-info">Most Commented</h5>
                     <ul class="list-unstyled text-secondary pr-5">
                         {% if mostcommented %}
                         {% for j in mostcommented %}
-                        <li><a class="text-secondary" href="/blogentry?id={{j.id}}">{{j.id}}</a></li>
+                        <li><a class="text-secondary" href="/blogentry?id={{j.id}}">{{j.post_title}}</a></li>
                         
                         {% endfor %}
                         {% else %}
