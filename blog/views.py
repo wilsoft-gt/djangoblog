@@ -3,7 +3,7 @@ import os
 from django.conf import settings
 from django.shortcuts import render #<- para renderizar un template
 from django.http import HttpResponse, HttpResponseRedirect #<- respuesta del servidor en plain text o redireccionamiento
-from .models import blogposts, images, comment #<- importar base de datos para usarla en las views
+from .models import blogposts, images, comment, adminExtraField #<- importar base de datos para usarla en las views
 from django.contrib.auth import authenticate, login, logout #<- loguea y desloguea a un usuario, sumamente necesario para loggins
 from django.contrib.auth.decorators import login_required #<- redirecciona el template al loggin info si no hay ningun usuario logueado
 
@@ -29,7 +29,7 @@ def blogEntry(request):
     postId = request.GET.get("id")
     #tomo unicamente el post que fue requerido desde el template
     postGet = blogposts.objects.get(id=postId)
-
+    userinfo = adminExtraField.objects.get(adminFields_user = request.user.id)
     comments = comment.objects.all().filter(comment_post=postGet)
        
     postGet.post_views += 1
@@ -44,15 +44,15 @@ def blogEntry(request):
         postGet.post_count_comments = len(comments)
         postGet.save()
         if comments != "":
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments, "userinfo":userinfo})
         else:
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "userinfo":userinfo})
     #reenvio la information requerida del template para usarlo dentro del blog
     else:
         if comments != "":
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments, "userinfo":userinfo})
         else:
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "userinfo":userinfo})
 
 @login_required
 def postDelete(request):

@@ -20,6 +20,8 @@ class images(models.Model):
     imagefile = models.ImageField(upload_to="blog/images")
     imagedate = models.DateTimeField(auto_now=True)
     imageuser = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    def __str__(self):
+        return self.imagefile.name
     
 class comment(models.Model):
     comment_name = models.CharField(max_length=42)
@@ -27,4 +29,14 @@ class comment(models.Model):
     comment_comment = models.TextField()
     comment_date = models.DateTimeField(auto_now=True)
     comment_post = models.ForeignKey(blogposts, on_delete=models.CASCADE, null=True)
+    comment_moderated = models.BooleanField(default=False)
+    def __str__(self):
+        return self.comment_name
     
+class adminExtraField(models.Model):
+    adminFields_image = models.ImageField(upload_to="blog/adminimages")
+    adminFields_bio = models.TextField()
+    adminFields_quote = models.TextField()
+    adminFields_user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    def __str__(self):
+        return self.adminFields_image.name

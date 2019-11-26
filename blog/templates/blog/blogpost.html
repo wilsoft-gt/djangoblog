@@ -78,7 +78,7 @@
                 <!-- author information -->
                 <div class="row">
                     <div class="col-lg-1.5">
-                        <img class="rounded-circle" src="https://via.placeholder.com/50" alt="">
+                        <img class="rounded-circle" src="{{ userinfo.adminFields_image.url }}" alt="Profilepicture" style="height:50px; width: auto">
                     </div>
                     <div class="col">
                     {% if postGet.post_author.get_full_name %}
@@ -125,7 +125,7 @@
                     <!-- who writte the blog -->
                     <div class="row">
                         <div class="col-lg-1.5">
-                            <img class="rounded-circle" src="https://via.placeholder.com/100" alt="">
+                            <img class="rounded-circle" src=" {{userinfo.adminFields_image.url}} " alt="Profilepicture" style="Height:100px; width: auto">
                         </div>
                         <div class="col">
                             Writed by:
@@ -134,8 +134,7 @@
                             {% else %}
                                 {{postGet.post_author}}
                             {% endif %}
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi similique
-                                accusantium voluptas at nihil, ducimus architecto.</p>
+                            <p>{{userinfo.adminFields_bio}} </p>
                         </div>
                     </div>
                 </div>

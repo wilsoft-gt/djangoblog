@@ -92,15 +92,15 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ posts.post_title }}</h5>
                                 <p class="card-text">{{ posts.post_body|slice:":125"|safe }} ...<a class="text-info"
-                                        href="/blogentry?id={{posts.id}}">continue reading</a></p>
+                                        href="/blogentry?id={{posts.id}}">Continuar leyendo</a></p>
                                 <hr>
                                 {% if posts.post_author.get_full_name %}
-                                by <a class="text-info" href="">{{ posts.post_author.get_full_name }}</a>
+                                Por <a class="text-info" href="">{{ posts.post_author.get_full_name }}</a>
                                 {% else %}
-                                by <a class="text-info" href="">{{ posts.post_author }}</a>
+                                Por <a class="text-info" href="">{{ posts.post_author }}</a>
                                 {% endif %}
                                 
-                                on {{ posts.post_date }} total views {{posts.post_views}}
+                                on {{ posts.post_date }} | Total de vistas {{posts.post_views}}
 
                             </div>
                         </div>
@@ -126,15 +126,13 @@
 
                 <!-- first column on the footer to show some text -->
                 <div class="col-sm-6 text-info">
-                    <h3>Title</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illo repellat quia exercitationem
-                        dignissimos a praesentium ipsum facilis fuga impedit, animi distinctio debitis ex. Illo vero
-                        ipsum facere distinctio voluptates magnam.</p>
+                    <h3>Disclaimer</h3>
+                    <p>Este blog fue creado para subir tutoriales e informacion sobre cosas que me parecen interesantes. No soy un experto en la programacion pero me encanta y cada cosa nueva que aprenda que fue dificil conseguir informacion la subire a este post sin importar si es la mejor manera. Si funciona porque no utilizarlo.</p>
                 </div>
 
                 <!-- second column on the footer to show some links -->
                 <div class="col-sm-3">
-                    <h5 class="text-info text-info">Most views</h5>
+                    <h5 class="text-info text-info">Mas visto</h5>
                     <ul class="list-unstyled text-secondary pr-5">
                         {% if views %}
                         {% for i in views %}
@@ -142,14 +140,14 @@
                         
                         {% endfor %}
                         {% else %}
-                        no data available
+                            No hay datos disponibles
                         {% endif %}
                     </ul>
                 </div>
 
                 <!-- third column on the footer to show some links -->
                 <div class="col-sm-3">
-                    <h5 class="text-secondary text-info">Most Commented</h5>
+                    <h5 class="text-secondary text-info">Mas comentado</h5>
                     <ul class="list-unstyled text-secondary pr-5">
                         {% if mostcommented %}
                         {% for j in mostcommented %}
