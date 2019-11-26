@@ -29,7 +29,7 @@ def blogEntry(request):
     postId = request.GET.get("id")
     #tomo unicamente el post que fue requerido desde el template
     postGet = blogposts.objects.get(id=postId)
-    userinfo = adminExtraField.objects.get(adminFields_user = request.user.id)
+    userinfo = adminExtraField.objects.get(adminFields_user = postGet.post_author)
     comments = comment.objects.all().filter(comment_post=postGet)
        
     postGet.post_views += 1
