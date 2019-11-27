@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="../../static/blog/fontawesome5112/css/all.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    {% if comentarios %}
+
+
+
+
+        <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">name</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Post</th>
+                    <th scope="col">Moderated</th>
+                    <th scope="col">Accion</th>
+                  </tr>
+                </thead>
+                <tbody>
+    {% for j in comentarios %}
+                  <tr>
+                    <th scope="row">{{j.id}}</th>
+                    <td>{{j.comment_name}}</td>
+                    <td>{{j.comment_comment}}</td>
+                    <td>{{j.comment_post}}</td>
+                    <td>
+                        {% if j.comment_moderated == True %}
+                        <i class="fas fa-check-circle text-success"></i>
+
+                        {% else %}
+                        <i class="fas fa-times-circle text-danger"></i>
+
+                        {% endif %}
+
+
+                    </td>
+                    <td>
+                        {% if j.comment_moderated == True %}
+                            <form action="comments" method="POST">
+                                <input type="hidden" name="commentid" value="{{ j.id }}">
+                                <input type="hidden" name="moderated" value="False">
+                                <button type="submit" class="btn btn-sm btn-success">Disable</button>
+                            </form>
+                        {% else %}
+                            <form action="comments" method="POST">
+                                <input type="hidden" name="commentid" value="{{ j.id }}">
+                                <input type="hidden" name="moderated" value="True">
+                                <button type="submit" class="btn btn-sm btn-danger">Allow</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                  </tr>
+
+    {% endfor %}
+                </tbody>
+              </table>    
+
+
+
+    
+    {% endif %}
+</body>
+</html>

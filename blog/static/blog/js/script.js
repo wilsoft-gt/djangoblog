@@ -55,3 +55,17 @@ function alertHide() {
     $(".alert").hide()
 }
 
+function adminActiveTab() {
+    var active = location.search.split('active=')[1].split("&")[0];
+    var button = location.search.split("button=")[1];
+    if (active){
+        let tabactive = document.getElementsByClassName("active");
+        tabactive[1].classList.remove("active")
+        tabactive[0].classList.remove("active")
+        document.getElementById(active).classList.add("active")
+        document.getElementById(button).classList.add("active")
+    } else {
+        return ""
+    }
+}
+

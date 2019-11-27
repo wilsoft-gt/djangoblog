@@ -10,5 +10,6 @@ urlpatterns = [
     path('logout', views.logoutview, name='logout'),
     path('remove', views.removeresource, name='removeresource'),
     path('administracion', views.administration, name='administration'),
-    path('postDelete', views.postDelete, name='postDelete')
+    path('postDelete', views.postDelete, name='postDelete'),
+    path('comments', views.commentsView, name='comments')
 ]

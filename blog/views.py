@@ -9,6 +9,18 @@ from django.contrib.auth.decorators import login_required #<- redirecciona el te
 
 # Create your views here.
 
+def commentsView(request):
+    comentarios = comment.objects.all()
+    if request.method == "POST":
+        toModerate = request.POST.get("commentid")
+        value = request.POST.get("moderated")
+        getComment = comment.objects.get(id=toModerate)
+        getComment.comment_moderated = value
+        getComment.save()
+        return HttpResponseRedirect("administracion?active=comments&button=list-commnets-list")
+    else:
+        return HttpResponseRedirect("administracion")
+
 def blog(request):
     #tomo el username como texto para pasarlo al template como texno no como objeto
     usernamelog = str(request.user)
@@ -30,7 +42,7 @@ def blogEntry(request):
     #tomo unicamente el post que fue requerido desde el template
     postGet = blogposts.objects.get(id=postId)
     userinfo = adminExtraField.objects.get(adminFields_user = postGet.post_author)
-    comments = comment.objects.all().filter(comment_post=postGet)
+    comments = comment.objects.all().filter(comment_post=postGet).filter(comment_moderated=True)
        
     postGet.post_views += 1
     postGet.save()
@@ -166,4 +178,6 @@ def administration(request):
     usernamelog = str(request.user)
     imagenes = images.objects.all()
     entries = blogposts.objects.order_by("-post_date")
-    return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries})
+    commentsdata = comment.objects.all()
+    unmoderated = len(commentsdata.filter(comment_moderated=False))
+    return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata})
