@@ -7,8 +7,8 @@
 
     <meta property="og:title" content="{{postGet.post_title}}">
     <meta property="og:description" content="{{ postGet.post_body|slice:':125'|safe }}">
-    <meta property="og:image" content="{{ postGet.post_body|slice:':125'|safe }}">
-    <meta property="og:url" content="{{ postGet.post_image_header }}">
+    <meta property="og:image" content="https://wilsonblog.herokuapp.com/{{ postGet.post_image_header.url }}">
+    <meta property="og:url" content="https://wilsonblog.herokuapp.com/blogentry?id={{postGet.id}}">
     <meta name="twitter:card" content="summary_large_image">
 
     <title>{{postGet.post_title}}</title>
