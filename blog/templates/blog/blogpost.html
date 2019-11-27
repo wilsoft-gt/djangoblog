@@ -4,7 +4,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="{{postGet.post_title}}">
+    <meta property="og:description" content="{{ postGet.post_body|slice:':125'|safe }}">
+    <meta property="og:image" content="{{ postGet.post_body|slice:':125'|safe }}">
+    <meta property="og:url" content="{{ postGet.post_image_header }}">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <title>{{postGet.post_title}}</title>
+    
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -21,7 +29,7 @@
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
     <script src="{% static 'blog/js/script.js' %}"></script>
-    <title>Blog Title</title>
+    
     <style>
         body {
             width: 100%;
@@ -118,7 +126,7 @@
                 <hr class="my-4">
                 <!-- sharing links -->
                 <div class="col" style="font-size: 30px">
-                    <i class="fab fa-facebook-square"></i> <i class="fab fa-twitter-square"></i>
+                   <a href="https://www.facebook.com/sharer/sharer.php?u=http://127.0.0.1:8000/blogentry?id={{postGet.id}}"><i class="fab fa-facebook-square"></i></a>  <i class="fab fa-twitter-square"></i>
                 </div>
                 <hr class="my-4">
                 <div class="col p-4">
