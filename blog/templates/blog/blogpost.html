@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
 
     <meta property="og:title" content="{{postGet.post_title}}">
-    <meta property="og:description" content="{{ postGet.post_body|slice:':125' }}">
+    <meta property="og:description" content="{{ postGet.post_body|slice:':150'|striptags }}...">
     <meta property="og:image" content="{{ postGet.post_image_header }}">
     <meta property="og:url" content="https://wilsonblog.herokuapp.com/blogentry?id={{postGet.id}}">
     <meta name="twitter:card" content="summary_large_image">
