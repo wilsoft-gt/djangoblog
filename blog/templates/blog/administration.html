@@ -79,8 +79,8 @@
                             
                             </a>
                     <!-- esto despliega una accion que abre la opcion de agregar un nuevo post -->
-                    <a class="list-group-item list-group-item-action btn-info" id="list-newpost-list" data-toggle="list"
-                        href="#newpost" role="tab" aria-controls="home"><i class="fas fa-plus-square"></i> New Post</a>
+                    <a class="list-group-item list-group-item-action btn-info" id="list-newpost-list"
+                        href="administracion?active=newpost&button=list-newpost-list"><i class="fas fa-plus-square"></i> New Post</a>
                     <!-- esto muestra las imagenes en la base de datos -->
                     <a class="list-group-item list-group-item-action btn-info" id="list-resources-list" data-toggle="list"
                         href="#resources" role="tab" aria-controls="profile"><i class="fas fa-image"></i> Resources</a>
@@ -132,7 +132,7 @@
                                                     <td class="">{{ i.post_title}} </td>
                                                     <td>{{i.post_date}}</td>
                                                     <td> <a href="blogentry?id={{ i.id }}" class="btn btn-sm btn-outline-info" title="View"><i class="fas fa-eye"></i></a>
-                                                        <a title="Edit" href="" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a> 
+                                                        <a title="Edit" href="administracion?postid={{ i.id }}&active=newpost&button=list-newpost-list" class="btn btn-sm btn-outline-info"><i class="fas fa-edit"></i></a> 
                                                         <a href="postDelete?id={{ i.id }}" title="Delete" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></a></td>
                                                 </tr>
                                             </tbody>
@@ -197,16 +197,18 @@
                                                                         <input type="hidden" name="commentid" value="{{ j.id }}">
                                                                         <input type="hidden" name="moderated" value="False">
                                                                         <button type="submit" class="btn btn-sm btn-outline-info" title="Hide"><i class="fas fa-eye-slash"></i></button>
-                                                                        <button type="button" class="btn btn-sm btn-outline-danger" title="Show"><i class="fas fa-trash"></i></button>
+                                                                        <a href="comments?deleteid={{ j.id }}" role="button" class="btn btn-sm btn-outline-danger" title="Show"><i class="fas fa-trash"></i></a>
                                                                     </form>
+                                                                    
                                                                 {% else %}
                                                                     <form action="/comments" method="POST">
                                                                     {% csrf_token %}
                                                                         <input type="hidden" name="commentid" value="{{ j.id }}">
                                                                         <input type="hidden" name="moderated" value="True">
                                                                         <button type="submit" class="btn btn-sm btn-outline-info" title="Show"><i class="fas fa-eye"></i></button>
-                                                                        <button type="button" class="btn btn-sm btn-outline-danger" title="Show"><i class="fas fa-trash"></i></button>
+                                                                        <a href="comments?deleteid={{ j.id }}" type="button" class="btn btn-sm btn-outline-danger" title="Show"><i class="fas fa-trash"></i></a>
                                                                     </form>
+                                                                    
                                                                 {% endif %}
                                                             </td>
                                                         </tr>
@@ -215,13 +217,6 @@
                                                         </tbody>
                                                     </table>    
                                             {% endif %}
-
-
-
-
-
-
-
 
                                     </div>
 
@@ -244,75 +239,163 @@
                                         <!-- here django will render the content of the post -->
                                         <div class="col-sm-11 blocentrie mt-4 mb-5">
                                             <div class="col">
-                                                <form action="/newpost" method="POST">
-                                                    {% csrf_token %}
-                                                    <!-- esta esto es para el titulo -->
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="fas fa-heading"></i>
+
+                                                    {% if posttoupdate %}
+
+
+
+                                                    <form action="/update" method="POST">
+                                                        {% csrf_token %}
+                                                        <!-- esta esto es para el titulo -->
+                                                        <input type="hidden" name="postid" value="{{posttoupdate.id}}">
+                                                        <div class="input-group mb-2">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fas fa-heading"></i>
+                                                                </div>
                                                             </div>
+                                                            <input type="text" class="form-control" id="entryTitle"
+                                                                name="entryTitle" placeholder="Post title" value="{{posttoupdate.post_title}}">
                                                         </div>
-                                                        <input type="text" class="form-control" id="entryTitle"
-                                                            name="entryTitle" placeholder="Post title">
-                                                    </div>
 
-                                                    <!-- esto es para la imagen heather -->
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text"><i class="fas fa-image"></i>
+                                                        <!-- esto es para la imagen heather -->
+                                                        <div class="input-group mb-2">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fas fa-image"></i>
+                                                                </div>
                                                             </div>
+                                                            <input type="text" class="form-control" id="entryImageHeader"
+                                                                name="entryImageHeader" placeholder="Header image" value="{{posttoupdate.post_image_header}}">
                                                         </div>
-                                                        <input type="text" class="form-control" id="entryImageHeader"
-                                                            name="entryImageHeader" placeholder="Header image">
-                                                    </div>
 
-                                                    <div class="btn-group btn-group-sm" role="group">
-                                                        <button type="button" title="Header 1 wrapper"
-                                                            class="btn btn-secondary btn-sm" id="h1"
-                                                            onclick="addWrapper('h1')">h1</button>
-                                                        <button type="button" type="button" title="Header 2 wrapper"
-                                                            class="btn btn-secondary btn-sm" id="h2"
-                                                            onclick="addWrapper('h2')">h2</button>
-                                                        <button type="button" title="Header 3 wrapper"
-                                                            class="btn btn-secondary btn-sm" id="h3"
-                                                            onclick="addWrapper('h3')">h3</button>
-                                                        <button type="button" title="Header 4 wrapper"
-                                                            class="btn btn-secondary btn-sm" id="h4"
-                                                            onclick="addWrapper('h4')">h4</button>
-                                                        <button type="button" title="Parragraph wrapper"
-                                                            class="btn btn-secondary btn-sm" id="p"
-                                                            onclick="addWrapper('p')"><i
-                                                                class="fas fa-paragraph"></i></button>
-                                                        <button type="button" title="Bold / strong"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('strong')"><i
-                                                                class="fas fa-bold"></i></button>
-                                                        <button type="button" title="Italic / emphatized"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('i')"><i
-                                                                class="fas fa-italic"></i></button>
-                                                        <button type="button" title="Underlined"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('u')"><i
-                                                                class="fas fa-underline"></i></button>
-                                                        <button type="button" title="Add image"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('img')"><i
-                                                                class="fas fa-image"></i></button>
-                                                        <button type="button" title="Add code"
-                                                            class="btn btn-secondary btn-sm"
-                                                            onclick="addWrapper('code')"><i
-                                                                class="fas fa-code"></i></button>
-                                                    </div>
-                                                    <textarea class="form-control" id="postBody" name="postBody"
-                                                        cols="30" rows="15"
-                                                        placeholder="Write your entrie here!"></textarea>
-                                                    <button type="button" class="btn btn-secondary btn-sm"
-                                                        onclick="addWrapper()">Mostrar</button>
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-sm">Guardar</button>
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <button type="button" title="Header 1 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h1"
+                                                                onclick="addWrapper('h1')">h1</button>
+                                                            <button type="button" type="button" title="Header 2 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h2"
+                                                                onclick="addWrapper('h2')">h2</button>
+                                                            <button type="button" title="Header 3 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h3"
+                                                                onclick="addWrapper('h3')">h3</button>
+                                                            <button type="button" title="Header 4 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h4"
+                                                                onclick="addWrapper('h4')">h4</button>
+                                                            <button type="button" title="Parragraph wrapper"
+                                                                class="btn btn-secondary btn-sm" id="p"
+                                                                onclick="addWrapper('p')"><i
+                                                                    class="fas fa-paragraph"></i></button>
+                                                            <button type="button" title="Bold / strong"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('strong')"><i
+                                                                    class="fas fa-bold"></i></button>
+                                                            <button type="button" title="Italic / emphatized"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('i')"><i
+                                                                    class="fas fa-italic"></i></button>
+                                                            <button type="button" title="Underlined"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('u')"><i
+                                                                    class="fas fa-underline"></i></button>
+                                                            <button type="button" title="Add image"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('img')"><i
+                                                                    class="fas fa-image"></i></button>
+                                                            <button type="button" title="Add code"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('code')"><i
+                                                                    class="fas fa-code"></i></button>
+                                                        </div>
+                                                        <textarea class="form-control" id="postBody" name="postBody"
+                                                            cols="30" rows="15"
+                                                            placeholder="Write your entrie here!">{{posttoupdate.post_body}}</textarea>
+                                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                            onclick="addWrapper()">Mostrar</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm">Guardar</button>
+                                                    </form>
 
-                                                </form>
+
+
+                                                    {% else %}
+                                                    <form action="/newpost" method="POST">
+                                                        {% csrf_token %}
+                                                        <!-- esta esto es para el titulo -->
+                                                        <div class="input-group mb-2">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fas fa-heading"></i>
+                                                                </div>
+                                                            </div>
+                                                            <input type="text" class="form-control" id="entryTitle"
+                                                                name="entryTitle" placeholder="Post title">
+                                                        </div>
+
+                                                        <!-- esto es para la imagen heather -->
+                                                        <div class="input-group mb-2">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text"><i class="fas fa-image"></i>
+                                                                </div>
+                                                            </div>
+                                                            <input type="text" class="form-control" id="entryImageHeader"
+                                                                name="entryImageHeader" placeholder="Header image">
+                                                        </div>
+
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <button type="button" title="Header 1 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h1"
+                                                                onclick="addWrapper('h1')">h1</button>
+                                                            <button type="button" type="button" title="Header 2 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h2"
+                                                                onclick="addWrapper('h2')">h2</button>
+                                                            <button type="button" title="Header 3 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h3"
+                                                                onclick="addWrapper('h3')">h3</button>
+                                                            <button type="button" title="Header 4 wrapper"
+                                                                class="btn btn-secondary btn-sm" id="h4"
+                                                                onclick="addWrapper('h4')">h4</button>
+                                                            <button type="button" title="Parragraph wrapper"
+                                                                class="btn btn-secondary btn-sm" id="p"
+                                                                onclick="addWrapper('p')"><i
+                                                                    class="fas fa-paragraph"></i></button>
+                                                            <button type="button" title="Bold / strong"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('strong')"><i
+                                                                    class="fas fa-bold"></i></button>
+                                                            <button type="button" title="Italic / emphatized"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('i')"><i
+                                                                    class="fas fa-italic"></i></button>
+                                                            <button type="button" title="Underlined"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('u')"><i
+                                                                    class="fas fa-underline"></i></button>
+                                                            <button type="button" title="Add image"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('img')"><i
+                                                                    class="fas fa-image"></i></button>
+                                                            <button type="button" title="Add code"
+                                                                class="btn btn-secondary btn-sm"
+                                                                onclick="addWrapper('code')"><i
+                                                                    class="fas fa-code"></i></button>
+                                                        </div>
+                                                        <textarea class="form-control" id="postBody" name="postBody"
+                                                            cols="30" rows="15"
+                                                            placeholder="Write your entrie here!"></textarea>
+                                                        <button type="button" class="btn btn-secondary btn-sm"
+                                                            onclick="addWrapper()">Mostrar</button>
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm">Guardar</button>
+                                                    </form>
+
+
+
+                                                    {% endif %}
+
+
+
+
+
+
+
                                                 <hr>
                                                 Body Preview
                                                 <div class="card">

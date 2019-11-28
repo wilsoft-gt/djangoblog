@@ -19,7 +19,14 @@ def commentsView(request):
         getComment.save()
         return HttpResponseRedirect("administracion?active=comments&button=list-commnets-list")
     else:
-        return HttpResponseRedirect("administracion")
+        deleteid = request.GET.get("deleteid")
+        if deleteid:
+            print ("el comentario %s va a ser eliminado" % deleteid)
+            getComment = comment.objects.get(id=deleteid)
+            getComment.delete()
+            return HttpResponseRedirect("administracion?active=comments&button=list-commnets-list")
+        else:
+            return HttpResponseRedirect("administracion")
 
 def blog(request):
     #tomo el username como texto para pasarlo al template como texno no como objeto
@@ -29,7 +36,7 @@ def blog(request):
     blogs = blogposts.objects.order_by("-post_date")
     mostviewed = blogposts.objects.order_by("-post_views")[:5]
     mostcomments = blogposts.objects.order_by("-post_count_comments")[:5]
-
+    print (blogs)
 
     #renderizo el template con los argumentos o variables que continenen el username y los datos de los blogs
     return render(request, "blog/blog.html", {"blogposts": blogs, "usernamelog":usernamelog, "views":mostviewed, "mostcommented":mostcomments})
@@ -43,7 +50,7 @@ def blogEntry(request):
     postGet = blogposts.objects.get(id=postId)
     userinfo = adminExtraField.objects.get(adminFields_user = postGet.post_author)
     comments = comment.objects.all().filter(comment_post=postGet).filter(comment_moderated=True)
-       
+    
     postGet.post_views += 1
     postGet.save()
     if request.method == "POST":
@@ -65,6 +72,28 @@ def blogEntry(request):
             return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments, "userinfo":userinfo})
         else:
             return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "userinfo":userinfo})
+
+def updatePost(request):
+    if request.method == "POST":
+        blogid = request.POST["postid"]
+        posttoupdate = blogposts.objects.get(id=blogid)
+       
+        #aca tomo todos los datos enviados desde el post (lo que esta dentro de entry es el name que fue dado al input dentro del form)
+        postTitle = request.POST.get("entryTitle")
+        postHeadImage = request.POST.get("entryImageHeader")
+        postBody = request.POST.get("postBody")
+        #asigno los datos a las bases de datos
+        posttoupdate.post_title = postTitle
+        posttoupdate.post_image_header = postHeadImage
+        posttoupdate.post_body = postBody
+        #guardo el nuevo post a la base de datos
+        posttoupdate.save()
+        return HttpResponseRedirect("administracion?active=newpost&button=list-newpost-list&postid="+blogid)
+    else:
+        blogid = request.GET.get("postid")
+        posttoupdate = blogposts.objects.get(id=blogid)
+        print (posttoupdate)
+        return HttpResponseRedirect("administracion?active=newpost&button=list-newpost-list")
 
 @login_required
 def postDelete(request):
@@ -178,6 +207,11 @@ def administration(request):
     usernamelog = str(request.user)
     imagenes = images.objects.all()
     entries = blogposts.objects.order_by("-post_date")
+    posttoupdate = request.GET.get("postid")
     commentsdata = comment.objects.all()
     unmoderated = len(commentsdata.filter(comment_moderated=False))
-    return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata})
+    if posttoupdate:
+        getposttoupdate = blogposts.objects.get(id=posttoupdate)
+        return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata, "posttoupdate":getposttoupdate})
+    else:
+        return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata})

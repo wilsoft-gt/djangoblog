@@ -11,5 +11,6 @@ urlpatterns = [
     path('remove', views.removeresource, name='removeresource'),
     path('administracion', views.administration, name='administration'),
     path('postDelete', views.postDelete, name='postDelete'),
-    path('comments', views.commentsView, name='comments')
+    path('comments', views.commentsView, name='comments'),
+    path('update', views.updatePost, name='update')
 ]
