@@ -212,6 +212,6 @@ def administration(request):
     unmoderated = len(commentsdata.filter(comment_moderated=False))
     if posttoupdate:
         getposttoupdate = blogposts.objects.get(id=posttoupdate)
-        return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata, "posttoupdate":getposttoupdate})
+        return render(request, "blog/customadmin.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata, "posttoupdate":getposttoupdate})
     else:
-        return render(request, "blog/administration.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata})
+        return render(request, "blog/customadmin.html", {"imagenes": imagenes, "usernamelog":usernamelog, "entries":entries, "unmoderated": unmoderated, "commentsdata": commentsdata})

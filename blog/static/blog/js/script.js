@@ -15,7 +15,7 @@ function addWrapper(textwrapper) {
                 document.getElementById("result").innerHTML = newContent;
 
             } else if (textwrapper === "code") {
-                var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<code><pre class='prettyprint'>" + textareacont.value.substring(textareacont.selectionStart, textareacont.selectionEnd) + "</pre></code>" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length);
+                var newContent = textareacont.value.slice(0, textareacont.selectionStart) + "<code><pre class='prettyprint linenums'>" + textareacont.value.substring(textareacont.selectionStart, textareacont.selectionEnd) + "</pre></code>" + textareacont.value.slice(textareacont.selectionEnd, textareacont.value.length);
                 /* regresamos el texto cambiado al textarea original */
                 textareacont.value = newContent;
     

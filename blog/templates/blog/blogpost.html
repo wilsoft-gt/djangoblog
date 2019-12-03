@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="{{postGet.post_title}}">
     <meta property="og:description" content="{{ postGet.post_body|slice:':150'|striptags }}...">
     <meta property="og:image" content="{{ postGet.post_image_header }}">
@@ -52,7 +52,7 @@
     <!-- navigation bar with a search box -->
     <nav class="navbar navbar-dark bg-dark shadow">
         <!-- title or brand -->
-        <a class="navbar-brand text-white " href="/">Wilson blog / {{ postGet.post_title }}</a>
+        <a class="navbar-brand text-white " href="/" style='white-space:normal'>Wilson blog / {{ postGet.post_title }}</a>
 
         <!-- search form -->
         <div class="row text-white justify-content-center align-items-center" style="text-align: center;">
