@@ -50,7 +50,10 @@ def blogEntry(request):
     postGet = blogposts.objects.get(id=postId)
     userinfo = adminExtraField.objects.get(adminFields_user = postGet.post_author)
     comments = comment.objects.all().filter(comment_post=postGet).filter(comment_moderated=True)
-    
+
+    mostviewed = blogposts.objects.order_by("-post_views")[:5]
+    mostcomments = blogposts.objects.order_by("-post_count_comments")[:5]
+
     postGet.post_views += 1
     postGet.save()
     if request.method == "POST":
@@ -63,15 +66,15 @@ def blogEntry(request):
         postGet.post_count_comments = len(comments)
         postGet.save()
         if comments != "":
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments, "userinfo":userinfo})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments, "userinfo":userinfo, "views":mostviewed, "mostcommented":mostcomments})
         else:
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "userinfo":userinfo})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "userinfo":userinfo,"views":mostviewed, "mostcommented":mostcomments})
     #reenvio la information requerida del template para usarlo dentro del blog
     else:
         if comments != "":
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments, "userinfo":userinfo})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "comments":comments, "userinfo":userinfo,"views":mostviewed, "mostcommented":mostcomments})
         else:
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "userinfo":userinfo})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog":usernamelog, "userinfo":userinfo,"views":mostviewed, "mostcommented":mostcomments})
 
 def updatePost(request):
     if request.method == "POST":
