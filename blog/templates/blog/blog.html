@@ -1,56 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% load staticfiles %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="../../static/blog/fontawesome5112/css/all.css">
+        <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}">
+        <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}">
     <title>wilsoft blog</title>
-
-    <style>
-        /* * {
-            border: red 0.2px dotted;
-        } */
-        body {
-            width: 100%;
-            height: 100%;
-        }
-
-        .card-title {
-            font-size: 3em;
-        }
-
-        .card {
-            margin: 1em 0;
-        }
-    </style>
 </head>
 
-<body>
+<body class="max-w-6xl mx-auto before:content-[' '] before:block before:w-96 before:h-96 before:bg-green-900 before:absolute before:-z-10 before:translate-y-28 before:-translate-x-80 before:blur-3xl before:opacity-10">
     <!-- navigation bar with a search box -->
-    <nav class="navbar navbar-dark bg-dark shadow">
+    <nav class="flex flex-row justify-between align-middle m-7">
         <!-- title or brand -->
-        <a class="navbar-brand text-white " href="/">Wilson blog</a>
+        <h1><a class="text-4xl font-bold" href="/">Wilson blog</a></h1>
         <!-- search form -->
-        <div class="row justify-content-center align-items-center">
 
             <!-- verifico si el username recibido es diferente de anonimo -->
             {% if usernamelog == "AnonymousUser" %}
-                <div class="col text-white">
+                <div class="">
                     <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
-                    <a class="text-info" href="accounts/login/">Login</a>
+                    <a class="border rounded-md p-2 border-green-900 text-green-900 hover:bg-green-900 hover:text-green-200" href="accounts/login/">Login <i class="fas fa-sign-in-alt"></i></a>
                 </div>
             {% endif %}
 
@@ -58,114 +31,32 @@
             {% if usernamelog != "AnonymousUser" %}
                 <!-- creamos un dropdown on las opciones principales -->
 
-                <div class="col text-white">
-                    logged in as <u>{{usernamelog}}</u> / <a class="text-info" href="/logout">logout</a>
-                    <a class="text-info" href="/administracion"><i class="fas fa-cog"></i></a>
+                <div class="">
+                    logged in as <u class="font-semibold">{{usernamelog}}</u>
                 </div>
-            {% endif %}
-            
-        <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-        </form>
+                <div>
+                    <a class="border rounded-md p-2 border-red-600 text-red-600 mr-4 hover:bg-red-600 hover:text-red-200" href="/logout">logout <i class="fas fa-sign-out-alt"></i></a>
+                    <a class="border rounded-md p-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-teal-200" href="/administracion">Settings <i class="fas fa-cog"></i></a>
+                </div>
+                {% endif %}
 
-        </div>
     </nav>
 
     <!-- main container for all the cards/articles -->
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-9 bg-light shadow">
-                <div class="row justify-content-center">
-
-                    <!-- this div contain all the cards, the 
-                        previous where just to indent the div 
-                        in the middle -->
-                    <div class="col-sm-11">
-                        <!-- ############ -->
-                        <!-- blog entries -->
-                        {% if blogposts %}
-                        {% for posts in blogposts %}
-
-                        <div class="card">
-                            <img src="{{ posts.post_image_header }}" class="card-img-top img-thumbnail" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ posts.post_title }}</h5>
-                                <p class="card-text">{{ posts.post_body|slice:":125"|safe }} ...<a class="text-info"
-                                        href="/blogentry?id={{posts.id}}">Continuar leyendo</a></p>
-                                <hr>
-                                {% if posts.post_author.get_full_name %}
-                                Por <a class="text-info" href="">{{ posts.post_author.get_full_name }}</a>
-                                {% else %}
-                                Por <a class="text-info" href="">{{ posts.post_author }}</a>
-                                {% endif %}
-                                
-                                on {{ posts.post_date }} | Total de vistas {{posts.post_views}}
-
-                            </div>
-                        </div>
-                        {% endfor %}
-                        {% endif %}
-
-
-                        <!-- end of block entries -->
-                        <!-- #################### -->
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <main class="container">
+        <h2 class="font-bold text-xl mb-3">Ultimos articulos</h2>
+        <section class="container mx-auto">
+            {% if blogposts %}
+                {% for post in blogposts %}
+                    {% include 'components/article_preview.html' with img=post.post_image_header title=post.post_title date=post.post_date id=post.id %}
+                {% endfor %}
+            {% endif %}
+        </section>
+    </main>
 
 
     <!-- footer at the very bottom of the page -->
-    <footer>
-        <!-- div container -->
-        <div class="container-fluid bg-dark shadow">
-            <div class="row p-5">
-
-                <!-- first column on the footer to show some text -->
-                <div class="col-sm-6 text-info">
-                    <h3>Atención!</h3>
-                    <p>Este blog fue creado para subir tutoriales e informacion sobre cosas que me parecen interesantes. No soy un experto en la programacion pero me encanta y cada cosa nueva que aprenda que fue dificil conseguir informacion la subire a este post sin importar si es la mejor manera. Si funciona porque no utilizarlo. Para mas informacion acerca de mi puedes visitar mi <a href="https://www.wilsonromero.design/beta/">pagina web</a> (beta)</p>
-                </div>
-
-                <!-- second column on the footer to show some links -->
-                <div class="col-sm-3">
-                    <h5 class="text-info text-info">Mas visto</h5>
-                    <ul class="list-unstyled text-secondary pr-5">
-                        {% if views %}
-                        {% for i in views %}
-                        <li><a class="text-secondary" href="/blogentry?id={{i.id}}">{{i.post_title}}</a></li>
-                        
-                        {% endfor %}
-                        {% else %}
-                            No hay datos disponibles
-                        {% endif %}
-                    </ul>
-                </div>
-
-                <!-- third column on the footer to show some links -->
-                <div class="col-sm-3">
-                    <h5 class="text-secondary text-info">Mas comentado</h5>
-                    <ul class="list-unstyled text-secondary pr-5">
-                        {% if mostcommented %}
-                        {% for j in mostcommented %}
-                        <li><a class="text-secondary" href="/blogentry?id={{j.id}}">{{j.post_title}}</a></li>
-                        
-                        {% endfor %}
-                        {% else %}
-                        no data available
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-            <!-- copyright info of the blog -->
-            <div class="row justify-content-center text-muted">
-                <p>Copyright &copy; <a href="https://www.wilsonromero.design/beta/">Wilson Romero</a> | 2019 </p>
-            </div>
-        </div>
-    </footer>
+    {% include 'components/footer.html' with top_comments=mostcommented top_views=views %}
 </body>
 
 </html>
