@@ -26,8 +26,11 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
     <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'blog/hightlight/styles/base16/dracula.min.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}">
+    <script src="{% static 'blog/hightlight/highlight.min.js' %}"></script>
+    <script>hljs.highlightAll();</script>
     <script src="{% static 'blog/js/script.js' %}"></script>
     
     <style>
@@ -90,7 +93,7 @@
                 <!-- author information -->
                 <div class="row">
                     <div class="col-lg-1.5">
-                        <img class="rounded-circle" src="{{ userinfo.adminFields_image.url }}" alt="Profilepicture" style="height:50px; width: auto">
+                        <img class="rounded-circle" src="{{ userinfo.user_profile.url }}" alt="Profilepicture" style="height:50px; width: auto">
                     </div>
                     <div class="col">
                         {% if postGet.post_author.get_full_name %}
@@ -113,7 +116,7 @@
                 <div class="row justify-content-center">
 
                     <!-- here django will render the content of the post -->
-                    <div id="postBody" class="col-sm-11 blocentrie mt-4 mb-5" style="font-size: 20px">
+                    <div id="postBody" class="col-sm-11 blocentrie mt-4 mb-5">
                         {{ postGet.post_body|safe }}
                     </div>
                 </div>
@@ -140,7 +143,7 @@
                 <!-- who writte the blog -->
                 <div class="row">
                     <div class="col-lg-1.5">
-                        <img class="rounded-circle" src=" {{userinfo.adminFields_image.url}} " alt="Profilepicture" style="Height:100px; width: auto">
+                        <img class="rounded-circle" src=" {{userinfo.user_profile.url }} " alt="Profilepicture" style="Height:100px; width: auto">
                     </div>
                     <div class="col">
                         Writed by:
@@ -149,7 +152,7 @@
                         {% else %}
                         {{postGet.post_author}}
                         {% endif %}
-                        <p>{{userinfo.adminFields_bio}} </p>
+                        <p>{{userinfo.user_bio}} </p>
                     </div>
                 </div>
             </div>
@@ -211,6 +214,8 @@
     {% endif %}
 
 </div>
+
+{% comment %} {% include 'components/footer.html' with top_comments=mostcommented top_views=views %} {% endcomment %}
 
 <footer>
     <!-- div container -->

@@ -16,7 +16,7 @@
               <ul class="">
                   {% if top_views %}
                   {% for view in top_views %}
-                  <li><a class="text-green-900" href="/blogentry?id={{i.id}}">{{view.post_title}}</a></li>
+                  <li><a class="text-green-900" href="/blogentry?id={{view.id}}">{{view.post_title}}</a></li>
                   
                   {% endfor %}
                   {% else %}
@@ -31,7 +31,7 @@
               <ul class="">
                   {% if top_comments %}
                   {% for comment in top_comments %}
-                  <li><a class="text-green-900" href="/blogentry?id={{j.id}}">{{comment.post_title}}</a></li>
+                  <li><a class="text-green-900" href="/blogentry?id={{comment.id}}">{{comment.post_title}}</a></li>
                   
                   {% endfor %}
                   {% else %}

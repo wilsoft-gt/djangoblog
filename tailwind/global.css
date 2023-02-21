@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+
+  pre,
+  code {
+    @apply rounded-lg mt-1 shadow-xl shadow-slate-500;
+  }
+
+  /* ... */
+}

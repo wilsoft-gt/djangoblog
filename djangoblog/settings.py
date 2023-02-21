@@ -26,7 +26,8 @@ SECRET_KEY = 'b=d6%n&lfuv$3t5e_1y)gyc#f0-9l%#8_-a83+ovxbm#by!)iy'
 DEBUG = True
 
 ALLOWED_HOSTS = ["wilsonblog.herokuapp.com", "127.0.0.1", "192.168.10.104",]
-
+AUTH_USER_MODEL = 'blog.User'
+AUTH_PROFILE_MODULE = 'blog.User'
 
 # Application definition
 
@@ -106,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'es-GT'
+# LANGUAGE_CODE = 'es-GT'
 
 TIME_ZONE = 'UTC'
 
@@ -123,9 +124,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'blog/static')
 
 
-#mediafiles
-#esto es necesario para poder mostrar los archivos (imagenes), desde el DB sin tanta cosa, solamente usarse en development
+# mediafiles
+# esto es necesario para poder mostrar los archivos (imagenes), desde el DB sin tanta cosa, solamente usarse en development
 MEDIA_ROOT = os.path.join(BASE_DIR, 'blog/media')
 
-#esto es como va a mostrar el navegador la direccion, podria cambiarse a images y el servidor mostraria www.myweb.com/images?nombreendatabase=nombredelaimagen.png
+# esto es como va a mostrar el navegador la direccion, podria cambiarse a images y el servidor mostraria www.myweb.com/images?nombreendatabase=nombredelaimagen.png
 MEDIA_URL = "/media/"
