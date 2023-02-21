@@ -53,33 +53,7 @@
 <body>
     <input type="hidden" id="postid" name="variable" value="{{ postGet.id }}">
     <!-- navigation bar with a search box -->
-    <nav class="navbar navbar-dark bg-dark shadow">
-        <!-- title or brand -->
-        <a class="navbar-brand text-white " href="/" style='white-space:normal'>Wilson blog / {{ postGet.post_title }}</a>
-
-        <!-- search form -->
-        <div class="row text-white justify-content-center align-items-center" style="text-align: center;">
-            <!-- verificamos que el usuario este logueado -->
-
-            <!-- verifico si el username recibido es diferente de anonimo -->
-            {% if usernamelog == "AnonymousUser" %}
-            <div class="col text-white">
-                <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
-                <a class="text-info" href="accounts/login/">Login</a>
-            </div>
-            {% endif %}
-
-            <!-- si estoy logueado me muestra otras opciones -->
-            {% if usernamelog != "AnonymousUser" %}
-            <!-- creamos un dropdown on las opciones principales -->
-
-            <div class="col text-white">
-                logged in as <u>{{usernamelog}}</u> / <a class="text-info" href="/logout">logout</a>
-                <a class="text-info" href="/administracion"><i class="fas fa-cog"></i></a>
-            </div>
-            {% endif %}
-        </div>
-    </nav>
+    {% include 'components/navigation.html' with usernamelog=usernamelog %}
 
     <!-- main container for the post content -->
     <div class="container-fluid">

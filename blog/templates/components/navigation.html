@@ -1,0 +1,30 @@
+<nav class="flex flex-row justify-between align-middle m-7">
+  <!-- title or brand -->
+  <h1><a class="text-4xl font-bold" href="/">Wilson blog</a></h1>
+  <!-- search form -->
+
+  <!-- verifico si el username recibido es diferente de anonimo -->
+  {% if usernamelog == "AnonymousUser" %}
+  <div class="">
+      <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
+      <a class="border rounded-md p-2 border-green-900 text-green-900 hover:bg-green-900 hover:text-green-200"
+          href="accounts/login/">Login <i class="fas fa-sign-in-alt"></i></a>
+  </div>
+  {% endif %}
+
+  <!-- si estoy logueado me muestra otras opciones -->
+  {% if usernamelog != "AnonymousUser" %}
+  <!-- creamos un dropdown on las opciones principales -->
+
+  <div class="">
+      logged in as <u class="font-semibold">{{usernamelog}}</u>
+  </div>
+  <div>
+      <a class="border rounded-md p-2 border-red-600 text-red-600 mr-4 hover:bg-red-600 hover:text-red-200"
+          href="/logout">logout <i class="fas fa-sign-out-alt"></i></a>
+      <a class="border rounded-md p-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-teal-200"
+          href="/administracion">Settings <i class="fas fa-cog"></i></a>
+  </div>
+  {% endif %}
+
+</nav>
