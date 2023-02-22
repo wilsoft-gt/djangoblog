@@ -1,244 +1,137 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load static %}
+{% extends 'blog/base.html' %}
+<!-- main container for the post content -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="{{postGet.post_title}}">
-    <meta property="og:description" content="{{ postGet.post_body|slice:':150'|striptags }}...">
-    <meta property="og:image" content="{{ postGet.post_image_header }}">
-    <meta property="og:url" content="https://wilsonblog.herokuapp.com/blogentry?id={{postGet.id}}">
-    <meta name="twitter:card" content="summary_large_image">
+{% block title %}
+<title>Wisoft &#x21d2; {{ postGet.post_title }}</title>
+{% endblock title %}
 
-    <title>{{postGet.post_title}}</title>
 
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'blog/hightlight/styles/base16/dracula.min.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}">
-    <script src="{% static 'blog/hightlight/highlight.min.js' %}"></script>
-    <script>hljs.highlightAll();</script>
-    <script src="{% static 'blog/js/script.js' %}"></script>
-    
-    <style>
-        body {
-            width: 100%;
-            height: auto;
-        }
+{% block body %}
+<main class="mt-16 max-w-4xl mx-auto flex flex-col gap-10">
+{% if postGet %}
 
-        /*p {
-            font-size: 20px;
-            
-        }*/
-
-        #postBody {
-            font-family: serif;
-        }
-    </style>
-</head>
-
-<body>
-    <input type="hidden" id="postid" name="variable" value="{{ postGet.id }}">
-    <!-- navigation bar with a search box -->
-    {% include 'components/navigation.html' with usernamelog=usernamelog %}
-
-    <!-- main container for the post content -->
-    <div class="container-fluid">
-        {% if postGet %}
-
-        <!-- main div for title, author and date, etc. -->
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-9 col-lg-5 m-5">
-                <!-- post title -->
-                <h1>{{ postGet.post_title }}</h1>
-                <!-- author information -->
-                <div class="row">
-                    <div class="col-lg-1.5">
-                        <img class="rounded-circle" src="{{ userinfo.user_profile.url }}" alt="Profilepicture" style="height:50px; width: auto">
-                    </div>
-                    <div class="col">
-                        {% if postGet.post_author.get_full_name %}
-                        {{postGet.post_author.get_full_name}} <br> {{ postGet.post_date }}
-                        {% else %}
-                        {{postGet.post_author}} <br> {{ postGet.post_date }}
-                        {% endif %}
-                        
-                    </div>
-                </div>
+<!-- main div for title, author and date, etc. -->
+    <section class="flex flex-row gap-3 mb-5">
+        <!-- post title -->
+        <div class="w-16">
+            <img class="rounded-full" src="{{ userinfo.user_profile.url }}" alt="Profilepicture">
+        </div>
+        <!-- author information -->
+        <div class="flex flex-col justify-center">
+            <h2 class="text-4xl text-green-900 font-semi-bold">{{ postGet.post_title }}</h2>
+            <div class="flex flex-row gap-3">
+                {% if postGet.post_author.get_full_name %}
+                <span>{{postGet.post_author.get_full_name}}</span>
+                <span>&#8226;</span>
+                <span>{{ postGet.post_date }}</span>
+                {% else %}
+                <span>{{postGet.post_author}}</span> <br> <span>{{ postGet.post_date }}</span>
+                {% endif %}
+                
             </div>
         </div>
+    </section>
+<img class="rounded-md" src="{{ postGet.post_image_header }}" alt="shadow" style="height: auto; width: 100%">
 
-        <!-- Heather image -->
-        <img class="" src="{{ postGet.post_image_header }}" alt="shadow" style="height: auto; width: 100%">
+<!-- Heather image -->
 
-        <!-- main div for the content -->
-        <div class="row justify-content-center">
-            <div class="col-lg-6 col-md-9 bg-light shadow">
-                <div class="row justify-content-center">
+<!-- main div for the content -->
+<section class="text-base max-w-3xl mx-auto">    
+    <!-- here django will render the content of the post -->
+    <p id="postBody">
+        {{ postGet.post_body|safe }}
+    </p>    
+</section>
 
-                    <!-- here django will render the content of the post -->
-                    <div id="postBody" class="col-sm-11 blocentrie mt-4 mb-5">
-                        {{ postGet.post_body|safe }}
-                    </div>
-                </div>
-
-            </div>
-
+<!-- bottom part for sharing links, who writted the doccument, etc -->
+    <section class="">
+        
+        <!-- divisor -->
+        <hr class="mb-2">
+        <!-- sharing links -->
+        <div class="flex flex-row gap-2 text-3xl">
+            <a class="text-blue-600" href="https://www.facebook.com/sharer/sharer.php?u=https://wilsonblog.herokuapp.com/blogentry?id={{postGet.id}}" target="_blank">
+                <i class="fab fa-facebook-square"></i>
+            </a>
+            <a class="text-sky-600" href="#" target="_blank"> 
+                <i class="fab fa-twitter-square"></i>
+            </a>
         </div>
-
-        <!-- bottom part for sharing links, who writted the doccument, etc -->
-        <div class="row justify-content-center">
-            <div class="col-md-7 col-sm-8">
-
-                <!-- divisor -->
-                <hr class="my-4">
-                <!-- sharing links -->
-                <div class="col" style="font-size: 30px">
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://wilsonblog.herokuapp.com/blogentry?id={{postGet.id}}">
-                        <i class="fab fa-facebook-square"></i>
-                    </a> 
-                    <i class="fab fa-twitter-square"></i>
+        <hr class="mt-2">
+        <div class="flex flex-col p-3">
+            <!-- who writte the blog -->
+            <div class="flex flex-row gap-3 p-3 align-center">
+                <div class="w-28">
+                    <img class="rounded" src=" {{userinfo.user_profile.url }} " alt="Profilepicture">
                 </div>
-             <hr class="my-4">
-             <div class="col p-4">
-                <!-- who writte the blog -->
-                <div class="row">
-                    <div class="col-lg-1.5">
-                        <img class="rounded-circle" src=" {{userinfo.user_profile.url }} " alt="Profilepicture" style="Height:100px; width: auto">
-                    </div>
-                    <div class="col">
-                        Writed by:
-                        {% if postGet.post_author.get_full_name %}
+                <div class="">
+                    <span class="text-green-900 font-semibold">
+                        Written by
+                    {% if postGet.post_author.get_full_name %}
                         {{postGet.post_author.get_full_name}}
-                        {% else %}
-                        {{postGet.post_author}}
-                        {% endif %}
-                        <p>{{userinfo.user_bio}} </p>
-                    </div>
+                    </span>
+                    {% else %}
+                    {{postGet.post_author}}
+                    {% endif %}
+                    <p>{{userinfo.user_bio}} </p>
                 </div>
             </div>
+        </div>
+        <hr class="mt-0 m-3">
+        <!-- comments div -->
+        <div class="col" id="commentsDiv" style="font-size: 17px">
+            <div class="card">
+                <div class="p-2 rounded-t-md border border-solid border-1 bg-gray-100">
+                    Coments
+                </div>
+                <div class="p-4 rounded-b-md border border-solid border-x-1">
+                    
+                    
+                    {% if comments %}
+                    {% for j in comments %}
+                    
+                    <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
+                        <div class="p-2">
+                            <h6 class="card-title"> <strong>{{ j.comment_name }}</strong> on {{ j.comment_date }}</h6>
+                            <p class="card-text"> {{j.comment_comment}} </p>
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+                    {% else %}
+                    <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
+                            <p class="p-2"> No comments yet, but you can be the first one! 😉</p>
+                    </div>
+                    {% endif %}
+                    
+                    
+                    
+                </div>
+            </div>
+            <!-- comment -->
+            
             <hr class="my-4">
-            <!-- comments div -->
-            <div class="col" id="commentsDiv" style="font-size: 17px">
-                <div class="card">
-                    <div class="card-header">
-                        Coments
-                    </div>
-                    <div class="card-body">
-
-
-                        {% if comments %}
-                        {% for j in comments %}
-
-                        <div class="card shadow-sm mb-2">
-                            <div class="card-body">
-                                <h6 class="card-title"> <strong>{{ j.comment_name }}</strong> on {{ j.comment_date }}</h6>
-                                <p class="card-text"> {{j.comment_comment}} </p>
-                            </div>
-                        </div>
-
-                        {% endfor %}
-                        {% else %}
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <p class="card-text"> Nothing yet </p>
-                            </div>
-                        </div>
-                        {% endif %}
-
-
-
-                    </div>
-                </div>
-                <!-- comment -->
-
-                <hr class="my-4">
-
-            </div>
-            <!-- comment form -->
-            <div class="col p-4">
-
-                <h2>New comment</h2>
-                <form action="#commentsDiv" method="POST">
-                    {% csrf_token %}
-                    <input type="text" class="form-control" name="comment_name" id="comment_name" placeholder="Enter Name">
-                    <input type="email" class="form-control" name="comment_email" id="comment_email" aria-describedby="emailHelp"
-                    placeholder="Enter email">
-                    <textarea class="form-control" name="comment_body" id="comment_body" rows="5" placeholder="Add your comments here"></textarea>
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+            
+        </div>
+        <!-- comment form -->
+        <div class="col p-4">
+            
+            <h2>New comment</h2>
+            <form action="#commentsDiv" method="POST">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="comment_name" id="comment_name" placeholder="Enter Name">
+                <input type="email" class="form-control" name="comment_email" id="comment_email" aria-describedby="emailHelp"
+                placeholder="Enter email">
+                <textarea class="form-control" name="comment_body" id="comment_body" rows="5" placeholder="Add your comments here"></textarea>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
                     <button type="submit" onclick="sendComment()" class="btn btn-primary">Submit</button>
                 </form>
             </div>
         </div>
-    </div>
+    </section>
     {% endif %}
+    
+</main>
+{% endblock body %}
 
-</div>
-
-{% comment %} {% include 'components/footer.html' with top_comments=mostcommented top_views=views %} {% endcomment %}
-
-<footer>
-    <!-- div container -->
-    <div class="container-fluid bg-dark shadow">
-        <div class="row p-5">
-
-            <!-- first column on the footer to show some text -->
-            <div class="col-sm-6 text-info">
-                <h3>Atención!</h3>
-                <p>Este blog fue creado para subir tutoriales e informacion sobre cosas que me parecen interesantes. No soy un experto en la programacion pero me encanta y cada cosa nueva que aprenda que fue dificil conseguir informacion la subire a este post sin importar si es la mejor manera. Si funciona porque no utilizarlo. Para mas informacion acerca de mi puedes visitar mi <a href="https://www.wilsonromero.design/beta/">pagina web</a> (beta)</p>
-            </div>
-
-            <!-- second column on the footer to show some links -->
-            <div class="col-sm-3">
-                <h5 class="text-info text-info">Mas visto</h5>
-                <ul class="list-unstyled text-secondary pr-5">
-                    {% if views %}
-                    {% for i in views %}
-                    <li><a class="text-secondary" href="/blogentry?id={{i.id}}">{{i.post_title}}</a></li>
-
-                    {% endfor %}
-                    {% else %}
-                    No hay datos disponibles
-                    {% endif %}
-                </ul>
-            </div>
-
-            <!-- third column on the footer to show some links -->
-            <div class="col-sm-3">
-                <h5 class="text-secondary text-info">Mas comentado</h5>
-                <ul class="list-unstyled text-secondary pr-5">
-                    {% if mostcommented %}
-                    {% for j in mostcommented %}
-                    <li><a class="text-secondary" href="/blogentry?id={{j.id}}">{{j.post_title}}</a></li>
-
-                    {% endfor %}
-                    {% else %}
-                    no data available
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
-        <!-- copyright info of the blog -->
-        <div class="row justify-content-center text-muted">
-            <p>Copyright &copy; <a href="https://www.wilsonromero.design/beta/">Wilson Romero</a> | 2019 </p>
-        </div>
-    </div>
-</footer>
-
-</body>
-
-</html>
