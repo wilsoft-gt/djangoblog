@@ -1,137 +1,139 @@
-{% extends 'blog/base.html' %}
+{% extends "blog/base.html" %}
 <!-- main container for the post content -->
-
 {% block title %}
-<title>Wisoft &#x21d2; {{ postGet.post_title }}</title>
+    <title>Wisoft ⇒ {{ postGet.post_title }}</title>
 {% endblock title %}
-
-
 {% block body %}
-<main class="mt-16 max-w-4xl mx-auto flex flex-col gap-10">
-{% if postGet %}
-
-<!-- main div for title, author and date, etc. -->
-    <section class="flex flex-row gap-3 mb-5">
-        <!-- post title -->
-        <div class="w-16">
-            <img class="rounded-full" src="{{ userinfo.user_profile.url }}" alt="Profilepicture">
-        </div>
-        <!-- author information -->
-        <div class="flex flex-col justify-center">
-            <h2 class="text-4xl text-green-900 font-semi-bold">{{ postGet.post_title }}</h2>
-            <div class="flex flex-row gap-3">
-                {% if postGet.post_author.get_full_name %}
-                <span>{{postGet.post_author.get_full_name}}</span>
-                <span>&#8226;</span>
-                <span>{{ postGet.post_date }}</span>
-                {% else %}
-                <span>{{postGet.post_author}}</span> <br> <span>{{ postGet.post_date }}</span>
-                {% endif %}
-                
-            </div>
-        </div>
-    </section>
-<img class="rounded-md" src="{{ postGet.post_image_header }}" alt="shadow" style="height: auto; width: 100%">
-
-<!-- Heather image -->
-
-<!-- main div for the content -->
-<section class="text-base max-w-3xl mx-auto">    
-    <!-- here django will render the content of the post -->
-    <p id="postBody">
-        {{ postGet.post_body|safe }}
-    </p>    
-</section>
-
-<!-- bottom part for sharing links, who writted the doccument, etc -->
-    <section class="">
-        
-        <!-- divisor -->
-        <hr class="mb-2">
-        <!-- sharing links -->
-        <div class="flex flex-row gap-2 text-3xl">
-            <a class="text-blue-600" href="https://www.facebook.com/sharer/sharer.php?u=https://wilsonblog.herokuapp.com/blogentry?id={{postGet.id}}" target="_blank">
-                <i class="fab fa-facebook-square"></i>
-            </a>
-            <a class="text-sky-600" href="#" target="_blank"> 
-                <i class="fab fa-twitter-square"></i>
-            </a>
-        </div>
-        <hr class="mt-2">
-        <div class="flex flex-col p-3">
-            <!-- who writte the blog -->
-            <div class="flex flex-row gap-3 p-3 align-center">
-                <div class="w-28">
-                    <img class="rounded" src=" {{userinfo.user_profile.url }} " alt="Profilepicture">
+    <main class="mt-16 max-w-4xl mx-auto flex flex-col gap-10">
+        {% if postGet %}
+            <!-- main div for title, author and date, etc. -->
+            <section class="flex flex-row gap-3 mb-5">
+                <!-- post title -->
+                <div class="w-16">
+                    <img width="auto"
+                         height="auto"
+                         class="rounded-full"
+                         src="{{ userinfo.user_profile.url }}"
+                         alt="Profilepicture"/>
                 </div>
-                <div class="">
-                    <span class="text-green-900 font-semibold">
-                        Written by
-                    {% if postGet.post_author.get_full_name %}
-                        {{postGet.post_author.get_full_name}}
-                    </span>
-                    {% else %}
-                    {{postGet.post_author}}
-                    {% endif %}
-                    <p>{{userinfo.user_bio}} </p>
+                <!-- author information -->
+                <div class="flex flex-col justify-center">
+                    <h2 class="text-4xl text-green-900 font-semi-bold">{{ postGet.post_title }}</h2>
+                    <div class="flex flex-row gap-3">
+                        {% if postGet.post_author.get_full_name %}
+                            <span>{{ postGet.post_author.get_full_name }}</span>
+                            <span>•</span>
+                            <span>{{ postGet.post_date }}</span>
+                        {% else %}
+                            <span>{{ postGet.post_author }}</span>
+                            <br />
+                            <span>{{ postGet.post_date }}</span>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        </div>
-        <hr class="mt-0 m-3">
-        <!-- comments div -->
-        <div class="col" id="commentsDiv" style="font-size: 17px">
-            <div class="card">
-                <div class="p-2 rounded-t-md border border-solid border-1 bg-gray-100">
-                    Coments
+            </section>
+            <img class="rounded-md"
+                 src="{{ postGet.post_image_header }}"
+                 alt="shadow"
+                 width="100%"
+                 height="auto"/>
+            <!-- Heather image -->
+            <!-- main div for the content -->
+            <section class="text-base max-w-3xl mx-auto">
+                <!-- here django will render the content of the post -->
+                <p id="postBody">{{ postGet.post_body|safe }}</p>
+            </section>
+            <!-- bottom part for sharing links, who writted the doccument, etc -->
+            <section>
+                <!-- divisor -->
+                <hr class="mb-2" />
+                <!-- sharing links -->
+                <div class="flex flex-row gap-2 text-3xl">
+                    <a class="text-blue-600"
+                       href="https://www.facebook.com/sharer/sharer.php?u=https://wilsonblog.herokuapp.com/blogentry?id={{ postGet.id }}"
+                       target="_blank">
+                        <i class="fab fa-facebook-square"></i>
+                    </a>
+                    <a class="text-sky-600" href="#" target="_blank">
+                        <i class="fab fa-twitter-square"></i>
+                    </a>
                 </div>
-                <div class="p-4 rounded-b-md border border-solid border-x-1">
-                    
-                    
-                    {% if comments %}
-                    {% for j in comments %}
-                    
-                    <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
-                        <div class="p-2">
-                            <h6 class="card-title"> <strong>{{ j.comment_name }}</strong> on {{ j.comment_date }}</h6>
-                            <p class="card-text"> {{j.comment_comment}} </p>
+                <hr class="mt-2" />
+                <div class="flex flex-col p-3">
+                    <!-- who writte the blog -->
+                    <div class="flex flex-row gap-3 p-3 align-center">
+                        <div class="w-28">
+                            <img class="rounded"
+                                 src=" {{ userinfo.user_profile.url }} "
+                                 alt="Profilepicture"
+                                 height="auto"
+                                 width="auto"/>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-green-900 font-semibold">
+                                Written by
+                                {% if postGet.post_author.get_full_name %}
+                                    {{ postGet.post_author.get_full_name }}
+                                </span>
+                            {% else %}
+                                {{ postGet.post_author }}
+                            {% endif %}
+                            <p>{{ userinfo.user_bio }}</p>
                         </div>
                     </div>
-                    
-                    {% endfor %}
-                    {% else %}
-                    <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
-                            <p class="p-2"> No comments yet, but you can be the first one! 😉</p>
-                    </div>
-                    {% endif %}
-                    
-                    
-                    
                 </div>
-            </div>
-            <!-- comment -->
-            
-            <hr class="my-4">
-            
-        </div>
-        <!-- comment form -->
-        <div class="col p-4">
-            
-            <h2>New comment</h2>
-            <form action="#commentsDiv" method="POST">
-                {% csrf_token %}
-                <input type="text" class="form-control" name="comment_name" id="comment_name" placeholder="Enter Name">
-                <input type="email" class="form-control" name="comment_email" id="comment_email" aria-describedby="emailHelp"
-                placeholder="Enter email">
-                <textarea class="form-control" name="comment_body" id="comment_body" rows="5" placeholder="Add your comments here"></textarea>
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                    else.</small>
-                    <button type="submit" onclick="sendComment()" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
-    </section>
-    {% endif %}
-    
-</main>
+                <hr class="mt-0 m-3" />
+                <!-- comments div -->
+                <div class="conatiner">
+                    <div class="p-2 rounded-t-md border border-solid border-1 bg-gray-100">Coments</div>
+                    <div class="flex flex-col gap-4 p-4 rounded-b-md border border-solid border-x-1">
+                        {% if comments %}
+                            {% for j in comments %}
+                                <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
+                                    <div class="p-2">
+                                        <h6 class="card-title">
+                                            <strong>{{ j.comment_name }}</strong> on {{ j.comment_date }}
+                                        </h6>
+                                        <p class="card-text">{{ j.comment_comment }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
+                                <p class="p-2">No comments yet, but you can be the first one! 😉</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- comment -->
+                <hr class="my-4" />
+                <!-- comment form -->
+                <div class="flex flex-col" id="comments_div">
+                    <h2>New comment</h2>
+                    <form action="#comments_div" method="post" class="flex flex-col">
+                        {% csrf_token %}
+                        <input type="text"
+                               class="form-control"
+                               name="comment_name"
+                               id="comment_name"
+                               placeholder="Enter Name"/>
+                        <input type="email"
+                               class="form-control"
+                               name="comment_email"
+                               id="comment_email"
+                               aria-describedby="emailHelp"
+                               placeholder="Enter email"/>
+                        <textarea class="form-control"
+                                  name="comment_body"
+                                  id="comment_body"
+                                  rows="5"
+                                  placeholder="Add your comments here"></textarea>
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small>
+                        <button type="submit" onclick="sendComment()" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </section>
+        {% endif %}
+    </main>
 {% endblock body %}
-

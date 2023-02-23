@@ -79,7 +79,7 @@ def blogEntry(request):
     # reenvio la information requerida del template para usarlo dentro del blog
     else:
         if comments != "":
-            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog": usernamelog, "top_comments": comments, "userinfo": userinfo, "views": mostviewed, "mostcommented": mostcomments})
+            return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog": usernamelog, "comments": comments, "userinfo": userinfo, "views": mostviewed, "mostcommented": mostcomments})
         else:
             return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog": usernamelog, "userinfo": userinfo, "views": mostviewed, "mostcommented": mostcomments})
 
