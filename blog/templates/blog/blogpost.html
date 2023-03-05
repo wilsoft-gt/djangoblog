@@ -12,23 +12,20 @@
                 <div class="w-16">
                     <img width="auto"
                          height="auto"
-                         class="rounded-full"
-                         src="{{ userinfo.user_profile.url }}"
+                         class="rounded-md"
+                         src="{{ postGet.post_language.language_image.url }}"
                          alt="Profilepicture"/>
                 </div>
                 <!-- author information -->
                 <div class="flex flex-col justify-center">
                     <h2 class="text-4xl text-green-900 font-semi-bold">{{ postGet.post_title }}</h2>
                     <div class="flex flex-row gap-3">
-                        {% if postGet.post_author.get_full_name %}
-                            <span>{{ postGet.post_author.get_full_name }}</span>
+                        {% if postGet.post_language.language_name %}
+                            <span>{{ postGet.post_language.language_name }}</span>
                             <span>•</span>
-                            <span>{{ postGet.post_date }}</span>
-                        {% else %}
-                            <span>{{ postGet.post_author }}</span>
-                            <br />
-                            <span>{{ postGet.post_date }}</span>
                         {% endif %}
+                        <span>{{ postGet.post_date }}</span>
+                        <br />
                     </div>
                 </div>
             </section>
@@ -92,7 +89,13 @@
                                 <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
                                     <div class="p-2">
                                         <h6 class="card-title">
-                                            <strong>{{ j.comment_name }}</strong> on {{ j.comment_date }}
+                                            <strong>
+                                                {% if j.comment_name %}
+                                                    {{ j.comment_name }}
+                                                {% elif j.comment_name == "" %}
+                                                    Anonymous
+                                                {% endif %}
+                                            </strong> on {{ j.comment_date }}
                                         </h6>
                                         <p class="card-text">{{ j.comment_comment }}</p>
                                     </div>
@@ -110,27 +113,32 @@
                 <!-- comment form -->
                 <div class="flex flex-col" id="comments_div">
                     <h2>New comment</h2>
-                    <form action="#comments_div" method="post" class="flex flex-col">
+                    <form action="#comments_div"
+                          method="post"
+                          class="flex flex-col gap-2 border border-gray-300 rounded-md p-4">
                         {% csrf_token %}
                         <input type="text"
-                               class="form-control"
+                               class="shadow-md p-2 border border-gray-300 rounded-md focus:border-green-900 focus:border-2 focus:outline-none"
                                name="comment_name"
                                id="comment_name"
                                placeholder="Enter Name"/>
                         <input type="email"
-                               class="form-control"
+                               class=" shadow-md p-2 border border-gray-300 rounded-md focus:border-green-900 focus:border-2 focus:outline-none"
                                name="comment_email"
                                id="comment_email"
                                aria-describedby="emailHelp"
                                placeholder="Enter email"/>
-                        <textarea class="form-control"
+                        <textarea class="shadow-md p-2 border border-gray-300 rounded-md focus:border-green-900 focus:border-2 focus:outline-none"
                                   name="comment_body"
                                   id="comment_body"
                                   rows="5"
                                   placeholder="Add your comments here"></textarea>
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
-                        else.</small>
-                        <button type="submit" onclick="sendComment()" class="btn btn-primary">Submit</button>
+                        <small id="emailHelp" class="form-text text-muted">We'll never share any personal information.</small>
+                        <button type="submit"
+                                onclick="sendComment()"
+                                class="border rounded-md p-2 border-green-900 text-green-900 hover:bg-green-900 hover:text-green-200">
+                            Submit
+                        </button>
                     </form>
                 </div>
             </section>

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.core.validators import FileExtensionValidator
 # Create your models here.
 
 
@@ -9,6 +9,15 @@ class User(AbstractUser):
         upload_to="blog/adminimages", null=True, blank=True)
     user_bio = models.TextField(null=True, blank=True)
     user_quote = models.TextField(null=True, blank=True)
+
+
+class LanguageTopic(models.Model):
+    language_name = models.CharField(max_length=25)
+    language_image = models.ImageField(
+        upload_to='blog/images/languages', validators=[FileExtensionValidator(["svg", "png", "jpg", "jpeg", "webm", "webp"])])
+
+    def __str__(self):
+        return self.language_name
 
 
 class blogposts(models.Model):
@@ -21,6 +30,8 @@ class blogposts(models.Model):
     post_like = models.IntegerField(default=0)
     post_count_comments = models.IntegerField(default=0)
     # post_shares = models.IntegerField(default=0)
+    post_language = models.ForeignKey(
+        LanguageTopic, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.post_title
@@ -32,11 +43,6 @@ class images(models.Model):
 
     def __str__(self):
         return self.imagefile.name
-
-
-class LanguageTopic:
-    language_name = models.CharField(max_length=25)
-    language_image = models.ImageField(upload_to='blog/images/languages')
 
 
 class comment(models.Model):

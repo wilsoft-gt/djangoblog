@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, blogposts, images, comment
+from .models import User, blogposts, images, comment, LanguageTopic
 
 # Register your models here.
 
@@ -15,16 +15,17 @@ class postAdminModel(admin.ModelAdmin):
 
 
 class commentAdminModel(admin.ModelAdmin):
-    list_display = ("comment_name", "comment_post",
+    list_display = ("id", "comment_name", "comment_post",
                     "comment_date", "comment_moderated")
     list_filter = ('comment_date', "comment_moderated")
 
 
 class imageAdminModel(admin.ModelAdmin):
-    list_display = ("imagefile", "imagedate")
+    list_display = ("id", "imagefile", "imagedate")
 
 
 # registrando las bases de datos para mostrarlas en el admin site
 admin.site.register(blogposts, postAdminModel)
 admin.site.register(comment, commentAdminModel)
 admin.site.register(images, imageAdminModel)
+admin.site.register(LanguageTopic, admin.ModelAdmin)

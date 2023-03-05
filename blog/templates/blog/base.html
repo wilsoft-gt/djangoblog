@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'blog/highlight/styles/base16/dracula.min.css' %}">
-    <script src="{% static 'blog/highlight/highlight.min.js' %}"></script>
-    <script>hljs.highlightAll();</script>
-
-    {% block title  %}
-
-    {% endblock %}
-</head>
-
-<body class="max-w-6xl mx-auto before:content-[' '] before:block before:w-96 before:h-96 before:bg-green-900 before:absolute before:-z-10 before:translate-y-28 before:-translate-x-80 before:blur-3xl before:opacity-10">
-    <!-- navigation bar with a search box -->
-    {% include 'components/navigation.html' with usernamelog=usernamelog %}
-
-    {% block body %}
-    
-    {% endblock body %}
-    
-    <!-- footer at the very bottom of the page -->
-    {% include 'components/footer.html' with top_comments=mostcommented top_views=views %}
-</body>
-
+    {% load static %}
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Wilsoft-gm personal blog" />
+        <meta name="keywords"
+              content="blog, wilsoft, python, programming, javascript, tailwind"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet"
+              href="{% static 'blog/fontawesome5112/css/all.css' %}"/>
+        <link rel="stylesheet" href="{% static 'blog/css/styles.css' %}" />
+        <link rel="stylesheet"
+              href="{% static 'blog/highlight/styles/base16/dracula.min.css' %}"/>
+        <script src="{% static 'blog/highlight/highlight.min.js' %}"></script>
+        <script>hljs.highlightAll();</script>
+        {% block title %}
+            <title>This a temp title!</title>
+        {% endblock title %}
+    </head>
+    <body class="max-w-6xl mx-auto before:content-[' '] before:block before:w-96 before:h-96 before:bg-green-900 before:absolute before:-z-10 before:translate-y-28 before:-translate-x-80 before:blur-3xl before:opacity-10">
+        <!-- navigation bar with a search box -->
+        {% include "components/navigation.html" with usernamelog=usernamelog %}
+        {% block body %}
+        {% endblock body %}
+        <!-- footer at the very bottom of the page -->
+        {% include "components/footer.html" with top_comments=mostcommented top_views=views %}
+    </body>
 </html>

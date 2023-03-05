@@ -47,13 +47,12 @@ def blog(request):
     return render(request, "blog/blog.html", {"blogposts": blogs, "usernamelog": usernamelog, "views": mostviewed, "mostcommented": mostcomments})
 
 
-def blogEntry(request):
+def blogEntry(request, id):
     # tomo el username como texto para pasarlo al template como texno no como objeto
     usernamelog = str(request.user)
-    # tomo el id enviado desde el get request que sera el id del blog que quiero mostrar
-    postId = request.GET.get("id")
+
     # tomo unicamente el post que fue requerido desde el template
-    postGet = blogposts.objects.get(id=postId)
+    postGet = blogposts.objects.get(id=id)
     userinfo = User.objects.get(username=postGet.post_author)
     comments = comment.objects.all().filter(
         comment_post=postGet).filter(comment_moderated=True)
