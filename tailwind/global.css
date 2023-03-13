@@ -4,8 +4,7 @@
 
 @layer base {
 
-  pre,
-  code {
+  pre>code {
     @apply rounded-lg mt-1 shadow-xl shadow-slate-500;
   }
 

@@ -214,25 +214,42 @@ def logoutview(request):
 
 
 @login_required
-def removeresource(request):
-    imagen = request.GET.get("img")
-    imagen_db = images.objects.get(id=imagen)
+def removeresource(request, id):
+    imagen_db = images.objects.get(id=id)
     imagen_path = os.path.join(settings.MEDIA_ROOT, str(imagen_db.imagefile))
     os.remove(imagen_path)
     imagen_db.delete()
-    return HttpResponseRedirect("administracion")
+    return HttpResponseRedirect("/administration/resources")
 
 
 @login_required
-def administration(request):
-    usernamelog = str(request.user)
-    imagenes = images.objects.all()
+def administration_entries(request):
     entries = blogposts.objects.order_by("-post_date")
-    posttoupdate = request.GET.get("postid")
-    commentsdata = comment.objects.all()
-    unmoderated = len(commentsdata.filter(comment_moderated=False))
-    if posttoupdate:
-        getposttoupdate = blogposts.objects.get(id=posttoupdate)
-        return render(request, "blog/customadmin.html", {"imagenes": imagenes, "usernamelog": usernamelog, "entries": entries, "unmoderated": unmoderated, "commentsdata": commentsdata, "posttoupdate": getposttoupdate})
+    return render(request, "blog/entries.html", {"entries": entries})
+
+
+@login_required
+def administration_comments(request):
+    comments = comment.objects.all()
+    return render(request, "blog/comments.html", {"comments": comments})
+
+
+@login_required
+def administration_create_entry(request):
+    if request.method == "POST":
+        return render(request, "blog/createedit.html")
+
     else:
-        return render(request, "blog/customadmin.html", {"imagenes": imagenes, "usernamelog": usernamelog, "entries": entries, "unmoderated": unmoderated, "commentsdata": commentsdata})
+        return render(request, "blog/createedit.html")
+
+
+@login_required
+def administration_resources(request):
+    resources = images.objects.all()
+    if request.method == "POST":
+        newImg = images()
+        newImg.imagefile = request.FILES["image"]
+        newImg.save()
+        return HttpResponseRedirect("/administration/resources")
+    else:
+        return render(request, "blog/resources.html", {"images": resources})

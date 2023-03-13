@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-    <script
-    src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
-
-    <link rel="stylesheet" href="{% static 'blog/fontawesome5112/css/all.css' %}" type="text/css">
-    <script src="{% static 'blog/js/script.js' %}"></script>
-    <title>Blog admin page</title>
-</head>
-<style>
+    <head>
+        {% load static %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+              crossorigin="anonymous"/>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sons-of-obsidian"></script>
+        <link rel="stylesheet"
+              href="{% static 'blog/fontawesome5112/css/all.css' %}"
+              type="text/css"/>
+        <link rel="stylesheet"
+              href="{% static 'blog/highlight/styles/base16/dracula.min.css' %}"/>
+        <script src="{% static 'blog/highlight/highlight.min.js' %}"></script>
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css"/>
+        <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+        <script src="{% static 'blog/js/script.js' %}"></script>
+        <script defer>var simplemde = new SimpleMDE({ element: document.getElementById("postBody") });</script>
+        <title>Blog admin page</title>
+    </head>
+    <style>
     /* * {
     border: red dotted 0.2px
     } */
@@ -60,432 +68,538 @@
         break-inside: avoid;
         /* IE 10+ */
     }
-</style>
-
-<body onload="alertHide(); adminActiveTab()">
-    <nav class="navbar navbar-dark bg-secondary shadow m-0 p-0">
-        <div class="col-12 col-md-2 m-0 p-0 bg-dark">
-            <a class="navbar-brand text-white ml-3">Wilson blog</a>
-
-        </div>
-
-        <div class="navbar-brand col-6 col-md-2">Bienvenido {{ usernamelog }}</div>
-
-        <a href="/logout" class="btn btn-info text-light navbar-brand m-0">
-            Logout <i class="fas fa-sign-out-alt"></i>
-        </a>
-    </nav>
-
-    <div class="container-fluid maincontainerheight">
-        <div class="row h-100">
-            <div class="col-12 col-md-2 bg-light shadow border-right">
-                <!-- esta lista sirve para mostrar y ocultar los datos del menu administrativo principal -->
-                <div class="list-group" id="list-tab" role="tablist">
-                    <div class="dropdown-divider"></div>
-                    Tabs
-                    <!-- esto muestra el div con las entradas de los blogs creados -->
-                    <a class="list-group-item list-group-item-action btn-info active" id="list-profile-list" data-toggle="list" href="#postslist" role="tab" aria-controls="postslist">
-                        <i class="fas fa-edit"></i> Entries
-                    </a>
-                    <!-- esto muestra el div con informacion de los comentarios -->
-                    <a class="list-group-item list-group-item-action btn-info" id="list-commnets-list" data-toggle="list" href="#comments" role="tab" aria-controls="postslist">
-                        <i class="fas fa-comments"></i> Comments
-                        {% if unmoderated %}
-                        <span class="badge badge-info float-right">{{unmoderated}}</span>
-                        {% endif %}
-                    </a>
-                    <!-- esto despliega una accion que abre la opcion de agregar un nuevo post -->
-                    <a class="list-group-item list-group-item-action btn-info" id="list-newpost-list" href="administracion?active=newpost&button=list-newpost-list">
-                        <i class="fas fa-plus-square"></i> New Post
-                    </a>
-                    <!-- esto muestra las imagenes en la base de datos -->
-                    <a class="list-group-item list-group-item-action btn-info" id="list-resources-list" data-toggle="list" href="#resources" role="tab" aria-controls="profile">
-                        <i class="fas fa-image"></i> Resources
-                    </a>
-
-                    <!-- solo un hr usando -->
-                    <div class="dropdown-divider"></div>
-                    Go to
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <!-- este boton envia hacia el menu principal -->
-                        <a type="button" class="btn btn-outline-info" href="/">
-                            <i class="fas fa-home"></i> Blog
-                        </a>
-                        <!-- esto envia al menu root de django -->
-                        <a type="button" class="btn btn-outline-info" href="/admin">
-                            <i class="fas fa-user-cog"></i> Root
-                        </a>
-
-                    </div>
-                    <div class="dropdown-divider"></div>
-                </div>
+    </style>
+    <body onload="alertHide(); adminActiveTab()">
+        <nav class="navbar navbar-dark bg-secondary shadow m-0 p-0">
+            <div class="col-12 col-md-2 m-0 p-0 bg-dark">
+                <a class="navbar-brand text-white ml-3">Wilson blog</a>
             </div>
-            <hr />
-            <div class="col-12 col-md mt-3">
-                <div class="col-12 h-100" style="overflow-y: scroll">
-                    <div class="tab-content h-100" id="nav-tabContent">
-
-                        <!-- ############################################################## -->
-                        <!--               esta seccion de los posts creados                -->
-                        <!-- ############################################################## -->
-                        <div class="tab-pane fade show active" id="postslist" role="tabpanel" aria-labelledby="list-home-list">
-
-                            <div class="container-fluid row justify-content-center p-0 m-0">
-                                <div class="col-lg-11 col-md-11 col-12 bg-light shadow-sm">
-                                    <div class="row justify-content-center">
-                                        <!-- here django will render the content of the post -->
-
-                                        <table class="table">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th scope="col-2">ID #</th>
-                                                    <th scope="col-6">Titulo</th>
-                                                    <th scope="col-2">Fecha</th>
-                                                    <th scope="col-2">Opciones</th>
-                                                </tr>
-                                            </thead>
-                                            {% if entries %}
-                                            {% for i in entries %}
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">{{i.id}}</th>
-                                                    <td class="">{{ i.post_title}} </td>
-                                                    <td>{{i.post_date}}</td>
-                                                    <td> 
-                                                        <a href="blogentry?id={{ i.id }}" class="btn btn-sm btn-outline-info" title="View">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>
-                                                        <a title="Edit" href="administracion?postid={{ i.id }}&active=newpost&button=list-newpost-list" class="btn btn-sm btn-outline-info">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        <a href="postDelete?id={{ i.id }}" title="Delete" class="btn btn-sm btn-outline-danger">
-                                                            <i class="fa fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-
-                                            {% endfor %}
-                                            {% endif %}
-                                        </table>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
+            <div class="navbar-brand col-6 col-md-2">Bienvenido {{ usernamelog }}</div>
+            <a href="/logout" class="btn btn-info text-light navbar-brand m-0">
+                Logout <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </nav>
+        <div class="container-fluid maincontainerheight">
+            <div class="row h-100">
+                <div class="col-12 col-md-2 bg-light shadow border-right">
+                    <!-- esta lista sirve para mostrar y ocultar los datos del menu administrativo principal -->
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <div class="dropdown-divider"></div>
+                        Tabs
+                        <!-- esto muestra el div con las entradas de los blogs creados -->
+                        <a class="list-group-item list-group-item-action btn-info active"
+                           id="list-profile-list"
+                           data-toggle="list"
+                           href="#postslist"
+                           role="tab"
+                           aria-controls="postslist">
+                            <i class="fas fa-edit"></i> Entries
+                        </a>
+                        <!-- esto muestra el div con informacion de los comentarios -->
+                        <a class="list-group-item list-group-item-action btn-info"
+                           id="list-commnets-list"
+                           data-toggle="list"
+                           href="#comments"
+                           role="tab"
+                           aria-controls="postslist">
+                            <i class="fas fa-comments"></i> Comments
+                            {% if unmoderated %}<span class="badge badge-info float-right">{{ unmoderated }}</span>{% endif %}
+                        </a>
+                        <!-- esto despliega una accion que abre la opcion de agregar un nuevo post -->
+                        <a class="list-group-item list-group-item-action btn-info"
+                           id="list-newpost-list"
+                           href="administracion?active=newpost&button=list-newpost-list">
+                            <i class="fas fa-plus-square"></i> New Post
+                        </a>
+                        <!-- esto muestra las imagenes en la base de datos -->
+                        <a class="list-group-item list-group-item-action btn-info"
+                           id="list-resources-list"
+                           data-toggle="list"
+                           href="#resources"
+                           role="tab"
+                           aria-controls="profile">
+                            <i class="fas fa-image"></i> Resources
+                        </a>
+                        <!-- solo un hr usando -->
+                        <div class="dropdown-divider"></div>
+                        Go to
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <!-- este boton envia hacia el menu principal -->
+                            <a type="button" class="btn btn-outline-info" href="/">
+                                <i class="fas fa-home"></i> Blog
+                            </a>
+                            <!-- esto envia al menu root de django -->
+                            <a type="button" class="btn btn-outline-info" href="/admin">
+                                <i class="fas fa-user-cog"></i> Root
+                            </a>
                         </div>
-
-                        <!-- ############################################################## -->
-                        <!--          esta seccion moderacion de comentarios                -->
-                        <!-- ############################################################## -->
-                        <div class="tab-pane fade show" id="comments" role="tabpanel" aria-labelledby="list-home-list">
-
-                            <div class="container-fluid row justify-content-center">
-                                <div class="col-lg-11 col-md-11 bg-light shadow-sm">
-                                    <div class="row justify-content-center">
-                                        <!-- here django will render the comments into a table -->
-                                        {% if commentsdata %}
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">name</th>
-                                                    <th scope="col">Comment</th>
-                                                    <th scope="col">Post</th>
-                                                    <th scope="col">Moderated</th>
-                                                    <th scope="col">Accion</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for j in commentsdata %}
-                                                <tr>
-                                                    <th scope="row">{{j.id}}</th>
-                                                    <td>{{j.comment_name}}</td>
-                                                    <td>{{j.comment_comment}}</td>
-                                                    <td>{{j.comment_post}}</td>
-                                                    <td>
-                                                        {% if j.comment_moderated == True %}
-                                                        <i class="fas fa-check-circle text-success"></i>
-                                                        {% else %}
-                                                        <i class="fas fa-times-circle text-danger"></i>
-                                                        {% endif %}
-                                                    </td>
-                                                    <td>
-                                                        {% if j.comment_moderated == True %}
-                                                        <form action="/comments" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="commentid" value="{{ j.id }}">
-                                                            <input type="hidden" name="moderated" value="False">
-                                                            <button type="submit" class="btn btn-sm btn-outline-info" title="Hide">
-                                                                <i class="fas fa-eye-slash"></i>
-                                                            </button>
-                                                            <a href="comments?deleteid={{ j.id }}" role="button" class="btn btn-sm btn-outline-danger" title="Show">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        </form>
-
-                                                        {% else %}
-                                                        <form action="/comments" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="hidden" name="commentid" value="{{ j.id }}">
-                                                            <input type="hidden" name="moderated" value="True">
-                                                            <button type="submit" class="btn btn-sm btn-outline-info" title="Show"><i class="fas fa-eye"></i></button>
-                                                            <a href="comments?deleteid={{ j.id }}" type="button" class="btn btn-sm btn-outline-danger" title="Show">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
-                                                        </form>
-
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                        {% endif %}
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <!-- ############################################################## -->
-                        <!--               esta seccion es para crear nuevos posts          -->
-                        <!-- ############################################################## -->
-                        <div class="tab-pane fade show" id="newpost" role="tabpanel" aria-labelledby="list-home-list">
-
-                            <div class="container-fluid row justify-content-center p-0 m-0">
-                                <div class="col-lg-9 col-md-11 col-12 bg-light shadow">
-                                    <div class="row justify-content-center">
-                                        <!-- here django will render the content of the post -->
-                                        <div class="col-sm-11 col-12 blocentrie mt-4 mb-5">
-                                            <div class="col">
-
-                                                {% if posttoupdate %}
-
-                                                <form action="/update" method="POST">
-                                                    {% csrf_token %}
-                                                    <!-- esta esto es para el titulo -->
-                                                    <input type="hidden" name="postid" value="{{posttoupdate.id}}">
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-heading"></i>
-                                                            </div>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="entryTitle" name="entryTitle" placeholder="Post title" value="{{posttoupdate.post_title}}">
-                                                    </div>
-
-                                                    <!-- esto es para la imagen heather -->
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-image"></i>
-                                                            </div>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="entryImageHeader" name="entryImageHeader" placeholder="Header image" value="{{posttoupdate.post_image_header}}">
-                                                    </div>
-
-                                                    <div class="btn-group btn-group-sm" role="group">
-
-                                                        <div class="dropdown">
-                                                            <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                Header
-                                                            </a>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                <a class="dropdown-item" href="#">H1</a>
-                                                                <a class="dropdown-item" href="#">H2</a>
-                                                                <a class="dropdown-item" href="#">H3</a>
-                                                                <a class="dropdown-item" href="#">H4</a>
-                                                                <a class="dropdown-item" href="#">H5</a>
-                                                                <a class="dropdown-item" href="#">H6</a>
-                                                            </div>
-                                                        </div>
-
-                                                        <button type="button" title="Parragraph wrapper" class="btn btn-secondary btn-sm" id="p" onclick="addWrapper('p')">
-                                                            <i class="fas fa-paragraph"></i>
-                                                        </button>
-                                                        <button type="button" title="Bold / strong" class="btn btn-secondary btn-sm" onclick="addWrapper('strong')">
-                                                            <i class="fas fa-bold"></i>
-                                                        </button>
-                                                        <button type="button" title="Italic / emphatized" class="btn btn-secondary btn-sm" onclick="addWrapper('i')">
-                                                            <i class="fas fa-italic"></i>
-                                                        </button>
-                                                        <button type="button" title="Underlined" class="btn btn-secondary btn-sm" onclick="addWrapper('u')">
-                                                            <i class="fas fa-underline"></i>
-                                                        </button>
-                                                        <button type="button" title="Add image" class="btn btn-secondary btn-sm" onclick="addWrapper('img')">
-                                                            <i class="fas fa-image"></i>
-                                                        </button>
-                                                        <button type="button" title="Add code" class="btn btn-secondary btn-sm" onclick="addWrapper('code')">
-                                                            <i class="fas fa-code"></i>
-                                                        </button>
-                                                    </div>
-                                                    <textarea class="form-control" id="postBody" name="postBody" cols="30" rows="15" placeholder="Write your entrie here!">{{posttoupdate.post_body}}</textarea>
-                                                    <button type="button" class="btn btn-secondary btn-sm" onclick="addWrapper()">Mostrar</button>
-                                                    <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
-                                                </form>
-
-                                                {% else %}
-                                                <form action="/newpost" method="POST">
-                                                    {% csrf_token %}
-                                                    <!-- esta esto es para el titulo -->
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-heading"></i>
-                                                            </div>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="entryTitle"
-                                                        name="entryTitle" placeholder="Post title">
-                                                    </div>
-
-                                                    <!-- esto es para la imagen heather -->
-                                                    <div class="input-group mb-2">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fas fa-image"></i>
-                                                            </div>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="entryImageHeader"
-                                                        name="entryImageHeader" placeholder="Header image">
-                                                    </div>
-
-                                                    <div class="btn-group btn-group-sm" role="group">
-
-                                                        <div class="dropdown">
-                                                            <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                Header
-                                                            </a>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                                <a class="dropdown-item" href="#">H1</a>
-                                                                <a class="dropdown-item" href="#">H2</a>
-                                                                <a class="dropdown-item" href="#">H3</a>
-                                                                <a class="dropdown-item" href="#">H4</a>
-                                                                <a class="dropdown-item" href="#">H5</a>
-                                                                <a class="dropdown-item" href="#">H6</a>
-                                                            </div>
-                                                        </div>
-
-                                                        <button type="button" title="Parragraph wrapper" class="btn btn-secondary btn-sm" id="p" onclick="addWrapper('p')">
-                                                            <i class="fas fa-paragraph"></i>
-                                                        </button>
-                                                        <button type="button" title="Bold / strong" class="btn btn-secondary btn-sm" onclick="addWrapper('strong')">
-                                                            <i class="fas fa-bold"></i>
-                                                        </button>
-                                                        <button type="button" title="Italic / emphatized" class="btn btn-secondary btn-sm" onclick="addWrapper('i')">
-                                                            <i class="fas fa-italic"></i>
-                                                        </button>
-                                                        <button type="button" title="Underlined" class="btn btn-secondary btn-sm" onclick="addWrapper('u')">
-                                                            <i class="fas fa-underline"></i>
-                                                        </button>
-                                                        <button type="button" title="Add image" class="btn btn-secondary btn-sm" onclick="addWrapper('img')">
-                                                            <i class="fas fa-image"></i>
-                                                        </button>
-                                                        <button type="button" title="Add code" class="btn btn-secondary btn-sm" onclick="addWrapper('code')">
-                                                            <i class="fas fa-code"></i>
-                                                        </button>
-                                                    </div>
-                                                    <textarea class="form-control" id="postBody" name="postBody"
-                                                    cols="30" rows="15"
-                                                    placeholder="Write your entrie here!"></textarea>
-                                                    <button type="button" class="btn btn-secondary btn-sm"
-                                                    onclick="addWrapper()">Mostrar</button>
-                                                    <button type="submit"
-                                                    class="btn btn-primary btn-sm">Guardar</button>
-                                                </form>
-
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+                <hr />
+                <div class="col-12 col-md mt-3">
+                    <div class="col-12 h-100" style="overflow-y: scroll">
+                        <div class="tab-content h-100" id="nav-tabContent">
+                            <!-- ############################################################## -->
+                            <!--               esta seccion de los posts creados                -->
+                            <!-- ############################################################## -->
+                            <div class="tab-pane fade show active"
+                                 id="postslist"
+                                 role="tabpanel"
+                                 aria-labelledby="list-home-list">
+                                <div class="container-fluid row justify-content-center p-0 m-0">
+                                    <div class="col-lg-11 col-md-11 col-12 bg-light shadow-sm">
+                                        <div class="row justify-content-center">
+                                            <!-- here django will render the content of the post -->
+                                            <table class="table">
+                                                <thead class="thead-dark">
+                                                    <tr>
+                                                        <th scope="col-2">ID #</th>
+                                                        <th scope="col-6">Titulo</th>
+                                                        <th scope="col-2">Fecha</th>
+                                                        <th scope="col-2">Opciones</th>
+                                                    </tr>
+                                                </thead>
+                                                {% if entries %}
+                                                    {% for i in entries %}
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">{{ i.id }}</th>
+                                                                <td class="">{{ i.post_title }}</td>
+                                                                <td>{{ i.post_date }}</td>
+                                                                <td>
+                                                                    <a href="blogentry?id={{ i.id }}"
+                                                                       class="btn btn-sm btn-outline-info"
+                                                                       title="View">
+                                                                        <i class="fas fa-eye"></i>
+                                                                    </a>
+                                                                    <a title="Edit"
+                                                                       href="administracion?postid={{ i.id }}&active=newpost&button=list-newpost-list"
+                                                                       class="btn btn-sm btn-outline-info">
+                                                                        <i class="fas fa-edit"></i>
+                                                                    </a>
+                                                                    <a href="postDelete?id={{ i.id }}"
+                                                                       title="Delete"
+                                                                       class="btn btn-sm btn-outline-danger">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    {% endfor %}
                                                 {% endif %}
-
-                                                <hr>
-                                                Body Preview
-                                                <div class="card">
-                                                    <div id="result" class="card-body" style="font-size: 17px">
-
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </table>
                                         </div>
                                     </div>
-
                                 </div>
-
                             </div>
-                        </div>
-
-                        <!-- ############################################################## -->
-                        <!--               esta seccion es para los resources               -->
-                        <!-- ############################################################## -->
-                        <div class="tab-pane fade" id="resources" role="tabpanel" aria-labelledby="list-profile-list">
-
-                            <div class="container-fluid m-0 p-0 row justify-content-center">
-                                <div class="col-lg-11 col-md-11 col-12 bg-light shadow-sm">
-                                    <div class="row justify-content-center">
-
-                                        <!-- upload button -->
-                                        <button type="button" class="btn btn-info ml-4 mr-3" data-toggle="modal" data-target="#subirimagen">
-                                            <i class="fas fa-plus-square"></i>
-                                        </button>
-
-                                        <!-- alert to upload an image -->
-                                        <div class="modal fade" id="subirimagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Upload image</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="/resources" enctype="multipart/form-data" method="POST">
-                                                            {% csrf_token %}
-                                                            <input type="file" name="newpic" id="newpic">
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Submit</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- esto es el div para mostrar las imagenes -->
-                                        <div id="imgcontainer" class="container-fluid mt-3">
-                                            {% if imagenes %}
-                                            {% for i in imagenes %}
-                                            <div class="card border border-info bg-dark text-white shadow-sm m-2">
-                                                <img style="cursor: pointer; display: block" onclick="returnUrl(this)" class="img-fluid" src="{{ i.imagefile.url }}" alt="{{ i.imagefile.name }}">
-                                                <div class="card-img-overlay img-fluid" style="height: 0px; padding: 0px">
-                                                    <a href="/remove?img={{ i.id }}" style="font-size: 1.5em;" class="text-danger mt-3 ml-3"><i class="fas fa-trash"></i></a>
-                                                </div>
-                                            </div>
-
-                                            {% endfor %}
+                            <!-- ############################################################## -->
+                            <!--          esta seccion moderacion de comentarios                -->
+                            <!-- ############################################################## -->
+                            <div class="tab-pane fade show"
+                                 id="comments"
+                                 role="tabpanel"
+                                 aria-labelledby="list-home-list">
+                                <div class="container-fluid row justify-content-center">
+                                    <div class="col-lg-11 col-md-11 bg-light shadow-sm">
+                                        <div class="row justify-content-center">
+                                            <!-- here django will render the comments into a table -->
+                                            {% if commentsdata %}
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">name</th>
+                                                            <th scope="col">Comment</th>
+                                                            <th scope="col">Post</th>
+                                                            <th scope="col">
+                                                                Moderated
+                                                            </th>
+                                                            <th scope="col">
+                                                                Accion
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for j in commentsdata %}
+                                                            <tr>
+                                                                <th scope="row">
+                                                                    {{ j.id }}
+                                                                </th>
+                                                                <td>
+                                                                    {{ j.comment_name }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ j.comment_comment }}
+                                                                </td>
+                                                                <td>
+                                                                    {{ j.comment_post }}
+                                                                </td>
+                                                                <td>
+                                                                    {% if j.comment_moderated == True %}
+                                                                        <i class="fas fa-check-circle text-success"></i>
+                                                                    {% else %}
+                                                                        <i class="fas fa-times-circle text-danger"></i>
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    {% if j.comment_moderated == True %}
+                                                                        <form action="/comments" method="POST">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="commentid" value="{{ j.id }}">
+                                                                            <input type="hidden" name="moderated" value="False">
+                                                                            <button type="submit" class="btn btn-sm btn-outline-info" title="Hide">
+                                                                                <i class="fas fa-eye-slash"></i>
+                                                                            </button>
+                                                                            <a href="comments?deleteid={{ j.id }}"
+                                                                               role="button"
+                                                                               class="btn btn-sm btn-outline-danger"
+                                                                               title="Show">
+                                                                                <i class="fas fa-trash"></i>
+                                                                            </a>
+                                                                        </form>
+                                                                    {% else %}
+                                                                        <form action="/comments" method="POST">
+                                                                            {% csrf_token %}
+                                                                            <input type="hidden" name="commentid" value="{{ j.id }}">
+                                                                            <input type="hidden" name="moderated" value="True">
+                                                                            <button type="submit" class="btn btn-sm btn-outline-info" title="Show">
+                                                                                <i class="fas fa-eye"></i>
+                                                                            </button>
+                                                                            <a href="comments?deleteid={{ j.id }}"
+                                                                               type="button"
+                                                                               class="btn btn-sm btn-outline-danger"
+                                                                               title="Show">
+                                                                                <i class="fas fa-trash"></i>
+                                                                            </a>
+                                                                        </form>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
                                             {% endif %}
                                         </div>
-                                        <!-- copied alert -->
-                                        <div class="row justify-content-center fixed-bottom">
-                                            <div style='white-space:normal' class="alert alert-info fade show alert-dismissible col-10 col-md-6" role="alert">
-                                                Image link <a style='white-space:normal' id="imageLink" href="#" class="alert-link"></a> copied to clipboard.
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ############################################################## -->
+                            <!--               esta seccion es para crear nuevos posts          -->
+                            <!-- ############################################################## -->
+                            <div class="tab-pane fade show"
+                                 id="newpost"
+                                 role="tabpanel"
+                                 aria-labelledby="list-home-list">
+                                <div class="container-fluid row justify-content-center p-0 m-0">
+                                    <div class="col-lg-9 col-md-11 col-12 bg-light shadow">
+                                        <div class="row justify-content-center">
+                                            <!-- here django will render the content of the post -->
+                                            <div class="col-sm-11 col-12 blocentrie mt-4 mb-5">
+                                                <div class="col">
+                                                    {% if posttoupdate %}
+                                                        <form action="/update" method="POST">
+                                                            {% csrf_token %}
+                                                            <!-- esta esto es para el titulo -->
+                                                            <input type="hidden" name="postid" value="{{ posttoupdate.id }}">
+                                                            <div class="input-group mb-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <i class="fas fa-heading"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text"
+                                                                       class="form-control"
+                                                                       id="entryTitle"
+                                                                       name="entryTitle"
+                                                                       placeholder="Post title"
+                                                                       value="{{ posttoupdate.post_title }}">
+                                                            </div>
+                                                            <!-- esto es para la imagen heather -->
+                                                            <div class="input-group mb-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <i class="fas fa-image"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text"
+                                                                       class="form-control"
+                                                                       id="entryImageHeader"
+                                                                       name="entryImageHeader"
+                                                                       placeholder="Header image"
+                                                                       value="{{ posttoupdate.post_image_header }}">
+                                                            </div>
+                                                            <div class="btn-group btn-group-sm" role="group">
+                                                                <div class="dropdown">
+                                                                    <a class="btn btn-secondary btn-sm dropdown-toggle"
+                                                                       href="#"
+                                                                       role="button"
+                                                                       id="dropdownMenuLink"
+                                                                       data-toggle="dropdown"
+                                                                       aria-haspopup="true"
+                                                                       aria-expanded="false">
+                                                                        Header
+                                                                    </a>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                        <a class="dropdown-item" href="#">H1</a>
+                                                                        <a class="dropdown-item" href="#">H2</a>
+                                                                        <a class="dropdown-item" href="#">H3</a>
+                                                                        <a class="dropdown-item" href="#">H4</a>
+                                                                        <a class="dropdown-item" href="#">H5</a>
+                                                                        <a class="dropdown-item" href="#">H6</a>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button"
+                                                                        title="Parragraph wrapper"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        id="p"
+                                                                        onclick="addWrapper('p')">
+                                                                    <i class="fas fa-paragraph"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Bold / strong"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('strong')">
+                                                                    <i class="fas fa-bold"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Italic / emphatized"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('i')">
+                                                                    <i class="fas fa-italic"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Underlined"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('u')">
+                                                                    <i class="fas fa-underline"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Add image"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('img')">
+                                                                    <i class="fas fa-image"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Add code"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('code')">
+                                                                    <i class="fas fa-code"></i>
+                                                                </button>
+                                                            </div>
+                                                            <textarea class="form-control"
+                                                                      id="postBody"
+                                                                      name="postBody"
+                                                                      cols="30"
+                                                                      rows="15"
+                                                                      placeholder="Write your entrie here!">{{posttoupdate.post_body}}</textarea>
+                                                            <button type="button" class="btn btn-secondary btn-sm" onclick="addWrapper()">
+                                                                Mostrar
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                                Guardar
+                                                            </button>
+                                                        </form>
+                                                    {% else %}
+                                                        <form action="/newpost" method="POST">
+                                                            {% csrf_token %}
+                                                            <!-- esta esto es para el titulo -->
+                                                            <div class="input-group mb-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <i class="fas fa-heading"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text"
+                                                                       class="form-control"
+                                                                       id="entryTitle"
+                                                                       name="entryTitle"
+                                                                       placeholder="Post title">
+                                                            </div>
+                                                            <!-- esto es para la imagen heather -->
+                                                            <div class="input-group mb-2">
+                                                                <div class="input-group-prepend">
+                                                                    <div class="input-group-text">
+                                                                        <i class="fas fa-image"></i>
+                                                                    </div>
+                                                                </div>
+                                                                <input type="text"
+                                                                       class="form-control"
+                                                                       id="entryImageHeader"
+                                                                       name="entryImageHeader"
+                                                                       placeholder="Header image">
+                                                            </div>
+                                                            <div class="btn-group btn-group-sm" role="group">
+                                                                <div class="dropdown">
+                                                                    <a class="btn btn-secondary btn-sm dropdown-toggle"
+                                                                       href="#"
+                                                                       role="button"
+                                                                       id="dropdownMenuLink"
+                                                                       data-toggle="dropdown"
+                                                                       aria-haspopup="true"
+                                                                       aria-expanded="false">
+                                                                        Header
+                                                                    </a>
+                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                                        <a class="dropdown-item" href="#">H1</a>
+                                                                        <a class="dropdown-item" href="#">H2</a>
+                                                                        <a class="dropdown-item" href="#">H3</a>
+                                                                        <a class="dropdown-item" href="#">H4</a>
+                                                                        <a class="dropdown-item" href="#">H5</a>
+                                                                        <a class="dropdown-item" href="#">H6</a>
+                                                                    </div>
+                                                                </div>
+                                                                <button type="button"
+                                                                        title="Parragraph wrapper"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        id="p"
+                                                                        onclick="addWrapper('p')">
+                                                                    <i class="fas fa-paragraph"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Bold / strong"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('strong')">
+                                                                    <i class="fas fa-bold"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Italic / emphatized"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('i')">
+                                                                    <i class="fas fa-italic"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Underlined"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('u')">
+                                                                    <i class="fas fa-underline"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Add image"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('img')">
+                                                                    <i class="fas fa-image"></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                        title="Add code"
+                                                                        class="btn btn-secondary btn-sm"
+                                                                        onclick="addWrapper('code')">
+                                                                    <i class="fas fa-code"></i>
+                                                                </button>
+                                                            </div>
+                                                            <textarea class="form-control"
+                                                                      id="postBody"
+                                                                      name="postBody"
+                                                                      cols="30"
+                                                                      rows="15"
+                                                                      placeholder="Write your entrie here!"></textarea>
+                                                            <button type="button" class="btn btn-secondary btn-sm" onclick="addWrapper()">
+                                                                Mostrar
+                                                            </button>
+                                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                                Guardar
+                                                            </button>
+                                                        </form>
+                                                    {% endif %}
+                                                    <hr>
+                                                    Body Preview
+                                                    <div class="card">
+                                                        <div id="result" class="card-body" style="font-size: 17px">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ############################################################## -->
+                            <!--               esta seccion es para los resources               -->
+                            <!-- ############################################################## -->
+                            <div class="tab-pane fade"
+                                 id="resources"
+                                 role="tabpanel"
+                                 aria-labelledby="list-profile-list">
+                                <div class="container-fluid m-0 p-0 row justify-content-center">
+                                    <div class="col-lg-11 col-md-11 col-12 bg-light shadow-sm">
+                                        <div class="row justify-content-center">
+                                            <!-- upload button -->
+                                            <button type="button"
+                                                    class="btn btn-info ml-4 mr-3"
+                                                    data-toggle="modal"
+                                                    data-target="#subirimagen">
+                                                <i class="fas fa-plus-square"></i>
+                                            </button>
+                                            <!-- alert to upload an image -->
+                                            <div class="modal fade"
+                                                 id="subirimagen"
+                                                 tabindex="-1"
+                                                 role="dialog"
+                                                 aria-labelledby="exampleModalCenterTitle"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalCenterTitle">
+                                                                Upload image
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="/resources" enctype="multipart/form-data" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="file" name="newpic" id="newpic">
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                                        Close
+                                                                    </button>
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        Submit
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- esto es el div para mostrar las imagenes -->
+                                            <div id="imgcontainer" class="container-fluid mt-3">
+                                                {% if imagenes %}
+                                                    {% for i in imagenes %}
+                                                        <div class="card border border-info bg-dark text-white shadow-sm m-2">
+                                                            <img style="cursor: pointer;
+                                                                        display: block"
+                                                                 onclick="returnUrl(this)"
+                                                                 class="img-fluid"
+                                                                 src="{{ i.imagefile.url }}"
+                                                                 alt="{{ i.imagefile.name }}">
+                                                            <div class="card-img-overlay img-fluid" style="height: 0px; padding: 0px">
+                                                                <a href="/remove?img={{ i.id }}"
+                                                                   style="font-size: 1.5em"
+                                                                   class="text-danger mt-3 ml-3"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                            <!-- copied alert -->
+                                            <div class="row justify-content-center fixed-bottom">
+                                                <div style='white-space:normal'
+                                                     class="alert alert-info fade show alert-dismissible col-10 col-md-6"
+                                                     role="alert">
+                                                    Image link <a style='white-space:normal' id="imageLink" href="#" class="alert-link"></a> copied to clipboard.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-</body>
-
+    </body>
 </html>

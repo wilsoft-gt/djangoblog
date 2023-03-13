@@ -14,7 +14,7 @@ class User(AbstractUser):
 class LanguageTopic(models.Model):
     language_name = models.CharField(max_length=25)
     language_image = models.ImageField(
-        upload_to='blog/images/languages', validators=[FileExtensionValidator(["svg", "png", "jpg", "jpeg", "webm", "webp"])])
+        upload_to='blog/images/languages')
 
     def __str__(self):
         return self.language_name

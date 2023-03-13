@@ -1,27 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load static %}
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'static/blog/fontawesome5112/css/all.css' %}" type="text/css">
-    <title>Resources</title>
-
+{% extends "blog/adminbase.html" %}
+{% block content %}
     <script>
-
         function returnUrl(elements) {
             var texto = document.createElement("textarea");
             texto.value = elements.src;
@@ -31,119 +10,125 @@
             document.body.removeChild(texto);
             document.getElementById("imageLink").innerHTML = texto.value
             $(".alert").show()
-            setTimeout(function () { $('.alert').hide(); }, 5000);
+            setTimeout(function () { $(".alert").hide(); }, 5000);
         }
 
         function alertHide() {
             $(".alert").hide()
         }
 
+        const showDialog = () => {
+            document.querySelector("#dialogModal").showModal()
+        }
+
+        const hideDialog = () => {
+            document.querySelector("#dialogModal").close()
+            document.querySelector("#notDropping").classList.remove("hidden")
+            document.querySelector("#dragEnter").classList.add("hidden")
+            document.querySelector("#dropped").classList.add("hidden")
+        }
+
+        const selectFile = () => {
+            document.querySelector("#imageDrop").click()
+        }
+
+        const onDragOver = (event) => {
+            console.log("drag enter event")
+            event.preventDefault()
+            document.querySelector("#notDropping").classList.add("hidden")
+            document.querySelector("#dragEnter").classList.remove("hidden")
+        }
+
+        const onDragLeave = (event) => {
+            event.preventDefault()
+            document.querySelector("#notDropping").classList.remove("hidden")
+            document.querySelector("#dragEnter").classList.add("hidden")
+        }
+
+        const fileReceived = (event) => {
+            console.log("ondrop triggered", event)
+            event.preventDefault()
+            document.querySelector("#notDropping").classList.add("hidden")
+            document.querySelector("#dragEnter").classList.add("hidden")
+            document.querySelector("#dropped").classList.remove("hidden")
+            document.querySelector("#dropped").classList.add("flex")
+        }
+
+        const onChange = (event) => {
+            fileReceived(event)
+            document.querySelector("#droppedFileName").innerText = event.target.files[0].name
+        }
+
+        const onDrop = (event) => {
+            fileReceived(event)
+            document.querySelector("#imageDrop").files = event.dataTransfer.files
+            document.querySelector("#droppedFileName").innerText = event.dataTransfer.files[0].name
+        }
+
     </script>
-
-    <style>
-        body {
-            padding: 0;
-            margin: 0;
-            width: 100%;
-            height: auto;
-        }
-
-        .card {
-            -webkit-column-break-inside: avoid;
-            /* Chrome, Safari, Opera */
-            page-break-inside: avoid;
-            /* Firefox */
-            break-inside: avoid;
-            /* IE 10+ */
-        }
-    </style>
-</head>
-
-<body onload="alertHide()">
-
-    <!-- esto es para subir una nueva imagen -->
-    <div class="modal fade" id="subirimagen" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Upload image</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+    <div onload="alertHide()">
+        <!-- image container -->
+        <dialog class=" backdrop:bg-black backdrop:opacity-70 rounded"
+                id="dialogModal">
+            <form class="border border-black text-center rounded"
+                  method="post"
+                  enctype="multipart/form-data"
+                  ondragover="onDragOver(event)"
+                  onDragLeave="onDragLeave(event)"
+                  onDrop="onDrop(event)">
+                {% csrf_token %}
+                <input onChange="onChange(event)"
+                       id="imageDrop"
+                       type="file"
+                       name="image"
+                       hidden/>
+                <div id="notDropping" class="flex flex-col mx-40 my-12 ">
+                    <i class="fas fa-file-download text-7xl mb-4"></i>
+                    <p class="pointer-events-none">Drop your file here</p>
+                    <p class="pointer-events-none">or</p>
+                    <button type="button"
+                            onclick="selectFile()"
+                            class="bg-green-100 border border-black rounded-full px-4 py-2">
+                        Select file
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="" enctype="multipart/form-data" method="POST">
-                        {% csrf_token %}
-                        <input type="file" name="newpic" id="newpic">
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
+                <div id="dragEnter" class="hidden pointer-events-none mx-40 my-28 ">
+                    <p>Drop your file!</p>
                 </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- main nav bar -->
-    <nav class="navbar navbar-dark bg-dark shadow">
-        <a class="navbar-brand text-white ">Wilson blog / Resources</a>
-        <div class="row justify-content-center align-items-center">
-            <!-- verificamos que el usuario este logueado -->
-
-            <!-- verifico si el username recibido es diferente de anonimo -->
-            {% if usernamelog == "AnonymousUser" %}
-                <div class="col text-white">
-                    <!-- si es AnonymousUser quiere decir que no hay ningun usuario logueado -->
-                    <a href="accounts/login/">Login</a>
+                <div id="dropped" class="hidden flex-col gap-3 mx-40 my-12 ">
+                    <i class="fas fa-file-upload text-7xl mb-4"></i>
+                    <p id="droppedFileName" class="text-3xl font-bold"></p>
+                    <div class="flex flex-row gap-3">
+                        <button class="border border-green-900 text-green-900 py-2 px-3 rounded"
+                                type="submit">save</button>
+                        <button class="border border-red-600 text-red-600 py-2 px-3 rounded"
+                                type="button"
+                                onclick="hideDialog()">
+                            cancel
+                        </button>
+                    </div>
                 </div>
-            {% endif %}
-
-            <!-- si estoy logueado me muestra otras opciones -->
-            {% if usernamelog != "AnonymousUser" %}
-                <!-- creamos un dropdown on las opciones principales -->
-
-                <div class="col text-white">
-                    logged in as <u>{{usernamelog}}</u> / <a href="/logout">logout</a>
-                    <a href="/administracion"><i class="fas fa-cog"></i></a>
-                </div>
-            {% endif %}
-
-            <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
             </form>
-            <button type="button" class="btn btn-info ml-4 mr-3" data-toggle="modal" data-target="#subirimagen">
-                <i class="fas fa-plus-square"></i>
-            </button>
+        </dialog>
+        <div id="imgcontainer" class="flex flex-row gap-3">
+            {% if images %}
+                {% for i in images %}
+                    <div class="group relative w-1/3 h-auto">
+                        <div class="hidden group-hover:block absolute text-red-600">
+                            <a href="{% url 'removeresource' i.id %}" class="text-danger mt-3 ml-3">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                        <img class="w-full"
+                             height=""
+                             width=""
+                             onclick="returnUrl(this)"
+                             src="{{ i.imagefile.url }}"
+                             alt="{{ i.imagefile.name }}"/>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-    </nav>
-
-    <!-- image container -->
-    <div id="imgcontainer" class="container-fluid mt-3"
-        style="-webkit-columns: 3; -moz-columns: 3; columns: 3;">
-        {% if imagenes %}
-        {% for i in imagenes %}
-        <div class="card border border-info bg-dark text-white shadow-sm m-2">
-            <img style="cursor: pointer; display: block" onclick="returnUrl(this)" class="img-fluid"
-                src="{{ i.imagefile.url }}" alt="{{ i.imagefile.name }}">
-            <div class="card-img-overlay img-fluid" style="height: 0px; padding: 0px">
-                <a href="/remove?img={{ i.id }}" style="font-size: 1.5em;" class="text-danger mt-3 ml-3"><i
-                        class="fas fa-trash"></i></a>
-            </div>
-        </div>
-
-        {% endfor %}
-        {% endif %}
+        <button onclick="showDialog()">Show Dialog</button>
     </div>
-    <div class="row justify-content-center fixed-bottom">
-        <div class="alert alert-info fade show alert-dismissible" role="alert">
-            Image link <a id="imageLink" href="#" class="alert-link"></a> copied to clipboard.
-        </div>
-    </div>
-
-</body>
-
-</html>
+{% endblock content %}
