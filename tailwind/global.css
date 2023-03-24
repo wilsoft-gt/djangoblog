@@ -4,7 +4,7 @@
 
 @layer base {
 
-  pre>code {
+  .hightlight {
     @apply rounded-lg mt-1 shadow-xl shadow-slate-500;
   }
 

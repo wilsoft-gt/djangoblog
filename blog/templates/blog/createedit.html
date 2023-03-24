@@ -13,6 +13,7 @@
                    class="form-control"
                    id="entryTitle"
                    name="entryTitle"
+                   {% if entry %} value="{{ entry.post_title }}"{% endif %}
                    placeholder="Post title"/>
         </div>
         <!-- esto es para la imagen heather -->
@@ -26,14 +27,12 @@
                    class="form-control"
                    id="entryImageHeader"
                    name="entryImageHeader"
+                   {% if entry %} value="{{ entry.post_image_header }}"{% endif %}
                    placeholder="Header image"/>
         </div>
-        <textarea class=""
-                  id="postBody"
-                  name="postBody"
-                  cols="30"
-                  rows="15"
-                  placeholder="Write your entry here!"></textarea>
-        <script>const easyMDE = new EasyMDE();</script>
+        <textarea class="" id="postBody" name="postBody" cols="30" rows="15" placeholder="Write your entry here!">
+            {% if entry %} {{ entry.post_body | safe }}{% endif %}
+                </textarea>
+        <script type="text/javascript">const easyMDE = new EasyMDE();</script>
     </form>
 {% endblock content %}

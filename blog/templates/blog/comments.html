@@ -1,43 +1,56 @@
 {% extends "blog/adminbase.html" %}
 {% block content %}
     {% if comments %}
-        <table class="table">
-            <thead>
+        <h2 class="text-4xl mb-8 text-green-900">Comment moderation</h2>
+        <table class="w-full border-collapse border-gray-400">
+            <thead class="border-b-2">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">name</th>
-                    <th scope="col">Comment</th>
-                    <th scope="col">Post</th>
-                    <th scope="col">Moderated</th>
-                    <th scope="col">Accion</th>
+                    <th class="text-xl" scope="col">#</th>
+                    <th class="text-xl" scope="col">name</th>
+                    <th class="text-xl" scope="col">Comment</th>
+                    <th class="text-xl" scope="col">Post</th>
+                    <th class="text-xl" scope="col">Moderated</th>
+                    <th class="text-xl" scope="col">Accion</th>
                 </tr>
             </thead>
             <tbody>
                 {% for j in comments %}
-                    <tr>
-                        <th scope="row">{{ j.id }}</th>
-                        <td>{{ j.comment_name }}</td>
-                        <td>{{ j.comment_comment }}</td>
-                        <td>{{ j.comment_post }}</td>
-                        <td>
-                            {% if j.comment_moderated == True %}
-                                <i class="fas fa-check-circle text-success"></i>
+                    <tr class="border-b text-center">
+                        <th class="p-2" scope="row">{{ j.id }}</th>
+                        <td class="p-2">
+                            {% if j.comment_name != "" %}
+                                {{ j.comment_name }}
                             {% else %}
-                                <i class="fas fa-times-circle text-danger"></i>
+                                Anonimous
                             {% endif %}
                         </td>
-                        <td>
+                        <td class="p-2">{{ j.comment_comment }}</td>
+                        <td class="p-2">{{ j.comment_post }}</td>
+                        <td class="p-2">
+                            {% if j.comment_moderated == True %}
+                                <i class="fas fa-check-circle text-green-600"></i>
+                            {% else %}
+                                <i class="fas fa-times-circle text-red-600"></i>
+                            {% endif %}
+                        </td>
+                        <td class="p-2">
                             {% if j.comment_moderated == True %}
                                 <form method="post">
                                     <input type="hidden" name="commentid" value="{{ j.id }}" />
                                     <input type="hidden" name="moderated" value="False" />
-                                    <button type="submit" class="btn btn-sm btn-success">Disable</button>
+                                    <button type="submit"
+                                            class="border border-solid text-red-600 border-red-600 hover:bg-red-600 px-2 py-1 rounded-lg hover:text-red-100">
+                                        Disable
+                                    </button>
                                 </form>
                             {% else %}
                                 <form method="post">
                                     <input type="hidden" name="commentid" value="{{ j.id }}" />
                                     <input type="hidden" name="moderated" value="True" />
-                                    <button type="submit" class="btn btn-sm btn-danger">Allow</button>
+                                    <button type="submit"
+                                            class="border border-solid text-green-600 border-green-600 hover:bg-green-600 px-2 py-1 rounded-lg hover:text-green-100">
+                                        Allow
+                                    </button>
                                 </form>
                             {% endif %}
                         </td>

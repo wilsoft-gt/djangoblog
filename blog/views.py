@@ -83,10 +83,9 @@ def blogEntry(request, id):
             return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog": usernamelog, "userinfo": userinfo, "views": mostviewed, "mostcommented": mostcomments})
 
 
-def updatePost(request):
+def updatePost(request, id):
     if request.method == "POST":
-        blogid = request.POST["postid"]
-        posttoupdate = blogposts.objects.get(id=blogid)
+        posttoupdate = blogposts.objects.get(id=id)
 
         # aca tomo todos los datos enviados desde el post (lo que esta dentro de entry es el name que fue dado al input dentro del form)
         postTitle = request.POST.get("entryTitle")
@@ -98,18 +97,15 @@ def updatePost(request):
         posttoupdate.post_body = postBody
         # guardo el nuevo post a la base de datos
         posttoupdate.save()
-        return HttpResponseRedirect("administracion?active=newpost&button=list-newpost-list&postid="+blogid)
+        return HttpResponseRedirect(f"post/{id}/update")
     else:
-        blogid = request.GET.get("postid")
-        posttoupdate = blogposts.objects.get(id=blogid)
-        print(posttoupdate)
-        return HttpResponseRedirect("administracion?active=newpost&button=list-newpost-list")
+        posttoupdate = blogposts.objects.get(id=id)
+        return render(request, "blog/createedit.html", {"entry": posttoupdate})
 
 
 @login_required
-def postDelete(request):
-    postId = request.GET.get("id")
-    post = blogposts.objects.get(id=postId)
+def postDelete(request, id):
+    post = blogposts.objects.get(id=id)
     post.delete()
     return HttpResponseRedirect("administracion")
 # @login_required creo que no necesita mucha explicaion pero esto hace que sea requerido loguearse antes de poder ver el view

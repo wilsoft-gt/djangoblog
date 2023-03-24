@@ -16,7 +16,7 @@ urlpatterns = [
          name="admin_create_entry"),
     path('administration/resources',
          views.administration_resources, name="admin_resources"),
-    path('postDelete', views.postDelete, name='postDelete'),
+    path('post/<int:id>/delete', views.postDelete, name='postDelete'),
+    path('post/<int:id>/update', views.updatePost, name='postUpdate'),
     path('comments', views.commentsView, name='comments'),
-    path('update', views.updatePost, name='update')
 ]
