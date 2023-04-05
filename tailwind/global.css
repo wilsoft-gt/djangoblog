@@ -2,11 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
 
-  pre.hightlight {
-    @apply rounded-lg mt-1 shadow-xl shadow-slate-500;
-  }
+.hljs,  {
+  @apply rounded-lg my-4 shadow-xl shadow-slate-500;
+}
 
-  /* ... */
+#blogPost img, #imageHeader {
+  @apply rounded-lg my-4 shadow-xl shadow-gray-500;
+}
+
+#blogPost h1 {
+  @apply text-4xl;
 }

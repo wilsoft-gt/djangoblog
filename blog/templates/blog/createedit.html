@@ -36,7 +36,11 @@
                   cols="30"
                   rows="15"
                   placeholder="Write your entry here!">{% if entry %}{{ entry.post_body | safe }}{% endif %}</textarea>
-        <script type="text/javascript">const easyMDE = new EasyMDE();</script>
+        <script type="text/javascript">
+            const easyMDE = new EasyMDE({
+                toolbar: [ "undo", "redo", "|", "bold", "italic", "heading", "|", "quote", "image", "table", "link", "code", "unordered-list", "ordered-list", "|", "preview", "fullscreen", "|", "guide"]
+            });
+        </script>
         <div class="flex flex-row gap-3">
             <button class="border rounded-md p-2 border-green-700 text-green-700 hover:bg-green-700 hover:border-green-200 hover:text-green-200"
                     type="submit">

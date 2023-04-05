@@ -30,16 +30,17 @@
                     </div>
                 </div>
             </section>
-            <img class="rounded-md"
+            <img id="imageHeader"
+                 class="rounded-md"
                  src="{{ postGet.post_image_header }}"
                  alt="shadow"
                  width="100%"
                  height="auto"/>
             <!-- Heather image -->
             <!-- main div for the content -->
-            <section class="text-base max-w-3xl mx-auto">
+            <section id="blogPost" class="text-base max-w-3xl mx-auto">
                 <!-- here django will render the content of the post -->
-                <p id="postBody">{{ postGet.post_body| markdown |safe }}</p>
+                {{ postGet.post_body| markdown |safe }}
             </section>
             <!-- bottom part for sharing links, who writted the doccument, etc -->
             <section>
