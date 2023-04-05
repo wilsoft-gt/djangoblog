@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load markdown_parser %}
 <!-- main container for the post content -->
 {% block title %}
     <title>Wisoft ⇒ {{ postGet.post_title }}</title>
@@ -38,7 +39,7 @@
             <!-- main div for the content -->
             <section class="text-base max-w-3xl mx-auto">
                 <!-- here django will render the content of the post -->
-                <p id="postBody">{{ postGet.post_body|safe }}</p>
+                <p id="postBody">{{ postGet.post_body| markdown |safe }}</p>
             </section>
             <!-- bottom part for sharing links, who writted the doccument, etc -->
             <section>

@@ -35,8 +35,8 @@
                         </td>
                         <td class="p-2">
                             {% if j.comment_moderated == True %}
-                                <form method="post">
-                                    <input type="hidden" name="commentid" value="{{ j.id }}" />
+                                <form method="post" action="{% url 'admin_update_comment' j.id %}">
+                                    {% csrf_token %}
                                     <input type="hidden" name="moderated" value="False" />
                                     <button type="submit"
                                             class="border border-solid text-red-600 border-red-600 hover:bg-red-600 px-2 py-1 rounded-lg hover:text-red-100">
@@ -44,8 +44,8 @@
                                     </button>
                                 </form>
                             {% else %}
-                                <form method="post">
-                                    <input type="hidden" name="commentid" value="{{ j.id }}" />
+                                <form method="post" action="{% url 'admin_update_comment' j.id %}">
+                                    {% csrf_token %}
                                     <input type="hidden" name="moderated" value="True" />
                                     <button type="submit"
                                             class="border border-solid text-green-600 border-green-600 hover:bg-green-600 px-2 py-1 rounded-lg hover:text-green-100">

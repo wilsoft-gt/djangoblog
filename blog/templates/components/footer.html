@@ -1,48 +1,52 @@
 <footer>
-  <!-- div container -->
-  <div class="flex flex-col p-4 gap-10">
-    <hr>
-      <div class="flex flex-row justify-between">
-
-          <!-- first column on the footer to show some text -->
-          <div class="w-1/3">
-              <h3 class="text-yellow-600 font-semibold"><i class="fas fa-exclamation-circle"></i> Atención!</h3>
-              <p class="text-gray-600">Este blog fue creado para subir tutoriales e informacion sobre cosas que me parecen interesantes. No soy un experto en la programacion pero me encanta y cada cosa nueva que aprenda que fue dificil conseguir informacion la subire a este post sin importar si es la mejor manera. Si funciona porque no utilizarlo. Para mas informacion acerca de mi puedes visitar mi <a href="https://www.wilsonromero.design/beta/">pagina web</a> (beta)</p>
-          </div>
-
-          <!-- second column on the footer to show some links -->
-          <div class="">
-              <h5 class="font-bold">Mas vistos</h5>
-              <ul class="">
-                  {% if top_views %}
-                  {% for view in top_views %}
-                  <li><a class="text-green-900" href="/blogentry?id={{view.id}}">{{view.post_title}}</a></li>
-                  
-                  {% endfor %}
-                  {% else %}
-                      No hay datos disponibles
-                  {% endif %}
-              </ul>
-          </div>
-
-          <!-- third column on the footer to show some links -->
-          <div class="">
-              <h5 class="font-bold">Mas comentados</h5>
-              <ul class="">
-                  {% if top_comments %}
-                  {% for comment in top_comments %}
-                  <li><a class="text-green-900" href="/blogentry?id={{comment.id}}">{{comment.post_title}}</a></li>
-                  
-                  {% endfor %}
-                  {% else %}
-                  no data available
-                  {% endif %}
-              </ul>
-          </div>
-      </div>
-      <!-- copyright info of the blog -->
-      <div class="mx-auto">
-          <p>Copyright &copy; <a class="text-green-900 font-bold" href="https://www.wilsonromero.design/beta/">Wilson Romero</a> | 2023 </p>
-      </div>
-  </div>
+    <!-- div container -->
+    <div class="flex flex-col p-4 gap-10">
+        <hr/>
+        <div class="flex flex-row justify-between">
+            <!-- first column on the footer to show some text -->
+            <div class="w-1/3">
+                <h3 class="text-yellow-600 font-semibold">
+                    <i class="fas fa-exclamation-circle"></i> Atención!
+                </h3>
+                <p class="text-gray-600">
+                    Este blog fue creado para subir tutoriales e informacion sobre cosas que me parecen interesantes. No soy un experto en la programacion pero me encanta y cada cosa nueva que aprenda que fue dificil conseguir informacion la subire a este post sin importar si es la mejor manera. Si funciona porque no utilizarlo. Para mas informacion acerca de mi puedes visitar mi <a href="https://www.wilsonromero.design/beta/">pagina web</a> (beta)
+                </p>
+            </div>
+            <!-- second column on the footer to show some links -->
+            <div>
+                <h5 class="font-bold">Mas vistos</h5>
+                <ul>
+                    {% if top_views %}
+                        {% for view in top_views %}
+                            <li>
+                                <a class="text-green-900" href="{% url 'blogentry' view.id %}">{{ view.post_title }}</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        No hay datos disponibles
+                    {% endif %}
+                </ul>
+            </div>
+            <!-- third column on the footer to show some links -->
+            <h5 class="font-bold">Mas comentados</h5>
+            <ul>
+                {% if top_comments %}
+                    {% for comment in top_comments %}
+                        <li>
+                            <a class="text-green-900" href="{% url 'blogentry' comment.id %}">{{ comment.post_title }}</a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    no data available
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <!-- copyright info of the blog -->
+    <div class="mx-auto">
+        <p>
+            Copyright © <a class="text-green-900 font-bold"
+    href="https://www.wilsonromero.design/beta/">Wilson Romero</a> | 2023
+        </p>
+    </div>
 </footer>

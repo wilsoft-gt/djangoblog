@@ -1,38 +1,50 @@
 {% extends "blog/adminbase.html" %}
 {% block content %}
-    <form method="post">
+    <form method="post" class="flex flex-col gap-3">
         {% csrf_token %}
         <!-- esta esto es para el titulo -->
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
+        <div class="flex flex-row items-center">
+            <div class="bg-gray-300 rounded-l p-2 border border-solid border-gray-300">
+                <div class="m-0">
                     <i class="fas fa-heading"></i>
                 </div>
             </div>
             <input type="text"
-                   class="form-control"
+                   class="w-full h-100 rounded-r border border-solid border-gray-300 p-2 focus:outline-none focus:border-green-900"
                    id="entryTitle"
                    name="entryTitle"
                    {% if entry %} value="{{ entry.post_title }}"{% endif %}
                    placeholder="Post title"/>
         </div>
         <!-- esto es para la imagen heather -->
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <div class="input-group-text">
+        <div class="flex flex-row items-center">
+            <div class="bg-gray-300 rounded-l p-2 border border-solid border-gray-300">
+                <div class="mb-0">
                     <i class="fas fa-image"></i>
                 </div>
             </div>
             <input type="text"
-                   class="form-control"
+                   class="w-full h-100 rounded-r border border-solid border-gray-300 p-2 focus:outline-none focus:border-green-900"
                    id="entryImageHeader"
                    name="entryImageHeader"
                    {% if entry %} value="{{ entry.post_image_header }}"{% endif %}
                    placeholder="Header image"/>
         </div>
-        <textarea class="" id="postBody" name="postBody" cols="30" rows="15" placeholder="Write your entry here!">
-            {% if entry %} {{ entry.post_body | safe }}{% endif %}
-                </textarea>
+        <textarea class=""
+                  id="postBody"
+                  name="postBody"
+                  cols="30"
+                  rows="15"
+                  placeholder="Write your entry here!">{% if entry %}{{ entry.post_body | safe }}{% endif %}</textarea>
         <script type="text/javascript">const easyMDE = new EasyMDE();</script>
+        <div class="flex flex-row gap-3">
+            <button class="border rounded-md p-2 border-green-700 text-green-700 hover:bg-green-700 hover:border-green-200 hover:text-green-200"
+                    type="submit">
+                <i class="fas fa-save"></i>
+                Save new post
+            </button>
+            <a class="border rounded-md p-2 border-red-700 text-red-700 hover:bg-red-700 hover:border-red-200 hover:text-red-200"
+               href="{% url 'admin_create_entry' %}"><i class="fas fa-times"></i> Cancel</a>
+        </div>
     </form>
 {% endblock content %}

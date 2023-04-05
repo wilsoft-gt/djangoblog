@@ -14,26 +14,6 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
-def commentsView(request):
-    comentarios = comment.objects.all()
-    if request.method == "POST":
-        toModerate = request.POST.get("commentid")
-        value = request.POST.get("moderated")
-        getComment = comment.objects.get(id=toModerate)
-        getComment.comment_moderated = value
-        getComment.save()
-        return HttpResponseRedirect("administracion?active=comments&button=list-commnets-list")
-    else:
-        deleteid = request.GET.get("deleteid")
-        if deleteid:
-            print("el comentario %s va a ser eliminado" % deleteid)
-            getComment = comment.objects.get(id=deleteid)
-            getComment.delete()
-            return HttpResponseRedirect("administracion?active=comments&button=list-commnets-list")
-        else:
-            return HttpResponseRedirect("administracion")
-
-
 def blog(request):
     # tomo el username como texto para pasarlo al template como texno no como objeto
     usernamelog = str(request.user)
@@ -82,83 +62,6 @@ def blogEntry(request, id):
         else:
             return render(request, "blog/blogpost.html", {"postGet": postGet, "usernamelog": usernamelog, "userinfo": userinfo, "views": mostviewed, "mostcommented": mostcomments})
 
-
-def updatePost(request, id):
-    if request.method == "POST":
-        posttoupdate = blogposts.objects.get(id=id)
-
-        # aca tomo todos los datos enviados desde el post (lo que esta dentro de entry es el name que fue dado al input dentro del form)
-        postTitle = request.POST.get("entryTitle")
-        postHeadImage = request.POST.get("entryImageHeader")
-        postBody = request.POST.get("postBody")
-        # asigno los datos a las bases de datos
-        posttoupdate.post_title = postTitle
-        posttoupdate.post_image_header = postHeadImage
-        posttoupdate.post_body = postBody
-        # guardo el nuevo post a la base de datos
-        posttoupdate.save()
-        return HttpResponseRedirect(f"post/{id}/update")
-    else:
-        posttoupdate = blogposts.objects.get(id=id)
-        return render(request, "blog/createedit.html", {"entry": posttoupdate})
-
-
-@login_required
-def postDelete(request, id):
-    post = blogposts.objects.get(id=id)
-    post.delete()
-    return HttpResponseRedirect("administracion")
-# @login_required creo que no necesita mucha explicaion pero esto hace que sea requerido loguearse antes de poder ver el view
-# para usarlo se necesita en import en la linea NO. 6 de este documento
-
-
-@login_required
-def createEntry(request):
-    # tomo el username como texto para pasarlo al template como texno no como objeto
-    usernamelog = str(request.user)
-
-    # si no estoy enviando un formulario va a mostrar el template con el form vacio
-    if request.method == "GET":
-        # renderiza el template en blanco
-        return HttpResponseRedirect("administracion")
-    # si se solicita el view como POST (envio de formulario), entonces voy a tomar los datos y guardarlos en la base de datos
-    elif request.method == "POST":
-        # blogposts es el objeto que es llamado desde mi model (database)
-        newp = blogposts()
-        # aca tomo todos los datos enviados desde el post (lo que esta dentro de entry es el name que fue dado al input dentro del form)
-        postTitle = request.POST.get("entryTitle")
-        postHeadImage = request.POST.get("entryImageHeader")
-        postBody = request.POST.get("postBody")
-        # asigno los datos a las bases de datos
-        newp.post_title = postTitle
-        newp.post_image_header = postHeadImage
-        newp.post_body = postBody
-        newp.post_author = request.user
-        # guardo el nuevo post a la base de datos
-        newp.save()
-        # una vez se guarda muestra una entrada vacia
-        return HttpResponseRedirect("administracion")
-
-# @login_required creo que no necesita mucha explicaion pero esto hace que sea requerido loguearse antes de poder ver el view
-# para usarlo se necesita en import en la linea NO. 6 de este documento
-
-
-@login_required
-def resources(request):
-    usernamelog = str(request.user)
-    # si la pagina solo se solicita se muestra el template y se pasan los datos dentro de mi tabla de imagenes
-    if request.method == "GET":
-        imagenes = images.objects.all()
-        return HttpResponseRedirect("administracion")
-
-    # si se envia datos al template entonces tomo los datos y los guardo en el servidor
-    # en este caso necesito usar si o si la linea: enctype="multipart/form-data" en el form porque no estoy usando el modelform de django
-    elif request.method == "POST":
-        newImg = images()
-        newImg.imagefile = request.FILES["newpic"]
-        newImg.save()
-        imagenes = images.objects.all()
-        return HttpResponseRedirect("administracion")
 
 # este es el sistema de loggin que se hereda de a linea NO. 5 de este documento
 
@@ -209,8 +112,98 @@ def logoutview(request):
         return HttpResponseRedirect("/")
 
 
+# ADMINISTRATION FOR BLOG ENTRIES
+
+
 @login_required
-def removeresource(request, id):
+def administration_entries(request):
+    """DOCSTRING: administration_entries
+        Returns the blog entries in the admin
+    """
+    entries = blogposts.objects.order_by("-post_date")
+    return render(request, "blog/entries.html", {"entries": entries})
+
+
+@login_required
+def administration_create_entry(request):
+    """DOCSTRING: adminisstration_create_entry
+        Create a new blog post
+    """
+    if request.method == "POST":
+        csrf, entryTitle, entryImageHeader, postBody = request.POST.values()
+        blogposts.objects.create(
+            post_title=entryTitle, post_image_header=entryImageHeader, post_body=postBody, post_author=request.user)
+        return render(request, "blog/createedit.html")
+
+    else:
+        return render(request, "blog/createedit.html")
+
+
+@login_required
+def administration_delete_entry(request, id):
+    """DOCSTRING: administration_delete_entry
+        Delete the blog post
+    """
+    blogposts.objects.filter(pk=id).delete()
+    return HttpResponseRedirect("/administracion")
+
+
+def administration_update_entry(request, id):
+    """DOCSTRING: administration_update_entry
+        Update the blog post
+    """
+    if request.method == "POST":
+        csrf, postTitle, postHeadImage, postBody = request.POST.values()
+        blogposts.objects.filter(id=id).update(
+            post_title=postTitle, post_image_header=postHeadImage, post_body=postBody)
+        return HttpResponseRedirect(f"/post/{id}/update")
+    else:
+        posttoupdate = blogposts.objects.get(id=id)
+        return render(request, "blog/createedit.html", {"entry": posttoupdate})
+
+# ADMINISTRATION FOR COMMENTS ENTRIES
+
+
+@login_required
+def administration_comments(request):
+    """DOCSTRING: administration_update_entry
+        Update the blog post
+    """
+    comments = comment.objects.all()
+    return render(request, "blog/comments.html", {"comments": comments})
+
+
+@login_required
+def administration_update_comment(request, id):
+    if request.method == "POST":
+        comment.objects.filter(pk=id).update(
+            comment_moderated=request.POST['moderated'])
+        return HttpResponseRedirect(f"/admnistration/comments")
+
+    else:
+        return HttpResponseRedirect(f"/admnistration/comments")
+
+
+@login_required
+def administration_delete_comment(request, id):
+    comment.objects.filter(pk=id).delete()
+    return HttpResponseRedirect(f"/administration/comments")
+
+# ADMINISTRATION VIEW FOR RESOURCES
+
+
+@login_required
+def administration_resources(request):
+    resources = images.objects.all()
+    if request.method == "POST":
+        images.objects.create(request.FILES["image"])
+        return HttpResponseRedirect("/administration/resources")
+    else:
+        return render(request, "blog/resources.html", {"images": resources})
+
+
+@login_required
+def administration_delete_resource(request, id):
     imagen_db = images.objects.get(id=id)
     imagen_path = os.path.join(settings.MEDIA_ROOT, str(imagen_db.imagefile))
     os.remove(imagen_path)
@@ -219,33 +212,15 @@ def removeresource(request, id):
 
 
 @login_required
-def administration_entries(request):
-    entries = blogposts.objects.order_by("-post_date")
-    return render(request, "blog/entries.html", {"entries": entries})
+def resources(request):
+    usernamelog = str(request.user)
+    # si la pagina solo se solicita se muestra el template y se pasan los datos dentro de mi tabla de imagenes
+    if request.method == "GET":
+        imagenes = images.objects.all()
+        return HttpResponseRedirect("administracion")
 
-
-@login_required
-def administration_comments(request):
-    comments = comment.objects.all()
-    return render(request, "blog/comments.html", {"comments": comments})
-
-
-@login_required
-def administration_create_entry(request):
-    if request.method == "POST":
-        return render(request, "blog/createedit.html")
-
-    else:
-        return render(request, "blog/createedit.html")
-
-
-@login_required
-def administration_resources(request):
-    resources = images.objects.all()
-    if request.method == "POST":
-        newImg = images()
-        newImg.imagefile = request.FILES["image"]
-        newImg.save()
-        return HttpResponseRedirect("/administration/resources")
-    else:
-        return render(request, "blog/resources.html", {"images": resources})
+    # si se envia datos al template entonces tomo los datos y los guardo en el servidor
+    # en este caso necesito usar si o si la linea: enctype="multipart/form-data" en el form porque no estoy usando el modelform de django
+    elif request.method == "POST":
+        images.objects.create(imagefile=request.FILES["newpic"])
+        return HttpResponseRedirect("/administracion/resources")

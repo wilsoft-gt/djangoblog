@@ -4,19 +4,30 @@ from . import views
 urlpatterns = [
     path('', views.blog, name='blog'),
     path('blogentry/<int:id>/', views.blogEntry, name='blogentry'),
-    path('newpost', views.createEntry, name='newpost'),
-    path('resources', views.resources, name='resources'),
     path('accounts/login/', views.logginview, name='loggin'),
     path('logout', views.logoutview, name='logout'),
-    path('resource/<int:id>/remove', views.removeresource, name='removeresource'),
-    path('administracion', views.administration_entries, name='administration'),
-    path('admnistration/comments',
-         views.administration_comments, name='admin_comments'),
-    path('administration/create', views.administration_create_entry,
-         name="admin_create_entry"),
+
+
     path('administration/resources',
          views.administration_resources, name="admin_resources"),
-    path('post/<int:id>/delete', views.postDelete, name='postDelete'),
-    path('post/<int:id>/update', views.updatePost, name='postUpdate'),
-    path('comments', views.commentsView, name='comments'),
+    path('resource/<int:id>/remove',
+         views.administration_delete_resource, name='admin_delete_resource'),
+
+
+    path('administracion', views.administration_entries, name='admin_entries'),
+    path('administration/create', views.administration_create_entry,
+         name="admin_create_entry"),
+    path('post/<int:id>/delete',
+         views.administration_delete_entry, name='admin_delete_entry'),
+    path('post/<int:id>/update',
+         views.administration_update_entry, name='admin_update_entry'),
+
+
+    path('admnistration/comments',
+         views.administration_comments, name='admin_comments'),
+    path('comment/<int:id>/delete',
+         views.administration_delete_comment, name='admin_delete_comment'),
+    path('comment/<int:id>/update',
+         views.administration_update_comment, name='admin_update_comment'),
+
 ]
