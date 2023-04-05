@@ -65,6 +65,12 @@
             document.querySelector("#droppedFileName").innerText = event.dataTransfer.files[0].name
         }
 
+
+        let active_new = document.querySelector("#menu_resources")
+        active_new.classList.toggle("text-green-200")
+        active_new.classList.toggle("bg-green-900")
+        active_new.classList.toggle("active")
+
     </script>
     <div onload="alertHide()">
         <!-- image container -->
