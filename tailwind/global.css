@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-.hljs,  {
+.hljs  {
   @apply rounded-lg my-4 shadow-xl shadow-slate-500;
 }
 
@@ -12,5 +12,41 @@
 }
 
 #blogPost h1 {
+  @apply text-6xl;
+}
+
+#blogPost h2 {
+  @apply text-5xl;
+}
+
+#blogPost h3 {
   @apply text-4xl;
+}
+
+#blogPost h4 {
+  @apply text-3xl;
+}
+
+#blogPost h5 {
+  @apply text-2xl;
+}
+
+#blogPost h6 {
+  @apply text-xl;
+}
+
+#blogPost blockquote {
+  @apply p-4 m-2 border-l-8 bg-gray-100 border-l-green-900 text-gray-500 rounded;
+}
+
+#blogPost ul {
+  @apply list-disc pl-8;
+}
+
+#blogPost ol {
+  @apply list-decimal pl-8;
+}
+
+#blogPost a {
+  @apply text-green-700;
 }
