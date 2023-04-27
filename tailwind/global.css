@@ -3,50 +3,50 @@
 @tailwind utilities;
 
 
-.hljs  {
+.hljs, .editor-preview pre  {
   @apply rounded-lg my-4 shadow-xl shadow-slate-500;
 }
 
-#blogPost img, #imageHeader {
+#blogPost img, .editor-preview img, #imageHeader {
   @apply rounded-lg my-4 shadow-xl shadow-gray-500;
 }
 
-#blogPost h1 {
+#blogPost h1, .editor-preview h1 {
   @apply text-6xl;
 }
 
-#blogPost h2 {
+#blogPost h2, .editor-preview h2 {
   @apply text-5xl;
 }
 
-#blogPost h3 {
+#blogPost h3, .editor-preview h3 {
   @apply text-4xl;
 }
 
-#blogPost h4 {
+#blogPost h4, .editor-preview h4 {
   @apply text-3xl;
 }
 
-#blogPost h5 {
+#blogPost h5, .editor-preview h5 {
   @apply text-2xl;
 }
 
-#blogPost h6 {
+#blogPost h6, .editor-preview h6 {
   @apply text-xl;
 }
 
-#blogPost blockquote {
+#blogPost blockquote, .editor-preview blockquote {
   @apply p-4 m-2 border-l-8 bg-gray-100 border-l-green-900 text-gray-500 rounded;
 }
 
-#blogPost ul {
+#blogPost ul, .editor-preview ul {
   @apply list-disc pl-8;
 }
 
-#blogPost ol {
+#blogPost ol, .editor-preview ol {
   @apply list-decimal pl-8;
 }
 
-#blogPost a {
+#blogPost a, .editor-preview a {
   @apply text-green-700;
 }
