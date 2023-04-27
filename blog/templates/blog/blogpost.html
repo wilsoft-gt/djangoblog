@@ -10,7 +10,7 @@
             <!-- main div for title, author and date, etc. -->
             <section class="flex flex-row gap-3 mb-5">
                 <!-- post title -->
-                <div class="w-16">
+                <div class="w-24">
                     <img width="auto"
                          height="auto"
                          class="rounded-md"
@@ -19,7 +19,7 @@
                 </div>
                 <!-- author information -->
                 <div class="flex flex-col justify-center">
-                    <h2 class="text-4xl text-green-900 font-semi-bold">
+                    <h2 class="text-6xl text-green-900 font-semi-bold">
                         {{ postGet.post_title }}
                         <a href="{% url 'admin_update_entry' postGet.id %}"><sup><i class="fa fa-pen text-base"></sup></i></a>
                     </h2>
@@ -33,13 +33,15 @@
                     </div>
                 </div>
             </section>
-            <img id="imageHeader"
-                 class="rounded-md"
-                 src="{{ postGet.post_image_header }}"
-                 alt="shadow"
-                 width="100%"
-                 height="auto"/>
-            <!-- Heather image -->
+            {% if postGet.post_image_header %}
+                <img id="imageHeader"
+                     class="rounded-md"
+                     src="{{ postGet.post_image_header }}"
+                     alt="shadow"
+                     width="100%"
+                     height="auto"/>
+                <!-- Heather image -->
+            {% endif %}
             <!-- main div for the content -->
             <section id="blogPost" class="text-base max-w-3xl mx-auto">
                 <!-- here django will render the content of the post -->

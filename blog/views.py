@@ -5,7 +5,7 @@ from django.shortcuts import render  # <- para renderizar un template
 # <- respuesta del servidor en plain text o redireccionamiento
 from django.http import HttpResponse, HttpResponseRedirect
 # <- importar base de datos para usarla en las views
-from .models import blogposts, images, comment, User
+from .models import blogposts, images, comment, User, LanguageTopic
 # <- loguea y desloguea a un usuario, sumamente necesario para loggins
 from django.contrib.auth import authenticate, login, logout
 # <- redirecciona el template al loggin info si no hay ningun usuario logueado
@@ -28,7 +28,7 @@ def blog(request):
 
 
 def blogEntry(request, id):
-    # tomo el username como texto para pasarlo al template como texno no como objeto
+    # tomo el username como texto para pasarlo al template como texto no como objeto
     usernamelog = str(request.user)
 
     # tomo unicamente el post que fue requerido desde el template
@@ -129,14 +129,15 @@ def administration_create_entry(request):
     """DOCSTRING: adminisstration_create_entry
         Create a new blog post
     """
+    languages = LanguageTopic.objects.all()
     if request.method == "POST":
         csrf, entryTitle, entryImageHeader, postBody = request.POST.values()
         blogposts.objects.create(
             post_title=entryTitle, post_image_header=entryImageHeader, post_body=postBody, post_author=request.user)
-        return render(request, "blog/createedit.html")
+        return render(request, "blog/createedit.html", {"languages": languages})
 
     else:
-        return render(request, "blog/createedit.html")
+        return render(request, "blog/createedit.html", {"languages": languages})
 
 
 @login_required
