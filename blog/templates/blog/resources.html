@@ -116,10 +116,18 @@
                 </div>
             </form>
         </dialog>
-        <div id="imgcontainer" class="flex flex-row gap-3">
+        <div class="flex flex-row justify-between align-middle mb-2">
+            <h4>Resources</h4>
+            <button onclick="showDialog()"
+                    class="border rounded-md p-2 border-green-700 text-green-700 hover:bg-green-700 hover:border-green-200 hover:text-green-200">
+                <i class="fas fa-plus"></i> Upload new resource
+            </button>
+        </div>
+        <hr class="mb-3" />
+        <div id="imgcontainer" class="gap-3 columns-3">
             {% if images %}
                 {% for i in images %}
-                    <div class="group relative w-1/3 h-auto">
+                    <div class="group relative w-full h-auto mt-3">
                         <div class="hidden group-hover:block absolute text-red-600">
                             <a href="{% url 'admin_delete_resource' i.id %}"
                                class="text-danger mt-3 ml-3">
@@ -136,6 +144,5 @@
                 {% endfor %}
             {% endif %}
         </div>
-        <button onclick="showDialog()">Show Dialog</button>
     </div>
 {% endblock content %}

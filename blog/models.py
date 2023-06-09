@@ -38,7 +38,7 @@ class blogposts(models.Model):
 
 
 class images(models.Model):
-    imagefile = models.ImageField(upload_to="blog/images/media")
+    imagefile = models.ImageField()
     imagedate = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     def __str__(self):

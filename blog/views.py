@@ -129,15 +129,16 @@ def administration_create_entry(request):
     """DOCSTRING: adminisstration_create_entry
         Create a new blog post
     """
+    resources = images.objects.all()
     languages = LanguageTopic.objects.all()
     if request.method == "POST":
         csrf, entryTitle, entryImageHeader, postBody = request.POST.values()
         blogposts.objects.create(
             post_title=entryTitle, post_image_header=entryImageHeader, post_body=postBody, post_author=request.user)
-        return render(request, "blog/createedit.html", {"languages": languages})
+        return render(request, "blog/createedit.html", {"languages": languages, "resources": resources})
 
     else:
-        return render(request, "blog/createedit.html", {"languages": languages})
+        return render(request, "blog/createedit.html", {"languages": languages, "resources": resources})
 
 
 @login_required
@@ -154,13 +155,21 @@ def administration_update_entry(request, id):
         Update the blog post
     """
     if request.method == "POST":
-        csrf, postTitle, postHeadImage, postBody = request.POST.values()
+        print(request.POST.values)
+        csrf, postTitle, postHeadImage, language, postBody = request.POST.values()
+        if language == "-":
+            language = None
         blogposts.objects.filter(id=id).update(
-            post_title=postTitle, post_image_header=postHeadImage, post_body=postBody)
+            post_title=postTitle,
+            post_image_header=postHeadImage,
+            post_body=postBody,
+            post_language=language)
         return HttpResponseRedirect(f"/post/{id}/update")
     else:
         posttoupdate = blogposts.objects.get(id=id)
-        return render(request, "blog/createedit.html", {"entry": posttoupdate})
+        resources = images.objects.all()
+        languages = LanguageTopic.objects.all()
+        return render(request, "blog/createedit.html", {"entry": posttoupdate, "resources": resources, "languages": languages})
 
 # ADMINISTRATION FOR COMMENTS ENTRIES
 
@@ -197,7 +206,8 @@ def administration_delete_comment(request, id):
 def administration_resources(request):
     resources = images.objects.all()
     if request.method == "POST":
-        images.objects.create(request.FILES["image"])
+        images.objects.create(imagefile=request.FILES["image"])
+        print(request.FILES)
         return HttpResponseRedirect("/administration/resources")
     else:
         return render(request, "blog/resources.html", {"images": resources})
