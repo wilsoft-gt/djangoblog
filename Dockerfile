@@ -17,13 +17,14 @@ ENV DJANGO_SUPERUSER_USERNAME="sysadmin"
 ENV DJANGO_SUPERUSER_PASSWORD="admin123."
 
 #Install dependencies
+RUN apk add gcc python3-dev jpeg-dev zlib-dev musl-dev
 RUN pip install -r requirements.txt
 
 #Generate database tables and superuser
 RUN python manage.py migrate
 RUN python manage.py makemigrations
-RUN python manage.py createsuperuser --noimput
-RUN python manage.py collectstatic
+RUN python manage.py createsuperuser --noinput
+RUN python manage.py collectstatic --noinput
 
 #Start the server
 CMD [ "python", "manage.py", "runserver", "0:8080" ]
