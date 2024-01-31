@@ -1,8 +1,8 @@
 <dialog id="resources_selection"
-        class="backdrop:bg-black backdrop:opacity-70 w-2/3 max-h gap-3">
+        class="backdrop:bg-black backdrop:opacity-70 w-2/3 max-h gap-3 p-2">
   <div>
-    <h4>Choose a picture {{ entryImageHeader }}</h4>
-    <div id="galery-images" class="columns-3">
+    <h4>Choose a picture</h4>
+    <div id="galery-images" class="columns-3 m-3">
       {% if resources %}
         {% for i in resources %}
           <img onclick="setHeaderImage(event)"
@@ -10,7 +10,7 @@
                src="{{ i.imagefile.url }}"
                height="auto"
                width="auto"
-               alt="{{ i.imagefile.name }}"/>
+               alt="{{ i.imagefile.name }}" />
         {% endfor %}
       {% endif %}
     </div>

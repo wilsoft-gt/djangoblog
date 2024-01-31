@@ -1,4 +1,7 @@
 {% extends "blog/adminbase.html" %}
+{% block title %}
+    <title>Wilsoft ⇒ Recursos</title>
+{% endblock title %}
 {% block content %}
     <script>
         function returnUrl(elements) {
@@ -87,16 +90,14 @@
                        id="imageDrop"
                        type="file"
                        name="image"
-                       hidden/>
+                       hidden />
                 <div id="notDropping" class="flex flex-col mx-40 my-12 ">
                     <i class="fas fa-file-download text-7xl mb-4"></i>
                     <p class="pointer-events-none">Drop your file here</p>
                     <p class="pointer-events-none">or</p>
                     <button type="button"
                             onclick="selectFile()"
-                            class="bg-green-100 border border-black rounded-full px-4 py-2">
-                        Select file
-                    </button>
+                            class="bg-green-100 border border-black rounded-full px-4 py-2">Select file</button>
                 </div>
                 <div id="dragEnter" class="hidden pointer-events-none mx-40 my-28 ">
                     <p>Drop your file!</p>
@@ -109,18 +110,16 @@
                                 type="submit">save</button>
                         <button class="border border-red-600 text-red-600 py-2 px-3 rounded"
                                 type="button"
-                                onclick="hideDialog()">
-                            cancel
-                        </button>
+                                onclick="hideDialog()">cancel</button>
                     </div>
                 </div>
             </form>
         </dialog>
         <div class="flex flex-row justify-between align-middle mb-2">
-            <h4>Resources</h4>
+            <h4>Recursos</h4>
             <button onclick="showDialog()"
                     class="border rounded-md p-2 border-green-700 text-green-700 hover:bg-green-700 hover:border-green-200 hover:text-green-200">
-                <i class="fas fa-plus"></i> Upload new resource
+                <i class="fas fa-plus"></i> Subir nuevo recurso
             </button>
         </div>
         <hr class="mb-3" />
@@ -139,7 +138,7 @@
                              width=""
                              onclick="returnUrl(this)"
                              src="{{ i.imagefile.url }}"
-                             alt="{{ i.imagefile.name }}"/>
+                             alt="{{ i.imagefile.name }}" />
                     </div>
                 {% endfor %}
             {% endif %}

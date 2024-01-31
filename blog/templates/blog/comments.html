@@ -1,7 +1,10 @@
 {% extends "blog/adminbase.html" %}
+{% block title %}
+    <title>Wilsoft ⇒ Comentarios</title>
+{% endblock title %}
 {% block content %}
     {% if comments %}
-        <h2 class="text-4xl mb-8 text-green-900">Comment moderation</h2>
+        <h2 class="text-4xl mb-8 text-green-900">Moderacion de comentarios</h2>
         <table class="w-full border-collapse border-gray-400">
             <thead class="border-b-2">
                 <tr>
@@ -21,7 +24,7 @@
                             {% if j.comment_name != "" %}
                                 {{ j.comment_name }}
                             {% else %}
-                                Anonimous
+                                Anonimo
                             {% endif %}
                         </td>
                         <td class="p-2">{{ j.comment_comment }}</td>
@@ -40,7 +43,7 @@
                                     <input type="hidden" name="moderated" value="False" />
                                     <button type="submit"
                                             class="border border-solid text-red-600 border-red-600 hover:bg-red-600 px-2 py-1 rounded-lg hover:text-red-100">
-                                        Disable
+                                        Deshabilitar
                                     </button>
                                 </form>
                             {% else %}
@@ -49,7 +52,7 @@
                                     <input type="hidden" name="moderated" value="True" />
                                     <button type="submit"
                                             class="border border-solid text-green-600 border-green-600 hover:bg-green-600 px-2 py-1 rounded-lg hover:text-green-100">
-                                        Allow
+                                        Permitir
                                     </button>
                                 </form>
                             {% endif %}
