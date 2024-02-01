@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load i18n %}
 {% load markdown_parser %}
 <!-- main container for the post content -->
 {% block title %}
@@ -75,7 +76,7 @@
                         </div>
                         <div class="flex flex-col">
                             <span class="text-green-900 font-semibold">
-                                Escrito por
+                                {% trans "Escrito por" %}
                                 {% if postGet.post_author.get_full_name %}
                                     {{ postGet.post_author.get_full_name }}
                                 </span>
@@ -89,7 +90,7 @@
                 <hr class="mt-0 m-3" />
                 <!-- comments div -->
                 <div class="conatiner">
-                    <div class="p-2 rounded-t-md border border-solid border-1 bg-gray-100">Comentarios</div>
+                    <div class="p-2 rounded-t-md border border-solid border-1 bg-gray-100">{% trans "Comentarios" %}</div>
                     <div class="flex flex-col gap-4 p-4 rounded-b-md border border-solid border-x-1">
                         {% if comments %}
                             {% for j in comments %}
@@ -100,7 +101,7 @@
                                                 {% if j.comment_name %}
                                                     {{ j.comment_name }}
                                                 {% elif j.comment_name == "" %}
-                                                    Anonimo
+                                                    {% trans "Anonimo" %}
                                                 {% endif %}
                                             </strong> - {{ j.comment_date }}
                                         </h6>
@@ -110,7 +111,7 @@
                             {% endfor %}
                         {% else %}
                             <div class="border border-1 border-solid rounded-md shadow-md shadow-gray-200">
-                                <p class="p-2">No hay comentarios aun, pero tu puedes ser el primero! 😉</p>
+                                <p class="p-2">{% trans "No hay comentarios aun, pero tu puedes ser el primero! 😉" %}</p>
                             </div>
                         {% endif %}
                     </div>
@@ -119,7 +120,7 @@
                 <hr class="my-4" />
                 <!-- comment form -->
                 <div class="flex flex-col" id="comments_div">
-                    <h2>Nuevo comentario</h2>
+                    <h2>{% trans "Nuevo comentario" %}</h2>
                     <form action="#comments_div"
                           method="post"
                           class="flex flex-col gap-2 border border-gray-300 rounded-md p-4">
@@ -140,11 +141,11 @@
                                   id="comment_body"
                                   rows="5"
                                   placeholder="Agrega tu comentario aqui"></textarea>
-                        <small id="emailHelp" class="form-text text-muted">Nunca compartiremos tu informacion personal</small>
+                        <small id="emailHelp" class="form-text text-muted">{% trans "Nunca compartiremos tu informacion personal" %}</small>
                         <button type="submit"
                                 onclick="sendComment()"
                                 class="border rounded-md p-2 border-green-900 text-green-900 hover:bg-green-900 hover:text-green-200">
-                            Enviar comentario
+                            {% trans "Enviar comentario" %}
                         </button>
                     </form>
                 </div>

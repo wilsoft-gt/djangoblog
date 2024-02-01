@@ -1,6 +1,7 @@
 {% extends "blog/adminbase.html" %}
+{% load i18n %}
 {% block title %}
-    <title>Wilsoft ⇒ Crear / Editar</title>
+    <title>Wilsoft ⇒ {% trans "Crear / Editar" %}</title>
 {% endblock title %}
 {% block content %}
     {% include "components/resources_selection.html" with entryImageHeader="entryImageHeader" %}
@@ -18,7 +19,7 @@
                    id="entryTitle"
                    name="entryTitle"
                    {% if entry %}value="{{ entry.post_title }}"{% endif %}
-                   placeholder="Titulo del post" />
+                   placeholder="{% trans "Titulo del post" %}" />
         </div>
         <!-- esto es para la imagen heather -->
         <div class="flex flex-row items-center">
@@ -32,11 +33,11 @@
                    id="entryImageHeader"
                    name="entryImageHeader"
                    {% if entry %}value="{{ entry.post_image_header }}"{% endif %}
-                   placeholder="Imagen de cabecera" />
+                   placeholder="{% trans "Imagen de cabecera" %}" />
             <button type="button"
                     onclick="openSelectResource()"
                     class="w-2/12 h-100 rounded-r border border-solid border-gray-300 p-2 focus:outline-none focus:border-green-900">
-                <i class="fas fa-image"></i> Seleccionar un archivo
+                <i class="fas fa-image"></i> {% trans "Seleccionar un archivo" %}
             </button>
         </div>
         {% if languages %}
@@ -52,7 +53,9 @@
                         value="{{ entry.post_language }}">
                     <option value="-"
                             class="text-gray-400 p-2"
-                            {% if entry.post_language.id == "None" %}selected{% endif %}>Lenguage / Tema</option>
+                            {% if entry.post_language.id == "None" %}selected{% endif %}>
+                        {% trans "Lenguage / Tema" %}
+                    </option>
                     {% for lang in languages %}
                         <option value="{{ lang.id }}"
                                 class="w-full p-2"
@@ -68,7 +71,7 @@
                   name="postBody"
                   cols="30"
                   rows="15"
-                  placeholder="Write your entry here!">{% if entry %}{{ entry.post_body | safe }}{% endif %}</textarea>
+                  placeholder="{% trans "Escribe tu post aca!" %}">{% if entry %}{{ entry.post_body | safe }}{% endif %}</textarea>
         <script type="text/javascript">
             const easyMDE = new EasyMDE({
                 toolbar: [ "undo", "redo", "|", "bold", "italic", "heading", "|", "quote", "image", "table", "link", "code", "unordered-list", "ordered-list", "|", "preview", "fullscreen", "|", "guide"]
@@ -79,17 +82,17 @@
                     type="submit">
                 <i class="fas fa-save"></i>
                 {% if entry %}
-                    Guardar
+                    {% trans "Guardar" %}
                 {% else %}
-                    Guardar nuevo post
+                    {% trans "Guardar nuevo post" %}
                 {% endif %}
             </button>
             {% if entry %}
                 <a class="border rounded-md p-2 border-blue-700 text-blue-700 hover:bg-blue-700 hover:border-blue-200 hover:text-blue-200"
-                   href="{% url 'blogentry' entry.id %}"><i class="fas fa-eye"></i> View</a>
+                   href="{% url 'blogentry' entry.id %}"><i class="fas fa-eye"></i> {% trans "Ver" %}</a>
             {% endif %}
             <a class="border rounded-md p-2 border-red-700 text-red-700 hover:bg-red-700 hover:border-red-200 hover:text-red-200"
-               href="{% url 'admin_create_entry' %}"><i class="fas fa-times"></i> Cancelar</a>
+               href="{% url 'admin_create_entry' %}"><i class="fas fa-times"></i> {% trans "Cancelar" %}</a>
         </div>
     </form>
     <script>

@@ -1,0 +1,277 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-01 13:47-0600\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: blog/templates/blog/adminbase.html:25
+#, fuzzy
+#| msgid "Este es un titulo temporal!"
+msgid "Este es un mensaje temporal"
+msgstr "Este es un titulo temporal!"
+
+#: blog/templates/blog/base.html:20
+msgid "Este es un titulo temporal!"
+msgstr "Este es un titulo temporal!"
+
+#: blog/templates/blog/blog.html:9
+msgid "Ultimos articulos"
+msgstr "Ultimos articulos"
+
+#: blog/templates/blog/blogpost.html:79
+msgid "Escrito por"
+msgstr "Escrito por"
+
+#: blog/templates/blog/blogpost.html:93 blog/templates/blog/comments.html:4
+#: blog/templates/components/admin_nav_bar.html:14
+msgid "Comentarios"
+msgstr "Comentarios"
+
+#: blog/templates/blog/blogpost.html:104 blog/templates/blog/comments.html:28
+msgid "Anonimo"
+msgstr "Anonimo"
+
+#: blog/templates/blog/blogpost.html:114
+msgid "No hay comentarios aun, pero tu puedes ser el primero! 😉"
+msgstr "No hay comentarios aun, pero tu puedes ser el primero! 😉"
+
+#: blog/templates/blog/blogpost.html:123
+msgid "Nuevo comentario"
+msgstr "Nuevo comentario"
+
+#: blog/templates/blog/blogpost.html:144
+msgid "Nunca compartiremos tu informacion personal"
+msgstr "Nunca compartiremos tu informacion personal"
+
+#: blog/templates/blog/blogpost.html:148
+msgid "Enviar comentario"
+msgstr "Enviar comentario"
+
+#: blog/templates/blog/comments.html:8
+msgid "Moderacion de comentarios"
+msgstr "Moderacion de comentarios"
+
+#: blog/templates/blog/comments.html:13
+msgid "Nombre"
+msgstr "Nombre"
+
+#: blog/templates/blog/comments.html:14
+msgid "Comentario"
+msgstr "Comentario"
+
+#: blog/templates/blog/comments.html:15
+msgid "Post"
+msgstr "Post"
+
+#: blog/templates/blog/comments.html:16
+msgid "Moderado"
+msgstr "Moderado"
+
+#: blog/templates/blog/comments.html:17
+msgid "Accion"
+msgstr "Accion"
+
+#: blog/templates/blog/comments.html:47
+msgid "Deshabilitar"
+msgstr "Deshabilitar"
+
+#: blog/templates/blog/comments.html:56
+msgid "Permitir"
+msgstr "Permitir"
+
+#: blog/templates/blog/comments.html:66
+msgid "No hay comentarios para moderar"
+msgstr "No hay comentarios para moderar"
+
+#: blog/templates/blog/createedit.html:4
+msgid "Crear / Editar"
+msgstr "Crear / Editar"
+
+#: blog/templates/blog/createedit.html:22
+msgid "Titulo del post"
+msgstr "Titulo del post"
+
+#: blog/templates/blog/createedit.html:36
+msgid "Imagen de cabecera"
+msgstr "Imagen de cabecera"
+
+#: blog/templates/blog/createedit.html:40
+msgid "Seleccionar un archivo"
+msgstr "Seleccionar un archivo"
+
+#: blog/templates/blog/createedit.html:57
+msgid "Lenguage / Tema"
+msgstr "Lenguage / Tema"
+
+#: blog/templates/blog/createedit.html:74
+msgid "Escribe tu post aca!"
+msgstr "Escribe tu post aca!"
+
+#: blog/templates/blog/createedit.html:85
+msgid "Guardar"
+msgstr "Guardar"
+
+#: blog/templates/blog/createedit.html:87
+msgid "Guardar nuevo post"
+msgstr "Guardar nuevo post"
+
+#: blog/templates/blog/createedit.html:92
+msgid "Ver"
+msgstr "Ver"
+
+#: blog/templates/blog/createedit.html:95
+#: blog/templates/blog/resources.html:116
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#: blog/templates/blog/entries.html:4
+#: blog/templates/components/admin_nav_bar.html:8
+msgid "Entradas"
+msgstr "Entradas"
+
+#: blog/templates/blog/entries.html:8
+msgid "Posts"
+msgstr "Posts"
+
+#: blog/templates/blog/entries.html:12
+msgid "ID #"
+msgstr "ID #"
+
+#: blog/templates/blog/entries.html:13
+msgid "Titulo"
+msgstr "Titulo"
+
+#: blog/templates/blog/entries.html:14
+msgid "Fecha"
+msgstr "Fecha"
+
+#: blog/templates/blog/entries.html:15
+msgid "Opciones"
+msgstr "Opciones"
+
+#: blog/templates/blog/entries.html:39
+msgid "No hay entradas para mostrar"
+msgstr "No hay entradas para mostrar"
+
+#: blog/templates/blog/loggin.html:30
+msgid "Wilson Blog Ingreso"
+msgstr "Wilson Blog Ingreso"
+
+#: blog/templates/blog/loggin.html:62
+msgid "Problemas logueandote? reinicia"
+msgstr "Problemas logueandote? reinicia"
+
+#: blog/templates/blog/loggin.html:63
+msgid "usuario"
+msgstr "usuario"
+
+#: blog/templates/blog/loggin.html:63 blog/templates/blog/resources.html:98
+msgid "o"
+msgstr "o"
+
+#: blog/templates/blog/loggin.html:63
+msgid "contraseña"
+msgstr "contraseña"
+
+#: blog/templates/blog/loggin.html:66
+msgid "Iniciar sesion"
+msgstr "Iniciar sesion"
+
+#: blog/templates/blog/resources.html:97
+msgid "Suelta tu archivo aca"
+msgstr "Suelta tu archivo aca"
+
+#: blog/templates/blog/resources.html:102
+msgid "Seleccionar el archivo"
+msgstr "Seleccionar el archivo"
+
+#: blog/templates/blog/resources.html:106
+msgid "Soltar el archivo aca!"
+msgstr "Soltar el archivo aca!"
+
+#: blog/templates/blog/resources.html:122
+#: blog/templates/components/admin_nav_bar.html:26
+msgid "Recursos"
+msgstr "Recursos"
+
+#: blog/templates/blog/resources.html:125
+msgid "Subir nuevo recurso"
+msgstr "Subir nuevo recurso"
+
+#: blog/templates/blog/resources.html:148
+msgid "No hay recursos para mostrar"
+msgstr "No hay recursos para mostrar"
+
+#: blog/templates/components/admin_nav_bar.html:20
+msgid "Nuevo post"
+msgstr "Nuevo post"
+
+#: blog/templates/components/admin_top_bar.html:3
+msgid "Admin"
+msgstr "Admin"
+
+#: blog/templates/components/admin_top_bar.html:5
+#: blog/templates/components/navigation.html:24
+msgid "Salir"
+msgstr "Salir"
+
+#: blog/templates/components/footer.html:10
+msgid "Atención!"
+msgstr "Atención!"
+
+#: blog/templates/components/footer.html:13
+msgid "Blog desarrollado utilizando"
+msgstr "Blog desarrollado utilizando"
+
+#: blog/templates/components/footer.html:13
+msgid "y"
+msgstr "y"
+
+#: blog/templates/components/footer.html:13
+msgid ""
+". Los articulos aca mostrados son en su mayoria de mi autoria, basados en "
+"cosas que voy aprendiendo y no deben ser tomados como ejemplos de uso "
+"profesional."
+msgstr ""
+". Los articulos aca mostrados son en su mayoria de mi autoria, basados en "
+"cosas que voy aprendiendo y no deben ser tomados como ejemplos de uso "
+"profesional."
+
+#: blog/templates/components/footer.html:18
+msgid "Mas vistos"
+msgstr "Mas vistos"
+
+#: blog/templates/components/footer.html:27
+#: blog/templates/components/footer.html:42
+msgid "No hay datos disponibles"
+msgstr "No hay datos disponibles"
+
+#: blog/templates/components/footer.html:33
+msgid "Mas comentados"
+msgstr "Mas comentados"
+
+#: blog/templates/components/navigation.html:20
+msgid "Bienvenido"
+msgstr "Bienvenido"
+
+#: blog/templates/components/navigation.html:26
+msgid "Ajustes"
+msgstr "Ajustes"
+
+#: blog/templates/components/resources_selection.html:5
+msgid "Selecciona una imagen"
+msgstr "Selecciona una imagen"

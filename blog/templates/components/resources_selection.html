@@ -1,7 +1,8 @@
+{% load i18n %}
 <dialog id="resources_selection"
         class="backdrop:bg-black backdrop:opacity-70 w-2/3 max-h gap-3 p-2">
   <div>
-    <h4>Choose a picture</h4>
+    <h4>{% trans "Selecciona una imagen" %}</h4>
     <div id="galery-images" class="columns-3 m-3">
       {% if resources %}
         {% for i in resources %}

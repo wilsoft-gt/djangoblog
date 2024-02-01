@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -120,6 +121,12 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LANGUAGES = [
+  ('en', 'English'),
+  ('es', 'Spanish')
+]
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 
 # Static files (CSS, JavaScript, Images)

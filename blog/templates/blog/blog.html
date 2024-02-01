@@ -1,11 +1,12 @@
 {% extends "blog/base.html" %}
+{% load i18n %}
 {% block title %}
     <title>Wilsoft Blog</title>
 {% endblock title %}
 <!-- main container for all the cards/articles -->
 {% block body %}
     <main class="container">
-        <h2 class="font-bold text-xl mb-3">Ultimos articulos</h2>
+        <h2 class="font-bold text-xl mb-3">{% trans "Ultimos articulos" %}</h2>
         <section class="container mx-auto">
             {% if blogposts %}
                 {% for post in blogposts %}

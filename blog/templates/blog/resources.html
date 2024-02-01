@@ -1,4 +1,5 @@
 {% extends "blog/adminbase.html" %}
+{% load i18n %}
 {% block title %}
     <title>Wilsoft ⇒ Recursos</title>
 {% endblock title %}
@@ -93,16 +94,16 @@
                        hidden />
                 <div id="notDropping" class="flex flex-col mx-40 my-12 ">
                     <i class="fas fa-file-download text-7xl mb-4"></i>
-                    <p class="pointer-events-none">Suelta tu archivo aca</p>
-                    <p class="pointer-events-none">o</p>
+                    <p class="pointer-events-none">{% trans "Suelta tu archivo aca" %}</p>
+                    <p class="pointer-events-none">{% trans "o" %}</p>
                     <button type="button"
                             onclick="selectFile()"
                             class="bg-green-100 border border-black rounded-full px-4 py-2">
-                        Seleccionar el archivo
+                        {% trans "Seleccionar el archivo" %}
                     </button>
                 </div>
                 <div id="dragEnter" class="hidden pointer-events-none mx-40 my-28 ">
-                    <p>Soltar el archivo aca!</p>
+                    <p>{% trans "Soltar el archivo aca!" %}</p>
                 </div>
                 <div id="dropped" class="hidden flex-col gap-3 mx-40 my-12 ">
                     <i class="fas fa-file-upload text-7xl mb-4"></i>
@@ -112,16 +113,16 @@
                                 type="submit">save</button>
                         <button class="border border-red-600 text-red-600 py-2 px-3 rounded"
                                 type="button"
-                                onclick="hideDialog()">Cancelar</button>
+                                onclick="hideDialog()">{% trans "Cancelar" %}</button>
                     </div>
                 </div>
             </form>
         </dialog>
         <div class="flex flex-row justify-between align-middle mb-2">
-            <h2 class="text-xl font-bold text-green-900">Recursos</h2>
+            <h2 class="text-xl font-bold text-green-900">{% trans "Recursos" %}</h2>
             <button onclick="showDialog()"
                     class="border rounded-md p-2 border-green-700 text-green-700 hover:bg-green-700 hover:border-green-200 hover:text-green-200">
-                <i class="fas fa-plus"></i> Subir nuevo recurso
+                <i class="fas fa-plus"></i> {% trans "Subir nuevo recurso" %}
             </button>
         </div>
         <hr class="mb-3" />
@@ -144,7 +145,7 @@
                     </div>
                 {% endfor %}
             {% else %}
-                <h2 class="text-3xl font-bold text-green-900">No hay recursos para mostrar</h2>
+                <h2 class="text-3xl font-bold text-green-900">{% trans "No hay recursos para mostrar" %}</h2>
             {% endif %}
         </div>
     </div>

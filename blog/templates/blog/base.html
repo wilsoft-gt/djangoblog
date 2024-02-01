@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
     {% load static %}
@@ -16,7 +17,7 @@
         <script src="{% static 'blog/highlight/highlight.min.js' %}"></script>
         <script>hljs.highlightAll();</script>
         {% block title %}
-            <title>Este es un titulo temporal!</title>
+            <title>{% trans "Este es un titulo temporal!" %}</title>
         {% endblock title %}
     </head>
     <body class="max-w-6xl mx-auto before:content-[' '] before:block before:w-96 before:h-96 before:bg-green-900 before:absolute before:-z-10 before:translate-y-28 before:-translate-x-80 before:blur-3xl before:opacity-10">

@@ -1,17 +1,18 @@
 {% extends "blog/adminbase.html" %}
+{% load i18n %}
 {% block title %}
-    <title>Wilsoft ⇒ Entradas</title>
+    <title>Wilsoft ⇒ {% trans "Entradas" %}</title>
 {% endblock title %}
 {% block content %}
     {% if entries %}
-        <h2 class="text-4xl mb-8 text-green-900">Posts</h2>
+        <h2 class="text-4xl mb-8 text-green-900">{% trans "Posts" %}</h2>
         <table class="w-full border-collapse border-gray-400">
             <thead class="border-b-2">
                 <tr>
-                    <th class="text-xl" scope="col-2">ID #</th>
-                    <th class="text-xl" scope="col-6">Titulo</th>
-                    <th class="text-xl" scope="col-2">Fecha</th>
-                    <th class="text-xl" scope="col-2">Opciones</th>
+                    <th class="text-xl" scope="col-2">{% trans "ID #" %}</th>
+                    <th class="text-xl" scope="col-6">{% trans "Titulo" %}</th>
+                    <th class="text-xl" scope="col-2">{% trans "Fecha" %}</th>
+                    <th class="text-xl" scope="col-2">{% trans "Opciones" %}</th>
                 </tr>
             </thead>
             {% for i in entries %}
@@ -35,7 +36,7 @@
                 </tbody>
             {% endfor %}
         {% else %}
-            <h2 class="text-3xl font-bold text-green-900">No hay entradas para mostrar</h2>
+            <h2 class="text-3xl font-bold text-green-900">{% trans "No hay entradas para mostrar" %}</h2>
         {% endif %}
     </table>
     <script>

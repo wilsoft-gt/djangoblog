@@ -1,19 +1,20 @@
 {% extends "blog/adminbase.html" %}
+{% load i18n %}
 {% block title %}
-    <title>Wilsoft ⇒ Comentarios</title>
+    <title>Wilsoft ⇒ {% trans "Comentarios" %}</title>
 {% endblock title %}
 {% block content %}
     {% if comments %}
-        <h2 class="text-4xl mb-8 text-green-900">Moderacion de comentarios</h2>
+        <h2 class="text-4xl mb-8 text-green-900">{% trans "Moderacion de comentarios" %}</h2>
         <table class="w-full border-collapse border-gray-400">
             <thead class="border-b-2">
                 <tr>
                     <th class="text-xl" scope="col">#</th>
-                    <th class="text-xl" scope="col">name</th>
-                    <th class="text-xl" scope="col">Comment</th>
-                    <th class="text-xl" scope="col">Post</th>
-                    <th class="text-xl" scope="col">Moderated</th>
-                    <th class="text-xl" scope="col">Accion</th>
+                    <th class="text-xl" scope="col">{% trans "Nombre" %}</th>
+                    <th class="text-xl" scope="col">{% trans "Comentario" %}</th>
+                    <th class="text-xl" scope="col">{% trans "Post" %}</th>
+                    <th class="text-xl" scope="col">{% trans "Moderado" %}</th>
+                    <th class="text-xl" scope="col">{% trans "Accion" %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +25,7 @@
                             {% if j.comment_name != "" %}
                                 {{ j.comment_name }}
                             {% else %}
-                                Anonimo
+                                {% trans "Anonimo" %}
                             {% endif %}
                         </td>
                         <td class="p-2">{{ j.comment_comment }}</td>
@@ -43,7 +44,7 @@
                                     <input type="hidden" name="moderated" value="False" />
                                     <button type="submit"
                                             class="border border-solid text-red-600 border-red-600 hover:bg-red-600 px-2 py-1 rounded-lg hover:text-red-100">
-                                        Deshabilitar
+                                        {% trans "Deshabilitar" %}
                                     </button>
                                 </form>
                             {% else %}
@@ -52,7 +53,7 @@
                                     <input type="hidden" name="moderated" value="True" />
                                     <button type="submit"
                                             class="border border-solid text-green-600 border-green-600 hover:bg-green-600 px-2 py-1 rounded-lg hover:text-green-100">
-                                        Permitir
+                                        {% trans "Permitir" %}
                                     </button>
                                 </form>
                             {% endif %}
@@ -62,7 +63,7 @@
             </tbody>
         </table>
     {% else %}
-        <h2 class="text-3xl font-bold text-green-900">No hay comentarios para moderar</h2>
+        <h2 class="text-3xl font-bold text-green-900">{% trans "No hay comentarios para moderar" %}</h2>
     {% endif %}
     <script>
         let active_new = document.querySelector("#menu_comments")
