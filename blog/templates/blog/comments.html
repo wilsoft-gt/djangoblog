@@ -61,6 +61,8 @@
                 {% endfor %}
             </tbody>
         </table>
+    {% else %}
+        <h2 class="text-3xl font-bold text-green-900">No hay comentarios para moderar</h2>
     {% endif %}
     <script>
         let active_new = document.querySelector("#menu_comments")
